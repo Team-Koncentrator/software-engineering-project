@@ -3,13 +3,14 @@
  */
 
 import React from 'react';
+import './Register.css';
 
-const Home = () => {
+const Register = () => {
   return (
     <>
-      <h1>Home Page</h1>
+      <h1>Register Page</h1>
     </>
   );
 };
 
-export default Home;
+export default Register;
