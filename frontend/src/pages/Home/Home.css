@@ -11,7 +11,7 @@
 }
 
 .headers__main-header {
-  font-size: 54px;
+  font-size: 46px;
   font-family: 'open-700';
 }
 
@@ -23,13 +23,14 @@
 }
 
 .headers__second-header {
-  font-size: 28px;
+  font-size: 26px;
   font-family: 'open-700';
   margin-bottom: 25px;
+  width: 80%;
 }
 
 .headers__content {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 2.2;
   font-family: 'open-500';
   width: 80%;
