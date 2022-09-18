@@ -1,19 +1,21 @@
 import React from 'react';
-import './App.css';
+import { Routes, Route } from 'react-router-dom';
+
+import Home from 'pages/Home/Home';
+import Login from 'pages/Login/Login';
 import Button from './components/Button/Button';
 
 function App() {
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a className='App-link' href='https://reactjs.org' target='_blank' rel='noopener noreferrer'>
-          Learn React
-        </a>
+    <div>
+      <header>
+        <h1>Welcome to React Router!</h1>
         <Button name='click'>Clikck</Button>
       </header>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='login' element={<Login />} />
+      </Routes>
     </div>
   );
 }
