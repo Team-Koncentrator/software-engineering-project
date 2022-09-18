@@ -1,2 +1,27 @@
-:host() {
+.myInput {
+  padding: 3px;
+  font-size: 16px;
+  border: 1px solid transparent;
+  --darkreader-inline-border-top: #3e4446;
+  --darkreader-inline-border-right: #3e4446;
+  --darkreader-inline-border-bottom: #3e4446;
+  --darkreader-inline-border-left: #3e4446;
+  border-radius: 5px;
+  background-color: #f4f4f4;
+  padding: 10px 20px;
+  display: block;
+  font-family: 'open-regular';
+  width: 100%;
+}
+.myInput:focus {
+  outline: none;
+  border-color: black;
+}
+
+.label-input {
+  font-family: 'open-700';
+  font-size: 26px;
+  color: #474e65;
+  margin-bottom: 11px;
+  display: block;
 }
