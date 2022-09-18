@@ -1,2 +1,56 @@
-:host() {
+.wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding-top: 150px;
+}
+
+.left__headers {
+  max-width: 750px;
+  margin-bottom: 25px;
+}
+
+.headers__main-header {
+  font-size: 54px;
+  font-family: 'open-700';
+}
+
+.headers__horizontal {
+  margin: 25px 0;
+  background: #cbbed8;
+  height: 1px;
+  width: 80%;
+}
+
+.headers__second-header {
+  font-size: 28px;
+  font-family: 'open-700';
+  margin-bottom: 25px;
+}
+
+.headers__content {
+  font-size: 16px;
+  line-height: 2.2;
+  font-family: 'open-500';
+  width: 80%;
+}
+
+.left__files {
+  display: grid;
+  grid-template-columns: 200px 200px;
+  grid-row: auto auto;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}
+
+.files__text-xml,
+.files__text-enter {
+  font-size: 12px;
+  color: #897d81;
+  align-self: center;
+}
+
+.right__img {
+  margin-top: 50px;
+  width: 100%;
 }

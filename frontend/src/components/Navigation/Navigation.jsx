@@ -51,10 +51,8 @@ const Navigation = () => {
         {menuItems
           .sort((a, b) => Number(a.order) - Number(b.order))
           .map((item) => (
-            <li>
-              <NavLink key={item.id} to={item.url}>
-                {item.label}
-              </NavLink>
+            <li key={item.id}>
+              <NavLink to={item.url}>{item.label}</NavLink>
             </li>
           ))}
       </NavMenu>
