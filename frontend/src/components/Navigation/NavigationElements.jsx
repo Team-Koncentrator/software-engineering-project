@@ -46,10 +46,11 @@ export const Bars = styled(FaBars)`
   }
 `;
 
-export const NavMenu = styled.div`
+export const NavMenu = styled.ul`
   display: flex;
   align-items: center;
   margin-right: -24px;
+  list-style: none;
 
   @media screen and (max-width: 768px) {
     display: none;

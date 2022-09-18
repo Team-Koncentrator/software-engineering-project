@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { Nav, NavLink, Bars, NavMenu, NavBtn, NavBtnLink } from './NavigationElements';
+import { Nav, NavLink, Bars, NavMenu } from './NavigationElements';
 import myLogo from 'images/logo.svg';
 
 const Navigation = () => {
@@ -51,9 +51,11 @@ const Navigation = () => {
         {menuItems
           .sort((a, b) => Number(a.order) - Number(b.order))
           .map((item) => (
-            <NavLink key={item.id} to={item.url}>
-              {item.label}
-            </NavLink>
+            <li>
+              <NavLink key={item.id} to={item.url}>
+                {item.label}
+              </NavLink>
+            </li>
           ))}
       </NavMenu>
     </Nav>
