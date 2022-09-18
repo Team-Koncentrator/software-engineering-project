@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Button from './components/Button/Button';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <a className='App-link' href='https://reactjs.org' target='_blank' rel='noopener noreferrer'>
           Learn React
         </a>
+        <Button name='click'>Clikck</Button>
       </header>
     </div>
   );
