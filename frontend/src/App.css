@@ -1,7 +1,7 @@
 .wrapper {
   display: block;
   padding: 0 16px;
-  min-height: 100vh;
+  min-height: 140vh;
 }
 
 @media all and (min-width: 768px) {

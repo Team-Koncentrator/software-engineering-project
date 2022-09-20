@@ -4,7 +4,8 @@ import 'App.css';
 import Navigation from 'components/Navigation/Navigation';
 import GlobalStyle from 'theme/globalStyles';
 import Home from 'pages/Home/Home';
-import Login from 'pages/Login/Login';
+//import Login from 'pages/Login/Login';
+import Register from 'pages/Register/Register';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <Navigation />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='login' element={<Login />} />
+        <Route path='login' element={<Register />} />
       </Routes>
     </>
   );
