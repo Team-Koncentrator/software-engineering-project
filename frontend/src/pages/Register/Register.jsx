@@ -182,8 +182,8 @@ const Register = () => {
             Already registered?
             <br />
             <span className='line'>
-            
-              <a component={<Login />} class='a sign' href='login'>Sign In</a>
+              {/*put router link here*/}
+              <a class='a sign' href='#'>Sign In</a>
             </span>
           </p>
         </section>
