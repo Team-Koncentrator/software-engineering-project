@@ -95,13 +95,14 @@ const Register = () => {
           </p>
           <h1 className='registerTitle'>Register</h1>
           <form onSubmit={handleSubmit}>
-            <label htmlFor='username'>
+            <label  class='textLabel' htmlFor='username'>
               Nazwa użytkownika
               <FontAwesomeIcon icon={faCheck} className={validName ? 'valid' : 'hide'} />
               <FontAwesomeIcon icon={faTimes} className={validName || !user ? 'hide' : 'invalid'} />
             </label>
             <input
               type='text'
+              class='input'
               id='username'
               placeholder='Podaj login lub nazwę użytkownika'
               ref={userRef}
@@ -123,13 +124,14 @@ const Register = () => {
               Letters, numbers, underscores, hyphens allowed.
             </p>
 
-            <label htmlFor='password'>
+            <label class='textLabel' htmlFor='password'>
               Hasło
               <FontAwesomeIcon icon={faCheck} className={validPwd ? 'valid' : 'hide'} />
               <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? 'hide' : 'invalid'} />
             </label>
             <input
               type='password'
+              class='input'
               id='password'
               placeholder='Wprowadź hasło'
               onChange={(e) => setPwd(e.target.value)}
@@ -150,13 +152,14 @@ const Register = () => {
               <span aria-label='hashtag'>#</span> <span aria-label='dollar sign'>$</span> <span aria-label='percent'>%</span>
             </p>
 
-            <label htmlFor='confirm_pwd'>
+            <label class='textLabel' htmlFor='confirm_pwd'>
               Potwierdź hasło
               <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? 'valid' : 'hide'} />
               <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? 'hide' : 'invalid'} />
             </label>
             <input
               type='password'
+              class='input'
               id='confirm_pwd'
               placeholder='Powtórz hasło'
               onChange={(e) => setMatchPwd(e.target.value)}
@@ -172,9 +175,9 @@ const Register = () => {
               Must match the first password input field.
             </p>
 
-            <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
+            <button class='button' disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
           </form>
-          <p>
+          <p class='textLabel'>
             Already registered?
             <br />
             <span className='line'>

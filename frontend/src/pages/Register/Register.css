@@ -7,16 +7,6 @@
   justify-content: center;
 }
 
-html {
-  font-family: 'Nunito', sans-serif;
-  font-size: 22px;
-  color: #fff;
-}
-
-body {
-  min-height: 100vh;
-  background-color: rgba(255, 255, 255, 0.4);
-}
 
 .App {
   display: flex;
@@ -47,11 +37,7 @@ form {
   padding-bottom: 1rem;
 }
 
-a,
-a:visited {
-  color: black;
-}
-
+/*
 input[type='text'],
 input[type='password'],
 button,
@@ -61,22 +47,26 @@ textarea {
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
 }
+*/
 
-input {
+.input,
+.button {
+  font-family: 'Nunito', sans-serif;
+  font-size: 22px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
   background-color: whitesmoke;
 }
 
-label,
-h1,
-p,
-a {
+.textLabel,
+.registerTitle {
   margin-top: 1rem;
   color: #000;
   font-family: 'open-700';
   padding-bottom: 0.5rem;
 }
 
-button {
+.button {
   padding: 0.5rem;
   margin: 0.8rem 5rem;
   background-color: #1e4d73;
