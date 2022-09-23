@@ -85,7 +85,7 @@ const Register = () => {
         <section class='sect'>
           <h1>Success!</h1>
           <p>
-            <a href='#'>Sign In</a>
+            <a class='a sign' href='#'>Sign In</a>
           </p>
         </section>
       ) : (
@@ -182,7 +182,7 @@ const Register = () => {
             <br />
             <span className='line'>
               {/*put router link here*/}
-              <a href='#'>Sign In</a>
+              <a class='a sign' href='#'>Sign In</a>
             </span>
           </p>
         </section>
