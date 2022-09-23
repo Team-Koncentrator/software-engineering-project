@@ -1,0 +1,23 @@
+.myButton {
+  box-shadow: 0px 1px 0px 0px #f0f7fa;
+  background-color: #1e4d73;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  display: block;
+  cursor: pointer;
+  color: #ffffff;
+  font: bold 16px 'open-700';
+  padding: 12px 24px;
+  text-decoration: none;
+  width: 100%;
+  transition: 0.15s all ease-in-out;
+}
+
+.myButton:hover {
+  background-color: rgb(81, 111, 156);
+}
+
+.myButton:focus {
+  outline: none;
+  border-color: black;
+}

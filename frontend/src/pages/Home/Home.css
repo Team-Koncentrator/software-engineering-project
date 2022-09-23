@@ -1,0 +1,76 @@
+.main-wrapper {
+  padding-top: 150px;
+  max-width: 1368px;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.headers-section {
+  max-width: 750px;
+  margin-bottom: 25px;
+}
+
+.buttons__next,
+.buttons__file {
+  justify-self: center;
+}
+
+.headers__main-header {
+  font-size: 46px;
+  font-family: 'open-700';
+}
+
+.headers__horizontal {
+  margin: 25px 0;
+  background: #cbbed8;
+  height: 1px;
+  width: 80%;
+}
+
+.headers__second-header {
+  font-size: 26px;
+  font-family: 'open-700';
+  margin-bottom: 25px;
+  width: 80%;
+}
+
+.headers__content {
+  font-size: 14px;
+  line-height: 2.2;
+  font-family: 'open-500';
+  width: 80%;
+}
+
+.buttons-section {
+  display: grid;
+  grid-template-columns: 200px 200px;
+  grid-row: auto auto;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}
+
+.img-container__img {
+  margin-top: 50px;
+  width: 100%;
+}
+
+.progress-bar-section {
+  width: 50%;
+  margin-left: auto;
+}
+
+.linear-progress-container {
+  display: flex;
+  margin-right: 50px;
+}
+
+.icon {
+  transform: rotate(270deg);
+}

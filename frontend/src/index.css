@@ -1,0 +1,23 @@
+/**
+ * Created by Pawel on 18.09.2022.
+ */
+
+@font-face {
+  font-family: 'open-regular';
+  src: local('open-regular'), url(./fonts/open-sans-v34-latin-ext_latin-regular.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'open-500';
+  src: local('open-500'), url(./fonts/open-sans-v34-latin-ext_latin-500.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'open-600';
+  src: local('open-600'), url(./fonts/open-sans-v34-latin-ext_latin-600.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'open-700';
+  src: local('open-700'), url(./fonts/open-sans-v34-latin-ext_latin-700.woff) format('woff');
+}
