@@ -182,7 +182,6 @@ const Register = () => {
             Already registered?
             <br />
             <span className='line'>
-              
               <a class='a sign' href='login'>Sign In</a>
             </span>
           </p>
