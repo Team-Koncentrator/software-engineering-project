@@ -35,8 +35,8 @@ const Navigation = () => {
     // Wartość loginu będzie obsługiwana z poziomu bazy danych na podstawie tego czy ktoś jest zalogowany
     {
       id: '5',
-      label: 'Login',
-      url: 'login',
+      label: 'Register',
+      url: 'register',
       order: '5'
     }
   ];

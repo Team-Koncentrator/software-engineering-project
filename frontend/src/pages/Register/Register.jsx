@@ -3,6 +3,7 @@ import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'api/axios';
 import './Register.css';
+import Login from 'pages/Login/Login';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -82,19 +83,19 @@ const Register = () => {
   return (
     <>
       {success ? (
-        <section>
+        <section class='sect'>
           <h1>Success!</h1>
           <p>
-            <a href='#'>Sign In</a>
+            <a class='a sign' href='#'>Sign In</a>
           </p>
         </section>
       ) : (
-        <section>
+        <section class='sect'>
           <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>
             {errMsg}
           </p>
           <h1 className='registerTitle'>Register</h1>
-          <form onSubmit={handleSubmit}>
+          <form class='form' onSubmit={handleSubmit}>
             <label  class='textLabel' htmlFor='username'>
               Nazwa użytkownika
               <FontAwesomeIcon icon={faCheck} className={validName ? 'valid' : 'hide'} />
@@ -181,8 +182,8 @@ const Register = () => {
             Already registered?
             <br />
             <span className='line'>
-              {/*put router link here*/}
-              <a href='#'>Sign In</a>
+            
+              <a component={<Login />} class='a sign' href='login'>Sign In</a>
             </span>
           </p>
         </section>
