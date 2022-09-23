@@ -82,19 +82,19 @@ const Register = () => {
   return (
     <>
       {success ? (
-        <section>
+        <section class='sect'>
           <h1>Success!</h1>
           <p>
             <a href='#'>Sign In</a>
           </p>
         </section>
       ) : (
-        <section>
+        <section class='sect'>
           <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>
             {errMsg}
           </p>
           <h1 className='registerTitle'>Register</h1>
-          <form onSubmit={handleSubmit}>
+          <form class='form' onSubmit={handleSubmit}>
             <label  class='textLabel' htmlFor='username'>
               Nazwa użytkownika
               <FontAwesomeIcon icon={faCheck} className={validName ? 'valid' : 'hide'} />
