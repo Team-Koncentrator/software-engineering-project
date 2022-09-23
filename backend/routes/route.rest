@@ -1,0 +1,26 @@
+GET http://localhost:3000/users
+
+###
+GET http://localhost:3000/users/632df4eee06db26d09a0347d
+
+###
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "firstName": "Maciej",
+    "lastName": "Kowalski",
+    "age": 18,
+    "gender": "Male"
+}
+
+###
+DELETE http://localhost:3000/users/632df4eee06db26d09a0347d
+
+###
+PATCH http://localhost:3000/users/632df66191087f27c378f048
+Content-Type: application/json
+
+{
+    "firstName": "Paweł"
+}
