@@ -9,3 +9,12 @@
 .faq-accordition{
     padding: 0.5rem 18rem;
 }
+
+.heroContent {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0;
+}
+.heroContent > .faq-intro {
+    padding: 64px 0 48px;
+}

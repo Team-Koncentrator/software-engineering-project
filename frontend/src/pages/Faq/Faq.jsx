@@ -5,7 +5,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
+import Link from '@mui/material/Link';
 
 
 
@@ -29,31 +29,44 @@ const Faq = () => {
   };
   return (
   <>
-  
-    <div className='faq-accordition'>
-      {rows.map((row) => (
+  <main>
+      <div className='heroContent'>
+              <div className='faq-intro'>
+              <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+                  FAQ
+              </Typography>
+              <Typography variant="h6" align="center" color="textSecondary" component="p">
+                Poniżej znajduje się lista najczęściej zadawanych pytań. Jeżeli nie znalazłeś odpowiedzi, skontaktuj się z nami: <Link href="mailto:wojtkolos@gmail.com}" color="inherit">
+                  {'kontakt'}
+                </Link> 
+              </Typography>
+            </div>
+          </div>
+
+      <div className='faq-accordition'>
+        {rows.map((row) => (
+                      
                     
-                  
 
-                  <Accordion expanded={expanded === "panel"+row.nr} onChange={handleChange("panel"+row.nr)}>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
-                    >
-                      <Typography>{row.summary}</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography>
-                        {row.typography}
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                  ))}
-    </div>
+                    <Accordion expanded={expanded === "panel"+row.nr} onChange={handleChange("panel"+row.nr)}>
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                      >
+                        <Typography>{row.summary}</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Typography>
+                          {row.typography}
+                        </Typography>
+                      </AccordionDetails>
+                    </Accordion>
+                    ))}
+      </div>
 
 
-    
+    </main>
 
 
   </>
