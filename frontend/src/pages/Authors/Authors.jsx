@@ -31,7 +31,7 @@ const Authors = () => {
                 ''
             ],
             url: 'https://pl.linkedin.com/in/micha%C5%82-patz-962a55206',
-            buttonText: 'More info',
+            buttonText: 'Linkedin',
             buttonVariant: 'outlined',
         },
         {
@@ -47,7 +47,7 @@ const Authors = () => {
                 ''
             ],
             url: 'https://pl.linkedin.com/in/wojciech-witczak-416829197',
-            buttonText: 'More info',
+            buttonText: 'Linkedin',
             buttonVariant: 'outlined',
         },
         {
@@ -63,7 +63,7 @@ const Authors = () => {
                 '',
             ],
             url: 'https://pl.linkedin.com/in/pawe%C5%82-biniak-6446141ba',
-            buttonText: 'More info',
+            buttonText: 'Linkedin',
             buttonVariant: 'outlined',
         },
         {
@@ -79,7 +79,7 @@ const Authors = () => {
                 '',
             ],
             url: 'https://pl.linkedin.com/in/maciej-w%C4%99grzak-307a41212',
-            buttonText: 'More info',
+            buttonText: 'Linkedin',
             buttonVariant: 'outlined',
           },
       ];
