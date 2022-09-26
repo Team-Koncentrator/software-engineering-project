@@ -83,27 +83,27 @@ const Register = () => {
   return (
     <>
       {success ? (
-        <section class='sect'>
+        <section className='sect'>
           <h1>Success!</h1>
           <p>
-            <a class='a sign' href='#'>Sign In</a>
+            <a className='a sign' href='#'>Sign In</a>
           </p>
         </section>
       ) : (
-        <section class='sect'>
+        <section className='sect'>
           <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>
             {errMsg}
           </p>
           <h1 className='registerTitle'>Register</h1>
-          <form class='form' onSubmit={handleSubmit}>
-            <label  class='textLabel' htmlFor='username'>
+          <form className='form' onSubmit={handleSubmit}>
+            <label  className='textLabel' htmlFor='username'>
               Nazwa użytkownika
               <FontAwesomeIcon icon={faCheck} className={validName ? 'valid' : 'hide'} />
               <FontAwesomeIcon icon={faTimes} className={validName || !user ? 'hide' : 'invalid'} />
             </label>
             <input
               type='text'
-              class='input'
+              className='input'
               id='username'
               placeholder='Podaj login lub nazwę użytkownika'
               ref={userRef}
@@ -125,14 +125,14 @@ const Register = () => {
               Letters, numbers, underscores, hyphens allowed.
             </p>
 
-            <label class='textLabel' htmlFor='password'>
+            <label className='textLabel' htmlFor='password'>
               Hasło
               <FontAwesomeIcon icon={faCheck} className={validPwd ? 'valid' : 'hide'} />
               <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? 'hide' : 'invalid'} />
             </label>
             <input
               type='password'
-              class='input'
+              className='input'
               id='password'
               placeholder='Wprowadź hasło'
               onChange={(e) => setPwd(e.target.value)}
@@ -153,14 +153,14 @@ const Register = () => {
               <span aria-label='hashtag'>#</span> <span aria-label='dollar sign'>$</span> <span aria-label='percent'>%</span>
             </p>
 
-            <label class='textLabel' htmlFor='confirm_pwd'>
+            <label className='textLabel' htmlFor='confirm_pwd'>
               Potwierdź hasło
               <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? 'valid' : 'hide'} />
               <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? 'hide' : 'invalid'} />
             </label>
             <input
               type='password'
-              class='input'
+              className='input'
               id='confirm_pwd'
               placeholder='Powtórz hasło'
               onChange={(e) => setMatchPwd(e.target.value)}
@@ -176,13 +176,13 @@ const Register = () => {
               Must match the first password input field.
             </p>
 
-            <button class='button' disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
+            <button className='button' disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
           </form>
-          <p class='textLabel'>
+          <p className='textLabel'>
             Already registered?
             <br />
             <span className='line'>
-              <a class='a sign' href='login'>Sign In</a>
+              <a className='a sign' href='login'>Sign In</a>
             </span>
           </p>
         </section>
