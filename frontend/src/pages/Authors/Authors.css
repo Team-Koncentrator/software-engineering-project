@@ -4,3 +4,32 @@
     box-sizing: border-box;
 }
 
+
+
+.heroContent {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0;
+}
+.heroContent > .onas {
+    padding: 64px 0 48px;
+}
+.peopleCont{
+    padding: 0.5rem 18rem;
+    max-width: 1300px;
+    margin: auto !important;
+}
+
+.cardHeader {
+    background-color: #eeeeee;
+  }
+.cardPricing {
+    display: 'flex';
+    justify-content: 'center';
+    align-items: 'baseline';
+    margin-bottom: 20px;
+  }
+  .cardActions:hover {
+    border: 1px solid #2196f3;
+    background-color: rgba(33, 150, 243, 0.08);
+  }
