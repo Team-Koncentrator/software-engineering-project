@@ -17,6 +17,7 @@ const Component = ({ data, components, path }) => {
       isDragging: monitor.isDragging()
     })
   });
+  
 
   const opacity = isDragging ? 0 : 1;
   drag(ref);
