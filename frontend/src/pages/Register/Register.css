@@ -4,7 +4,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  justify-content: center;
 }
+
 
 .App {
   display: flex;
@@ -15,7 +17,7 @@
   padding: 1rem 0.5rem;
 }
 
-.sect {
+section {
   width: 100%;
   min-height: 400px;
   min-width: 300px;
@@ -27,25 +29,13 @@
   padding: 0.5rem 23rem;
 }
 
-.form {
+form {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   flex-grow: 1;
   padding-bottom: 1rem;
 }
-
-/*
-input[type='text'],
-input[type='password'],
-button,
-textarea {
-  font-family: 'Nunito', sans-serif;
-  font-size: 22px;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-}
-*/
 
 .input,
 .button {

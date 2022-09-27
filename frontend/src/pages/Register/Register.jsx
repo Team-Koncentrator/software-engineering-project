@@ -3,7 +3,6 @@ import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'api/axios';
 import './Register.css';
-import Login from 'pages/Login/Login';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -91,12 +90,14 @@ const Register = () => {
         </section>
       ) : (
         <section className='sect'>
+>>>>>>> work
           <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>
             {errMsg}
           </p>
           <h1 className='registerTitle'>Register</h1>
           <form className='form' onSubmit={handleSubmit}>
             <label  className='textLabel' htmlFor='username'>
+>>>>>>> work
               Nazwa użytkownika
               <FontAwesomeIcon icon={faCheck} className={validName ? 'valid' : 'hide'} />
               <FontAwesomeIcon icon={faTimes} className={validName || !user ? 'hide' : 'invalid'} />
@@ -183,6 +184,7 @@ const Register = () => {
             <br />
             <span className='line'>
               <a className='a sign' href='login'>Sign In</a>
+>>>>>>> work
             </span>
           </p>
         </section>
