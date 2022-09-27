@@ -8,10 +8,10 @@ POST http://localhost:3001/users
 Content-Type: application/json
 
 {
-    "firstName": "Kaluza",
-    "lastName": "KowaDupalski",
-    "age": 18,
-    "gender": "Female"
+    "firstName": "Juliet",
+    "lastName": "Dupna",
+    "age": 22,
+    "gender": "Male"
 }
 
 ###
