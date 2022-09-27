@@ -32,7 +32,7 @@ const TrashDropZone = ({ data, onDrop }) => {
 
   const isActive = isOver && canDrop;
   return (
-    <div className={'trashDropZone' + { active: isActive }} ref={drop}>
+    <div className={['trashDropZone', isActive ? 'active' : ''].join(' ')} ref={drop}>
       TRASH
     </div>
   );

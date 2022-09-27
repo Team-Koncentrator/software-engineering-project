@@ -63,6 +63,6 @@ const DropZone = ({ data, onDrop, isLast, className }) => {
   });
 
   const isActive = isOver && canDrop;
-  return <div className={'dropZone' + { active: isActive, isLast } + className} ref={drop} />;
+  return <div className={['dropZone', isActive ? 'active' : '', isLast ? 'isLast' : '', className].join(' ')} ref={drop} />;
 };
 export default DropZone;

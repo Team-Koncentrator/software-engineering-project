@@ -29,5 +29,21 @@ export const SIDEBAR_ITEMS = [
       type: 'email',
       content: 'Some email'
     }
+  },
+  {
+    id: nanoid(),
+    type: SIDEBAR_ITEM,
+    component: {
+      type: 'phone',
+      content: 'Some phone'
+    }
+  },
+  {
+    id: nanoid(),
+    type: SIDEBAR_ITEM,
+    component: {
+      type: 'image',
+      content: 'Some image'
+    }
   }
 ];

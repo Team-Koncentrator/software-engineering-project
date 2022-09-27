@@ -23,7 +23,7 @@ const Component = ({ data, components, path }) => {
   drag(ref);
 
   const component = components[data.id];
-
+  //console.log(component);
   return (
     <div ref={ref} style={{ ...style, opacity }} className='component draggable'>
       <div>{data.id}</div>

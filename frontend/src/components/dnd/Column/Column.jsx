@@ -7,7 +7,7 @@ import Component from 'components/dnd/Component/Component';
 const style = {};
 const Column = ({ data, components, handleDrop, path }) => {
   const ref = useRef(null);
-
+  console.table(data);
   const [{ isDragging }, drag] = useDrag({
     item: {
       id: data.id,

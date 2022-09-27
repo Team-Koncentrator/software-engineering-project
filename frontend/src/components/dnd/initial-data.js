@@ -16,7 +16,7 @@ const initialData = {
             },
             {
               type: COMPONENT,
-              id: 'component0'
+              id: 'component1'
             }
           ]
         },
@@ -26,7 +26,7 @@ const initialData = {
           children: [
             {
               type: COMPONENT,
-              id: 'component0'
+              id: 'component2'
             }
           ]
         }
@@ -38,33 +38,33 @@ const initialData = {
       children: [
         {
           type: COLUMN,
-          id: 'pookoj1',
+          id: 'pookoj3',
           children: [
             {
               type: COMPONENT,
-              id: 'component0'
+              id: 'component3'
             },
             {
               type: COMPONENT,
-              id: 'component0'
+              id: 'component4'
             },
             {
               type: COMPONENT,
-              id: 'component0'
+              id: 'component5'
             }
           ]
         },
         {
           type: COLUMN,
-          id: 'pookoj2',
+          id: 'pookoj4',
           children: [
             {
               type: COMPONENT,
-              id: 'component0'
+              id: 'component6'
             },
             {
               type: COMPONENT,
-              id: 'component0'
+              id: 'component7'
             }
           ]
         }
@@ -76,7 +76,10 @@ const initialData = {
     component1: { id: 'component1', type: 'image', content: 'Some image' },
     component2: { id: 'component2', type: 'email', content: 'Some email' },
     component3: { id: 'component3', type: 'name', content: 'Some name' },
-    component4: { id: 'component4', type: 'phone', content: 'Some phone' }
+    component4: { id: 'component4', type: 'phone', content: 'Some phone' },
+    component5: { id: 'component5', type: 'input', content: 'Nowy uczestnik' },
+    component6: { id: 'component6', type: 'input', content: 'Nowy uczestnik' },
+    component7: { id: 'component7', type: 'input', content: 'Nowy uczestnik' }
   }
 };
 
