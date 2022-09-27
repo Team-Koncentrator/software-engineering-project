@@ -77,14 +77,7 @@ const Register = () => {
       setErrMsg('Invalid Entry');
       return;
     }
-    setSuccess(true);
-    /*
-    try {
-      const response = await axios.post(REGISTER_URL, JSON.stringify({ user, pwd }), {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true
-      });
-      */
+
     try {
       const response = await axios.post('http://localhost:3001/users', {
         firstName: firstName,
