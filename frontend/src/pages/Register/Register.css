@@ -4,7 +4,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  justify-content: center;
 }
+
 
 .App {
   display: flex;
@@ -15,7 +17,7 @@
   padding: 1rem 0.5rem;
 }
 
-.sect {
+section {
   width: 100%;
   min-height: 400px;
   min-width: 300px;
@@ -24,29 +26,16 @@
   justify-content: flex-start;
   padding: 1rem;
   position: absolute;
-  padding: 0.5rem 15rem;
+  padding: 0.5rem 23rem;
 }
 
-.form {
+form {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  align-items: center;
   flex-grow: 1;
   padding-bottom: 1rem;
 }
-
-/*
-input[type='text'],
-input[type='password'],
-button,
-textarea {
-  font-family: 'Nunito', sans-serif;
-  font-size: 22px;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-}
-*/
 
 .input,
 .button {
@@ -55,7 +44,6 @@ textarea {
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   background-color: whitesmoke;
-  width: 100%;
 }
 
 .textLabel,
@@ -71,7 +59,6 @@ textarea {
   margin: 0.8rem 5rem;
   background-color: #1e4d73;
   color: white;
-  width: 30%;
 }
 
 .instructions {

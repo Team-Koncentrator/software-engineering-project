@@ -1,24 +1,24 @@
 GET http://localhost:3001/users
 
 ###
-GET http://localhost:3001/users/gender="localhost:3000/users/localhost:3000/users/gender="localhost:3000/users/localhost:3000/users/gender="127.0.0.1:3000/users
+GET http://localhost:3001/users/632df4eee06db26d09a0347d
 
 ###
 POST http://localhost:3001/users
 Content-Type: application/json
 
 {
-    "firstName": "Kaluza",
-    "lastName": "KowaDupalski",
+    "firstName": "Maciej",
+    "lastName": "Kowalski",
     "age": 18,
-    "gender": "Female"
+    "gender": "Male"
 }
 
 ###
 DELETE http://localhost:3001/users/632df4eee06db26d09a0347d
 
 ###
-PATCH http://localhost:3001/users/6331f7cc3abf2bd1cbf7997c
+PATCH http://localhost:3001/users/632df66191087f27c378f048
 Content-Type: application/json
 
 {
