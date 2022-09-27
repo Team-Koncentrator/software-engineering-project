@@ -3,7 +3,6 @@ import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'api/axios';
 import './Register.css';
-import Login from 'pages/Login/Login';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -87,7 +86,12 @@ const Register = () => {
       });
       */
     try {
-      const response = await axios.get('/users');
+      const response = await axios.post('http://localhost:3001/users', {
+        firstName: firstName,
+        lastName: lastName,
+        age: 44,
+        gender: firstName.charAt(firstName.length - 1) == 'a' || 'A' ? 'Female' : 'Male'
+      });
       console.log(response.data);
       console.log(response?.data);
       console.log(response?.accessToken);
