@@ -1,32 +1,32 @@
-import { COMPONENT, ROW, COLUMN } from "./constants";
+import { COMPONENT, ROW, COLUMN } from './constants';
 
 const initialData = {
   layout: [
     {
       type: ROW,
-      id: "row0",
+      id: 'domek1',
       children: [
         {
           type: COLUMN,
-          id: "column0",
+          id: 'pookoj1',
           children: [
             {
               type: COMPONENT,
-              id: "component0"
+              id: 'component0'
             },
             {
               type: COMPONENT,
-              id: "component1"
+              id: 'component0'
             }
           ]
         },
         {
           type: COLUMN,
-          id: "column1",
+          id: 'pookoj2',
           children: [
             {
               type: COMPONENT,
-              id: "component2"
+              id: 'component0'
             }
           ]
         }
@@ -34,23 +34,37 @@ const initialData = {
     },
     {
       type: ROW,
-      id: "row1",
+      id: 'domek2',
       children: [
         {
           type: COLUMN,
-          id: "column2",
+          id: 'pookoj1',
           children: [
             {
               type: COMPONENT,
-              id: "component3"
+              id: 'component0'
             },
             {
               type: COMPONENT,
-              id: "component0"
+              id: 'component0'
             },
             {
               type: COMPONENT,
-              id: "component2"
+              id: 'component0'
+            }
+          ]
+        },
+        {
+          type: COLUMN,
+          id: 'pookoj2',
+          children: [
+            {
+              type: COMPONENT,
+              id: 'component0'
+            },
+            {
+              type: COMPONENT,
+              id: 'component0'
             }
           ]
         }
@@ -58,11 +72,11 @@ const initialData = {
     }
   ],
   components: {
-    component0: { id: "component0", type: "input", content: "Some input" },
-    component1: { id: "component1", type: "image", content: "Some image" },
-    component2: { id: "component2", type: "email", content: "Some email" },
-    component3: { id: "component3", type: "name", content: "Some name" },
-    component4: { id: "component4", type: "phone", content: "Some phone" }
+    component0: { id: 'component0', type: 'input', content: 'Nowy uczestnik' },
+    component1: { id: 'component1', type: 'image', content: 'Some image' },
+    component2: { id: 'component2', type: 'email', content: 'Some email' },
+    component3: { id: 'component3', type: 'name', content: 'Some name' },
+    component4: { id: 'component4', type: 'phone', content: 'Some phone' }
   }
 };
 
