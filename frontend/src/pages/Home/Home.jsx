@@ -8,9 +8,35 @@ import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import * as React from 'react';
 import './Home.css';
 import HomeSubPageForm from 'pages/HomeSubPageForm/HomeSubPageForm';
+import { ReadMoreRounded, RedeemRounded } from '@mui/icons-material';
+import { render } from '@testing-library/react';
+import { useState, setFile } from 'react';
 
 const Home = () => {
   const [progress, setProgress] = React.useState(66);
+  const [file, setFile] = useState();
+  const fileReader = new FileReader();
+
+  const handleOnChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+
+    if (file) {
+      fileReader.onload = function (event) {
+        const csvOutput = event.target.result;
+      };
+
+      fileReader.readAsText(file);
+    }
+
+    //const name = target.accept.includes('csv') ? 'csv' : 'bad file';
+
+    console.log(e.target);
+    console.log(fileReader);
+  };
 
   const handleClick = (num) => {
     // 👇️ take parameter passed from Child component
@@ -33,18 +59,23 @@ const Home = () => {
             </div>
             <div className='buttons-section'>
               <div className='buttons__file'>
-                <input accept='text/xml' style={{ display: 'none' }} id='raised-button-file' multiple type='file' />
-                <label htmlFor='raised-button-file'>
-                  <Button variant='outlined' component='span'>
-                    Upload
-                  </Button>
-                </label>
+                <Button variant='contained' component='label'>
+                  Upload File
+                  <input type='file' hidden onChange={handleOnChange} accept={'.csv'} />
+                </Button>
               </div>
               <Typography variant='caption' sx={{ alignSelf: 'center' }}>
-                Wymagany format pliku to .<strong>XML</strong>
+                Wymagany format pliku to .<strong>CSV</strong>
               </Typography>
               <div className='buttons__next'>
-                <Button variant='contained'>ROZPOCZNIJ</Button>
+                <Button
+                  variant='contained'
+                  type='submit'
+                  onClick={(e) => {
+                    handleOnSubmit(e);
+                  }}>
+                  ROZPOCZNIJ
+                </Button>
               </div>
               <Typography variant='caption' sx={{ alignSelf: 'center' }}>
                 naciśnij <strong>Enter</strong>

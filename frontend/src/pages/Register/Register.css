@@ -1,22 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  justify-content: center;
-}
-
-
-.App {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 1rem 0.5rem;
-}
-
 section {
   width: 100%;
   min-height: 400px;
