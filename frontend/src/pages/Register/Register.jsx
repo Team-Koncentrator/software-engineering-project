@@ -9,7 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const NAME_REGEX = /^[A-z][A-z0-9-_]{1,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/register';
+const REGISTER_URL = '/users';
 
 const Register = () => {
   const userRef = useRef();
@@ -73,26 +73,29 @@ const Register = () => {
     const v2 = PWD_REGEX.test(pwd);
     const v3 = NAME_REGEX.test(firstName);
     const v4 = NAME_REGEX.test(lastName);
+    setSelectedDate(e.target.value);
     if (!v1 || !v2 || !v3 || !v4) {
       setErrMsg('Invalid Entry');
       return;
     }
 
     try {
-      const response = await axios.post('/users', {
+      const response = await axios.post(REGISTER_URL, {
         firstName: firstName,
         lastName: lastName,
-        age: 44,
+        age: new Date().getFullYear() - parseInt(selectedDate.toString().substring(11, 15)),
         gender: firstName.charAt(firstName.length - 1) == 'a' || 'A' ? 'Female' : 'Male'
       });
-      const currDate = new Date().toLocaleDateString();
       console.log(response.data);
       console.log(response.config);
       console.log(response.statusText);
       console.log(response.status);
+      console.log('dupa ' + parseInt(selectedDate.toString().substring(11, 15)));
+      console.log(new Date().getFullYear());
+      console.log(parseInt(selectedDate.toString().substring(11, 15)) - new Date().getFullYear());
+
       console.log(JSON.stringify(response));
-      console.log('Data ' + selectedDate);
-      console.log(currDate - selectedDate);
+      console.log(selectedDate);
       setSuccess(true);
       //clear state and controlled inputs
       //need value attrib on inputs for this
