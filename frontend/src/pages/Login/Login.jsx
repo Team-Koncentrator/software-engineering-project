@@ -1,7 +1,8 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import AuthContext from './context/AuthProvider';
 import axios from 'api/axios';
-import '../Register/Register.css';
+import './Login.css';
+import { NavLink } from 'react-router-dom';
 const LOGIN_URL = '/s';
 
 const Login = () => {
@@ -52,63 +53,87 @@ const Login = () => {
     }
   };
 
+  const handleClick = () => {
+    window.history.replaceState('/login', '/register');
+  };
+
   return (
-    <>
+    <div className='login-page-wrapper'>
       {success ? (
-        <section class='sect'>
-          <h1 class='registerTitle'>You are logged in!</h1>
+        // TODO
+        <section>
+          <h1>You are logged in!</h1>
           <br />
           <p>
             <a href='#'>Go to Home</a>
           </p>
         </section>
       ) : (
-        <section class='sect'>
-          <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>
-            {errMsg}
-          </p>
-          <h1 className='registerTitle'>Sign In</h1>
-          <form class='form' onSubmit={handleSubmit}>
-            <label class='textLabel' htmlFor='username'>
-              Nazwa użytkownika
-            </label>
-            <input
-              class='input'
-              type='text'
-              placeholder='Podaj login lub nazwę użytkownika'
-              id='username'
-              ref={userRef}
-              autoComplete='off'
-              onChange={(e) => setUser(e.target.value)}
-              value={user}
-              required
-            />
-
-            <label class='textLabel' htmlFor='password'>
-              Hasło
-            </label>
-            <input
-              class='input'
-              placeholder='Wprowadź hasło'
-              type='password'
-              id='password'
-              onChange={(e) => setPwd(e.target.value)}
-              value={pwd}
-              required
-            />
-            <button class='button'>Sign In</button>
-          </form>
-          <p>
-            Need an Account?
-            <br />
-            <span className='line'>
-              {/*put router link here*/}
-              <a href='register'>Sign Up</a>
-            </span>
-          </p>
-        </section>
+        <>
+          <section className='login-wrapper'>
+            <p ref={errRef} className={`m-hidden ${errMsg ? 'errorBox' : ''}`} aria-live='assertive'>
+              {errMsg}
+            </p>
+            <h1 className='login-wrapper__header'>Login</h1>
+            <form onSubmit={handleSubmit} className='login-wrapper__form'>
+              <div className='form__input-wrapper'>
+                <label htmlFor='username' className='input-wrapper__label'>
+                  <span className='label__asterisk'>*</span>Username
+                </label>
+                <input
+                  className='input-wrapper__input'
+                  type='text'
+                  placeholder='Username'
+                  id='username'
+                  ref={userRef}
+                  autoComplete='off'
+                  onChange={(e) => setUser(e.target.value)}
+                  value={user}
+                  required
+                />
+              </div>
+              <div className='form__input-wrapper'>
+                <label htmlFor='password' className='input-wrapper__label'>
+                  <span className='label__asterisk'>*</span>Password
+                </label>
+                <input
+                  className='input-wrapper__input'
+                  placeholder='Password'
+                  type='password'
+                  id='password'
+                  onChange={(e) => setPwd(e.target.value)}
+                  value={pwd}
+                  required
+                />
+              </div>
+              {/* TODO */}
+              <a href='#' className='form__forgot-password'>
+                Forgot your password?
+              </a>
+              <div className='form__button-wrapper'>
+                <button className='form__button'>Sign In</button>
+              </div>
+            </form>
+          </section>
+          <section className='register-wrapper'>
+            <h1 className='register-wrapper__header'>Register</h1>
+            <p className='register-wrapper__subheader'>Don't have an account yet?</p>
+            <ul className='register-wrapper__list'>
+              <p className='list__text'>Register now and have access to:</p>
+              <li>- cos trzeba tu wpisac</li>
+              <li>- jakies trzy</li>
+              <li>- fajne hasła</li>
+            </ul>
+            {/*put router link here*/}
+            <div className='form__button-wrapper'>
+              <NavLink className='form__button link' to={'/register'}>
+                Register
+              </NavLink>
+            </div>
+          </section>
+        </>
       )}
-    </>
+    </div>
   );
 };
 

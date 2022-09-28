@@ -20,18 +20,6 @@
   padding-bottom: 1rem;
 }
 
-/*
-input[type='text'],
-input[type='password'],
-button,
-textarea {
-  font-family: 'Nunito', sans-serif;
-  font-size: 22px;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-}
-*/
-
 .input,
 .button {
   font-family: 'Nunito', sans-serif;
@@ -72,11 +60,6 @@ textarea {
   margin-right: 0.25rem;
 }
 
-.offscreen {
-  position: absolute;
-  left: -9999px;
-}
-
 .hide {
   display: none;
 }
@@ -89,14 +72,6 @@ textarea {
 .invalid {
   color: red;
   margin-left: 0.25rem;
-}
-
-.errmsg {
-  background-color: lightpink;
-  color: firebrick;
-  font-weight: bold;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
 }
 
 .line {
