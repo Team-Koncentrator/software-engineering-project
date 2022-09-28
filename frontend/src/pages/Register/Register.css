@@ -1,20 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.App {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 1rem 0.5rem;
-}
-
 .sect {
   width: 100%;
   min-height: 400px;
@@ -23,8 +8,7 @@
   flex-direction: column;
   justify-content: flex-start;
   padding: 1rem;
-  position: absolute;
-  padding: 0.5rem 15rem;
+  padding: 0.5rem 23rem;
 }
 
 .form {
@@ -121,4 +105,5 @@ textarea {
 
 .registerTitle {
   text-align: center;
+  font-size: 38px;
 }
