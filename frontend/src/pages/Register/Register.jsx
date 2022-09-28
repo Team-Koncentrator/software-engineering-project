@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
-import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { FaCheck, FaTimes, FaInfoCircle } from 'react-icons/fa';
 import axios from 'api/axios';
 import './Register.css';
 import DatePicker from 'react-datepicker';
@@ -28,7 +28,7 @@ const Register = () => {
   const [validLastName, setValidLastName] = useState(false);
   const [lastNameFocus, setLastNameFocus] = useState(false);
 
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState();
 
   const [pwd, setPwd] = useState('');
   const [validPwd, setValidPwd] = useState(false);
@@ -79,16 +79,20 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3001/users', {
+      const response = await axios.post('/users', {
         firstName: firstName,
         lastName: lastName,
         age: 44,
         gender: firstName.charAt(firstName.length - 1) == 'a' || 'A' ? 'Female' : 'Male'
       });
+      const currDate = new Date().toLocaleDateString();
       console.log(response.data);
-      console.log(response?.data);
-      console.log(response?.accessToken);
+      console.log(response.config);
+      console.log(response.statusText);
+      console.log(response.status);
       console.log(JSON.stringify(response));
+      console.log('Data ' + selectedDate);
+      console.log(currDate - selectedDate);
       setSuccess(true);
       //clear state and controlled inputs
       //need value attrib on inputs for this
@@ -127,8 +131,8 @@ const Register = () => {
           <form class='form' onSubmit={handleSubmit}>
             <label class='textLabel' htmlFor='username'>
               Nazwa użytkownika
-              <FontAwesomeIcon icon={faCheck} className={validName ? 'valid' : 'hide'} />
-              <FontAwesomeIcon icon={faTimes} className={validName || !user ? 'hide' : 'invalid'} />
+              <FaCheck className={validName ? 'valid' : 'hide'}> </FaCheck>
+              <FaTimes className={validName || !user ? 'hide' : 'invalid'} />
             </label>
             <input
               type='text'
@@ -146,7 +150,7 @@ const Register = () => {
               onBlur={() => setUserFocus(false)}
             />
             <p id='uidnote' className={userFocus && user && !validName ? 'instructions' : 'offscreen'}>
-              <FontAwesomeIcon icon={faInfoCircle} />
+              <FaInfoCircle />
               4 to 24 characters.
               <br />
               Must begin with a letter.
@@ -155,8 +159,8 @@ const Register = () => {
             </p>
             <label class='textLabel' htmlFor='firstName'>
               Imię
-              <FontAwesomeIcon icon={faCheck} className={validFirstName ? 'valid' : 'hide'} />
-              <FontAwesomeIcon icon={faTimes} className={validFirstName || !firstName ? 'hide' : 'invalid'} />
+              <FaCheck className={validFirstName ? 'valid' : 'hide'} />
+              <FaTimes className={validFirstName || !firstName ? 'hide' : 'invalid'} />
             </label>
             <input
               type='text'
@@ -174,13 +178,13 @@ const Register = () => {
               onBlur={() => setFirstNameFocus(false)}
             />
             <p id='fnamenote' className={firstNameFocus && firstName && !validFirstName ? 'instructions' : 'offscreen'}>
-              <FontAwesomeIcon icon={faInfoCircle} />
+              <FaInfoCircle />
               At least two characters.
             </p>
             <label class='textLabel' htmlFor='lastName'>
               Nazwisko
-              <FontAwesomeIcon icon={faCheck} className={validLastName ? 'valid' : 'hide'} />
-              <FontAwesomeIcon icon={faTimes} className={validLastName || !lastName ? 'hide' : 'invalid'} />
+              <FaCheck className={validLastName ? 'valid' : 'hide'} />
+              <FaTimes className={validLastName || !lastName ? 'hide' : 'invalid'} />
             </label>
             <input
               type='text'
@@ -198,7 +202,7 @@ const Register = () => {
               onBlur={() => setLastNameFocus(false)}
             />
             <p id='namenote' className={lastNameFocus && lastName && !validLastName ? 'instructions' : 'offscreen'}>
-              <FontAwesomeIcon icon={faInfoCircle} />
+              <FaInfoCircle />
               At least two characters.
             </p>
             <label class='textLabel' htmlFor='firstName'>
@@ -206,7 +210,7 @@ const Register = () => {
             </label>
             <DatePicker
               className='input'
-              dateFormat='dd/MM/yyyy'
+              dateFormat='dd-MM-yyyy'
               selected={selectedDate}
               onChange={(date) => setSelectedDate(date)}
               placeholderText='Wybierz datę urodzenia'
@@ -216,8 +220,8 @@ const Register = () => {
 
             <label class='textLabel' htmlFor='password'>
               Hasło
-              <FontAwesomeIcon icon={faCheck} className={validPwd ? 'valid' : 'hide'} />
-              <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? 'hide' : 'invalid'} />
+              <FaCheck className={validPwd ? 'valid' : 'hide'} />
+              <FaTimes className={validPwd || !pwd ? 'hide' : 'invalid'} />
             </label>
             <input
               type='password'
@@ -233,7 +237,7 @@ const Register = () => {
               onBlur={() => setPwdFocus(false)}
             />
             <p id='pwdnote' className={pwdFocus && !validPwd ? 'instructions' : 'offscreen'}>
-              <FontAwesomeIcon icon={faInfoCircle} />
+              <FaInfoCircle />
               8 to 24 characters.
               <br />
               Must include uppercase and lowercase letters, a number and a special character.
@@ -243,8 +247,8 @@ const Register = () => {
             </p>
             <label class='textLabel' htmlFor='confirm_pwd'>
               Potwierdź hasło
-              <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? 'valid' : 'hide'} />
-              <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? 'hide' : 'invalid'} />
+              <FaCheck className={validMatch && matchPwd ? 'valid' : 'hide'} />
+              <FaTimes className={validMatch || !matchPwd ? 'hide' : 'invalid'} />
             </label>
             <input
               type='password'
@@ -260,7 +264,7 @@ const Register = () => {
               onBlur={() => setMatchFocus(false)}
             />
             <p id='confirmnote' className={matchFocus && !validMatch ? 'instructions' : 'offscreen'}>
-              <FontAwesomeIcon icon={faInfoCircle} />
+              <FaInfoCircle />
               Must match the first password input field.
             </p>
             <button class='button' disabled={!validName || !validPwd || !validMatch ? true : false}>
