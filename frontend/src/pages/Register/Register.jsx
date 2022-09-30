@@ -115,31 +115,31 @@ const Register = () => {
   };
 
   return (
-    <>
+    <div className='register-page-wrapper'>
       {success ? (
-        <section class='sect'>
+        <section className='sect'>
           <h1>Success!</h1>
           <p>
-            <a class='a sign' href='#'>
+            <a className='a sign' href='#'>
               Sign In
             </a>
           </p>
         </section>
       ) : (
-        <section class='sect'>
+        <section className='regsiter-wrapper'>
           <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>
             {errMsg}
           </p>
           <h1 className='registerTitle'>Register</h1>
-          <form class='form' onSubmit={handleSubmit}>
-            <label class='textLabel' htmlFor='username'>
+          <form className='form' onSubmit={handleSubmit}>
+            <label className='textLabel' htmlFor='username'>
               Nazwa użytkownika
               <FaCheck className={validName ? 'valid' : 'hide'}> </FaCheck>
               <FaTimes className={validName || !user ? 'hide' : 'invalid'} />
             </label>
             <input
               type='text'
-              class='input'
+              className='input'
               id='username'
               placeholder='Podaj login lub nazwę użytkownika'
               ref={userRef}
@@ -160,14 +160,14 @@ const Register = () => {
               <br />
               Letters, numbers, underscores, hyphens allowed.
             </p>
-            <label class='textLabel' htmlFor='firstName'>
+            <label className='textLabel' htmlFor='firstName'>
               Imię
               <FaCheck className={validFirstName ? 'valid' : 'hide'} />
               <FaTimes className={validFirstName || !firstName ? 'hide' : 'invalid'} />
             </label>
             <input
               type='text'
-              class='input'
+              className='input'
               id='firstName'
               placeholder='Podaj imię'
               ref={nameRef}
@@ -184,14 +184,14 @@ const Register = () => {
               <FaInfoCircle />
               At least two characters.
             </p>
-            <label class='textLabel' htmlFor='lastName'>
+            <label className='textLabel' htmlFor='lastName'>
               Nazwisko
               <FaCheck className={validLastName ? 'valid' : 'hide'} />
               <FaTimes className={validLastName || !lastName ? 'hide' : 'invalid'} />
             </label>
             <input
               type='text'
-              class='input'
+              className='input'
               id='lastName'
               placeholder='Podaj nazwisko'
               ref={nameRef}
@@ -208,7 +208,7 @@ const Register = () => {
               <FaInfoCircle />
               At least two characters.
             </p>
-            <label class='textLabel' htmlFor='firstName'>
+            <label className='textLabel' htmlFor='firstName'>
               Data
             </label>
             <DatePicker
@@ -228,7 +228,7 @@ const Register = () => {
             </label>
             <input
               type='password'
-              class='input'
+              className='input'
               id='password'
               placeholder='Wprowadź hasło'
               onChange={(e) => setPwd(e.target.value)}
@@ -248,14 +248,14 @@ const Register = () => {
               Allowed special characters: <span aria-label='exclamation mark'>!</span> <span aria-label='at symbol'>@</span>{' '}
               <span aria-label='hashtag'>#</span> <span aria-label='dollar sign'>$</span> <span aria-label='percent'>%</span>
             </p>
-            <label class='textLabel' htmlFor='confirm_pwd'>
+            <label className='textLabel' htmlFor='confirm_pwd'>
               Potwierdź hasło
               <FaCheck className={validMatch && matchPwd ? 'valid' : 'hide'} />
               <FaTimes className={validMatch || !matchPwd ? 'hide' : 'invalid'} />
             </label>
             <input
               type='password'
-              class='input'
+              className='input'
               id='confirm_pwd'
               placeholder='Powtórz hasło'
               onChange={(e) => setMatchPwd(e.target.value)}
@@ -270,22 +270,22 @@ const Register = () => {
               <FaInfoCircle />
               Must match the first password input field.
             </p>
-            <button class='button' disabled={!validName || !validPwd || !validMatch ? true : false}>
+            <button className='button' disabled={!validName || !validPwd || !validMatch ? true : false}>
               Sign Up
             </button>
           </form>
-          <p class='textLabel'>
+          <p className='textLabel'>
             Already registered?
             <br />
             <span className='line'>
-              <a class='a sign' href='login'>
+              <a className='a sign' href='login'>
                 Sign In
               </a>
             </span>
           </p>
         </section>
       )}
-    </>
+    </div>
   );
 };
 

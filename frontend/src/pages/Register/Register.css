@@ -1,14 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
-.sect {
-  width: 100%;
-  min-height: 400px;
-  min-width: 300px;
+.register-page-wrapper {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 1rem;
-  padding: 0.5rem 23rem;
+  justify-content: center;
+  flex-direction: row;
+  margin: 0 auto;
+  max-width: 1140px;
+  padding: 50px 48px 0;
+}
+
+.regsiter-wrapper {
+  flex-basis: 58%;
+  padding: 0 49px 74px 0;
+  border-bottom: none;
+  position: relative;
 }
 
 .form {
