@@ -3,34 +3,70 @@
  */
 
 //import Button from 'components/Button/Button';
-import { Button, LinearProgress, Box, Typography } from '@mui/material';
+
+/*
+TODO:
+ * wysłać fileContent do API
+ * wysłać potwierdzone headery do API
+ * przetworzyć fileContent do bazy danych
+*/
+import { Button, LinearProgress, Box, Typography, InputLabel, FormControl, MenuItem, Select } from '@mui/material';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import * as React from 'react';
 import './Home.css';
 import HomeSubPageForm from 'pages/HomeSubPageForm/HomeSubPageForm';
-import { ReadMoreRounded, RedeemRounded } from '@mui/icons-material';
+import { ConstructionOutlined, ReadMoreRounded, RedeemRounded } from '@mui/icons-material';
 import { render } from '@testing-library/react';
 import { useState, setFile } from 'react';
 
 const Home = () => {
   const [progress, setProgress] = React.useState(66);
   const [file, setFile] = useState();
-  const fileReader = new FileReader();
+  const [fileContent, setFileContent] = useState();
+  const [fileHeader, setFileHeader] = useState();
+  let fileReader = new FileReader();
 
   const handleOnChange = (e) => {
     setFile(e.target.files[0]);
+  };
+
+  const handleOnSubmitConfirmedHeaders = (e) => {
+    e.preventDefault();
+    console.log('dupa');
   };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
     if (file) {
       fileReader.onload = function (event) {
-        let csvOutput = event.target.result;
-        console.log(csvOutput);
+        const csvOutput = event.target.result;
+        let [array, header] = parseCsv(csvOutput);
+
+        setFileContent(array);
+        setFileHeader(header);
+
+        console.log(array);
+        console.log(header);
       };
 
       fileReader.readAsText(file);
     }
+  };
+
+  const parseCsv = (csvText) => {
+    const csvHeader = csvText.slice(0, csvText.indexOf('\n')).split(',');
+    const csvRows = csvText.slice(csvText.indexOf('\n') + 1).split('\n');
+
+    const array = csvRows.map((row) => {
+      const values = row.split(',');
+      const obj = csvHeader.reduce((object, header, index) => {
+        object[header] = values[index];
+        return object;
+      }, {});
+      return obj;
+    });
+
+    return [array, csvHeader];
   };
 
   const handleClick = (num) => {
@@ -93,6 +129,69 @@ const Home = () => {
           </div>
         </div>
         <div>{progress}</div>
+        <div>{JSON.stringify(fileContent)}</div>
+        <div>
+          <br />
+        </div>
+        <div id='view_csv'></div>
+
+        {fileHeader && (
+          <form id='confirm-csv'>
+            <FormControl fullWidth>
+              <InputLabel id='demo-simple-select-label'>Name</InputLabel>
+              <Select labelId='demo-simple-select-label' id='demo-simple-select' label='Age'>
+                {fileHeader.map((item) => {
+                  return <MenuItem value={item}>{item}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+
+            <FormControl fullWidth>
+              <InputLabel id='demo-simple-select-label'>Surname</InputLabel>
+              <Select labelId='demo-simple-select-label' id='demo-simple-select' label='Age'>
+                {fileHeader.map((item) => {
+                  return <MenuItem value={item}>{item}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+
+            <FormControl fullWidth>
+              <InputLabel id='demo-simple-select-label'>Age</InputLabel>
+              <Select labelId='demo-simple-select-label' id='demo-simple-select' label='Age'>
+                {fileHeader.map((item) => {
+                  return <MenuItem value={item}>{item}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+
+            <FormControl fullWidth>
+              <InputLabel id='demo-simple-select-label'>Gender</InputLabel>
+              <Select labelId='demo-simple-select-label' id='demo-simple-select' label='Age'>
+                {fileHeader.map((item) => {
+                  return <MenuItem value={item}>{item}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+
+            <FormControl fullWidth>
+              <InputLabel id='demo-simple-select-label'>With who</InputLabel>
+              <Select labelId='demo-simple-select-label' id='demo-simple-select' label='Age'>
+                {fileHeader.map((item) => {
+                  return <MenuItem value={item}>{item}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+
+            <Button
+              variant='contained'
+              type='submit'
+              onClick={(e) => {
+                handleOnSubmitConfirmedHeaders(e);
+              }}>
+              DALEJ
+            </Button>
+          </form>
+        )}
         <HomeSubPageForm handleClick={handleClick}></HomeSubPageForm>
       </div>
     </>
