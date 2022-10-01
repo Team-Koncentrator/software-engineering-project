@@ -87,3 +87,8 @@
   text-align: center;
   font-size: 38px;
 }
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
