@@ -1,10 +1,12 @@
 import { useRef, useState, useEffect } from 'react';
-
+import aes from 'crypto-js/aes';
 import { FaCheck, FaTimes, FaInfoCircle } from 'react-icons/fa';
 import axios from 'api/axios';
 import './Register.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+
+var CryptoJS = require('crypto-js');
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const NAME_REGEX = /^[A-z][A-z0-9-_]{1,23}$/;
@@ -85,18 +87,13 @@ const Register = () => {
         lastName: lastName,
         age: new Date().getFullYear() - parseInt(selectedDate.toString().substring(11, 15)),
         gender: firstName.charAt(firstName.length - 1) === 'a' || 'A' ? 'Female' : 'Male',
-        password: pwd
+        password: pwd //CryptoJS.AES.encrypt(pwd, 'testkey').toString()
       });
       console.log(response.data);
       console.log(response.config);
       console.log(response.statusText);
       console.log(response.status);
-      console.log('dupa ' + parseInt(selectedDate.toString().substring(11, 15)));
-      console.log(new Date().getFullYear());
-      console.log(parseInt(selectedDate.toString().substring(11, 15)) - new Date().getFullYear());
-
       console.log(JSON.stringify(response));
-      console.log(selectedDate);
       setSuccess(true);
       //clear state and controlled inputs
       //need value attrib on inputs for this
@@ -106,6 +103,7 @@ const Register = () => {
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
+        console.log(err.response?.data);
       } else if (err.response?.status === 409) {
         setErrMsg('Username Taken');
       } else {

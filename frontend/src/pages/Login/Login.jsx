@@ -27,9 +27,20 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(LOGIN_URL, {});
+      const response = await axios.get(
+        LOGIN_URL,
+        JSON.stringify(
+          { user, pwd },
+          {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true
+          }
+        )
+      );
       console.log(JSON.stringify(response?.data));
       //console.log(JSON.stringify(response));
+      console.log(response?.data?.accessToken);
+      console.log(response?.data?.roles);
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
       setAuth({ user, pwd, roles, accessToken });
@@ -62,7 +73,7 @@ const Login = () => {
           <h1>You are logged in!</h1>
           <br />
           <p>
-            <a href='#'>Go to Home</a>
+            <a href='/'>Go to Home</a>
           </p>
         </section>
       ) : (
