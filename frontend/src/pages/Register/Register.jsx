@@ -84,7 +84,8 @@ const Register = () => {
         firstName: firstName,
         lastName: lastName,
         age: new Date().getFullYear() - parseInt(selectedDate.toString().substring(11, 15)),
-        gender: firstName.charAt(firstName.length - 1) == 'a' || 'A' ? 'Female' : 'Male'
+        gender: firstName.charAt(firstName.length - 1) === 'a' || 'A' ? 'Female' : 'Male',
+        password: pwd
       });
       console.log(response.data);
       console.log(response.config);
