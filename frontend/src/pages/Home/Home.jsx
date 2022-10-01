@@ -23,19 +23,14 @@ const Home = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-
     if (file) {
       fileReader.onload = function (event) {
-        const csvOutput = event.target.result;
+        let csvOutput = event.target.result;
+        console.log(csvOutput);
       };
 
       fileReader.readAsText(file);
     }
-
-    //const name = target.accept.includes('csv') ? 'csv' : 'bad file';
-
-    console.log(e.target);
-    console.log(fileReader);
   };
 
   const handleClick = (num) => {

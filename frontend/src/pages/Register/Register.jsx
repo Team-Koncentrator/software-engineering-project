@@ -85,20 +85,21 @@ const Register = () => {
         <section className='sect'>
           <h1>Success!</h1>
           <p>
-            <a className='a sign' href='#'>Sign In</a>
+            <a className='a sign' href='#'>
+              Sign In
+            </a>
           </p>
         </section>
       ) : (
         <section className='sect'>
->>>>>>> work
+          >>>>>>> work
           <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>
             {errMsg}
           </p>
           <h1 className='registerTitle'>Register</h1>
           <form className='form' onSubmit={handleSubmit}>
-            <label  className='textLabel' htmlFor='username'>
->>>>>>> work
-              Nazwa użytkownika
+            <label className='textLabel' htmlFor='username'>
+              >>>>>>> Nazwa użytkownika
               <FontAwesomeIcon icon={faCheck} className={validName ? 'valid' : 'hide'} />
               <FontAwesomeIcon icon={faTimes} className={validName || !user ? 'hide' : 'invalid'} />
             </label>
@@ -177,14 +178,18 @@ const Register = () => {
               Must match the first password input field.
             </p>
 
-            <button className='button' disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
+            <button className='button' disabled={!validName || !validPwd || !validMatch ? true : false}>
+              Sign Up
+            </button>
           </form>
           <p className='textLabel'>
             Already registered?
             <br />
             <span className='line'>
-              <a className='a sign' href='login'>Sign In</a>
->>>>>>> work
+              <a className='a sign' href='login'>
+                Sign In
+              </a>
+              >>>>>>> work
             </span>
           </p>
         </section>
