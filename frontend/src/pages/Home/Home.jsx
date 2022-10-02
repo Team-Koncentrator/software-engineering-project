@@ -113,18 +113,20 @@ const Home = () => {
               <MdOutlineArrowBackIosNew className='icon'></MdOutlineArrowBackIosNew>
             </Button>
           </div>
+          <div>{progress}</div>
+          <HomeSubPageForm handleClick={handleClick}></HomeSubPageForm>
         </div>
-        {/* *******************************************************************/}
-        <div>{progress}</div>
-        <div>{JSON.stringify(fileContent)}</div>
 
         {/* *******************************************************************/}
 
         {fileHeader && fileContent && (
-          <HomeConfirmHeaderForm fileHeader={fileHeader} handleOnSubmitConfirmedHeaders={(e) => handleOnSubmitConfirmedHeaders(e)} />
+          <div>
+            <div>{JSON.stringify(fileContent)}</div>
+            <div>{JSON.stringify(fileHeader)}</div>
+            <HomeConfirmHeaderForm fileHeader={fileHeader} handleOnSubmitConfirmedHeaders={(e) => handleOnSubmitConfirmedHeaders(e)} />
+          </div>
         )}
         {JSON.stringify(confirmedHeader)}
-        <HomeSubPageForm handleClick={handleClick}></HomeSubPageForm>
 
         {/* *******************************************************************/}
         {fileHeader && confirmedHeader && fileContent && (
