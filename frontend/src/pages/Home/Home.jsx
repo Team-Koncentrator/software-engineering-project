@@ -2,42 +2,35 @@
  * Created by Pawel on 18.09.2022.
  */
 
-//import Button from 'components/Button/Button';
-
-/*
-TODO:
- * wysłać fileContent do API
- * wysłać potwierdzone headery do API
- * przetworzyć fileContent do bazy danych
-*/
-import { Button, LinearProgress, Box, Typography, InputLabel, FormControl, MenuItem, Select } from '@mui/material';
+import { Button, LinearProgress, Typography, InputLabel, FormControl, MenuItem, Select } from '@mui/material';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import * as React from 'react';
 import './Home.css';
-import HomeSubPageForm from 'pages/HomeSubPageForm/HomeSubPageForm';
-import { ConstructionOutlined, ReadMoreRounded, RedeemRounded } from '@mui/icons-material';
-import { render } from '@testing-library/react';
-import { useState, setFile } from 'react';
+import HomeTopSection from 'pages/Home/HomeTopSection/HomeTopSection';
+import HomeConfirmHeaderForm from 'pages/Home/HomeConfirmHeaderForm/HomeConfirmHeaderForm';
+import HomeSubPageForm from 'pages/Home/HomeSubPageForm/HomeSubPageForm';
+import HomeBottomSection from 'pages/Home/HomeBottomSection/HomeBottomSection';
+import { useState } from 'react';
 
 const Home = () => {
   const [progress, setProgress] = React.useState(66);
-  const [file, setFile] = useState();
+  const [csvFile, setCsvFile] = useState();
   const [fileContent, setFileContent] = useState();
   const [fileHeader, setFileHeader] = useState();
   const [confirmedHeader, setConfirmedHeader] = useState();
+
   let fileReader = new FileReader();
 
   /* *****************************
   handle functions for csv form
   ***************************** */
-
   const handleOnChange = (e) => {
-    setFile(e.target.files[0]);
+    setCsvFile(e.target.files[0]);
   };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    if (file) {
+    if (csvFile) {
       fileReader.onload = function (event) {
         const csvOutput = event.target.result;
         let [array, header] = parseCsv(csvOutput);
@@ -49,7 +42,7 @@ const Home = () => {
         console.log(header);
       };
 
-      fileReader.readAsText(file);
+      fileReader.readAsText(csvFile);
     }
   };
 
@@ -101,46 +94,15 @@ const Home = () => {
   return (
     <>
       <div className='main-wrapper'>
-        <div className='top-section'>
-          <div className='wrapper__headers'>
-            <div className='headers-section'>
-              <h1 className='headers__main-header'>Przydziel uczestników do domków!</h1>
-              <div className='headers__horizontal'></div>
-              <h2 className='headers__second-header'>Nasza aplikacja ułatwia podział uczestników ze względu na płeć i wiek</h2>
-              <p className='headers__content'>
-                Spędzasz noce nad logistyką obozów i chcesz przed rozpoczęciem wiedzieć, jak najbardziej optymalnie przydzielić uczestników do domków
-                i pokojów? Z naszą aplikacją to staje się dużo prostrze! Przygotuj plik xml, a my zrobimy resztę za ciebie :&#41;
-              </p>
-            </div>
-            <div className='buttons-section'>
-              <div className='buttons__file'>
-                <Button variant='contained' component='label'>
-                  Upload File
-                  <input type='file' hidden onChange={handleOnChange} accept={'.csv'} />
-                </Button>
-              </div>
-              <Typography variant='caption' sx={{ alignSelf: 'center' }}>
-                Wymagany format pliku to .<strong>CSV</strong>
-              </Typography>
-              <div className='buttons__next'>
-                <Button
-                  variant='contained'
-                  type='submit'
-                  onClick={(e) => {
-                    handleOnSubmit(e);
-                  }}>
-                  ROZPOCZNIJ
-                </Button>
-              </div>
-              <Typography variant='caption' sx={{ alignSelf: 'center' }}>
-                naciśnij <strong>Enter</strong>
-              </Typography>
-            </div>
-          </div>
-          <div className='top-section__img-container'>
-            <img src={require('images/mainImg.png')} alt='obrazek' className='img-container__img' />
-          </div>
-        </div>
+        {/* *******************************************************************/}
+        <HomeTopSection
+          csvfile={csvFile}
+          fileContent={fileContent}
+          fileHeader={fileHeader}
+          handleOnChange={(e) => handleOnChange(e)}
+          handleOnSubmit={(e) => handleOnSubmit(e)}
+        />
+        {/* *******************************************************************/}
         <div className='progress-bar-section'>
           <Typography variant='body2' sx={{ alignSelf: 'center' }}>
             Krok 1/3
@@ -152,73 +114,19 @@ const Home = () => {
             </Button>
           </div>
         </div>
+        {/* *******************************************************************/}
         <div>{progress}</div>
         <div>{JSON.stringify(fileContent)}</div>
-        <div>
-          <br />
-        </div>
-        <div id='view_csv'></div>
 
-        {fileHeader && (
-          <form id='confirm-csv'>
-            <FormControl fullWidth>
-              <InputLabel id='name-select-label'>Name</InputLabel>
-              <Select labelId='name-select-label' id='name-select' label='Name' name='name'>
-                {fileHeader.map((item) => {
-                  return <MenuItem value={item}>{item}</MenuItem>;
-                })}
-              </Select>
-            </FormControl>
+        {/* *******************************************************************/}
 
-            <FormControl fullWidth>
-              <InputLabel id='surname-select-label'>Surname</InputLabel>
-              <Select labelId='surname-select-label' id='surname-select-label' label='Surname' name='surname'>
-                {fileHeader.map((item) => {
-                  return <MenuItem value={item}>{item}</MenuItem>;
-                })}
-              </Select>
-            </FormControl>
-
-            <FormControl fullWidth>
-              <InputLabel id='age-select-label'>Age</InputLabel>
-              <Select labelId='age-select-label' id='age-select' label='Age' name='age'>
-                {fileHeader.map((item) => {
-                  return <MenuItem value={item}>{item}</MenuItem>;
-                })}
-              </Select>
-            </FormControl>
-
-            <FormControl fullWidth>
-              <InputLabel id='gender-select-label'>Gender</InputLabel>
-              <Select labelId='gender-select-label' id='gender-select-label' label='gender' name='gender'>
-                {fileHeader.map((item) => {
-                  return <MenuItem value={item}>{item}</MenuItem>;
-                })}
-              </Select>
-            </FormControl>
-
-            <FormControl fullWidth>
-              <InputLabel id='with-who-select-label'>With who</InputLabel>
-              <Select labelId='with-who-select-label' id='with-who-select' label='With who' name='with_who'>
-                {fileHeader.map((item) => {
-                  return <MenuItem value={item}>{item}</MenuItem>;
-                })}
-              </Select>
-            </FormControl>
-
-            <Button
-              variant='contained'
-              type='submit'
-              onClick={(e) => {
-                handleOnSubmitConfirmedHeaders(e);
-              }}>
-              DALEJ
-            </Button>
-          </form>
+        {fileHeader && fileContent && (
+          <HomeConfirmHeaderForm fileHeader={fileHeader} handleOnSubmitConfirmedHeaders={(e) => handleOnSubmitConfirmedHeaders(e)} />
         )}
         {JSON.stringify(confirmedHeader)}
         <HomeSubPageForm handleClick={handleClick}></HomeSubPageForm>
 
+        {/* *******************************************************************/}
         {fileHeader && confirmedHeader && fileContent && (
           <div>
             <Button variant='contained' type='submit'>
