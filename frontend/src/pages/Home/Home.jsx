@@ -24,15 +24,15 @@ const Home = () => {
   const [file, setFile] = useState();
   const [fileContent, setFileContent] = useState();
   const [fileHeader, setFileHeader] = useState();
+  const [confirmedHeader, setConfirmedHeader] = useState();
   let fileReader = new FileReader();
+
+  /* *****************************
+  handle functions for csv form
+  ***************************** */
 
   const handleOnChange = (e) => {
     setFile(e.target.files[0]);
-  };
-
-  const handleOnSubmitConfirmedHeaders = (e) => {
-    e.preventDefault();
-    console.log('dupa');
   };
 
   const handleOnSubmit = (e) => {
@@ -69,6 +69,30 @@ const Home = () => {
     return [array, csvHeader];
   };
 
+  /* ************************************
+  handle functions for csv headers confirmation
+  ************************************ */
+  const handleOnSubmitConfirmedHeaders = (e) => {
+    e.preventDefault();
+
+    const form = document.getElementById('confirm-csv');
+
+    let myHeader = {
+      confirmedHeader: {
+        name: form.name.value,
+        surname: form.surname.value,
+        gender: form.gender.value,
+        age: form.age.value,
+        withWho: form.with_who.value
+      }
+    };
+
+    setConfirmedHeader(myHeader);
+  };
+
+  /* ************************************
+  handle functions for progress bar
+  ************************************ */
   const handleClick = (num) => {
     // 👇️ take parameter passed from Child component
     setProgress(() => num);
@@ -138,8 +162,8 @@ const Home = () => {
         {fileHeader && (
           <form id='confirm-csv'>
             <FormControl fullWidth>
-              <InputLabel id='demo-simple-select-label'>Name</InputLabel>
-              <Select labelId='demo-simple-select-label' id='demo-simple-select' label='Age'>
+              <InputLabel id='name-select-label'>Name</InputLabel>
+              <Select labelId='name-select-label' id='name-select' label='Name' name='name'>
                 {fileHeader.map((item) => {
                   return <MenuItem value={item}>{item}</MenuItem>;
                 })}
@@ -147,8 +171,8 @@ const Home = () => {
             </FormControl>
 
             <FormControl fullWidth>
-              <InputLabel id='demo-simple-select-label'>Surname</InputLabel>
-              <Select labelId='demo-simple-select-label' id='demo-simple-select' label='Age'>
+              <InputLabel id='surname-select-label'>Surname</InputLabel>
+              <Select labelId='surname-select-label' id='surname-select-label' label='Surname' name='surname'>
                 {fileHeader.map((item) => {
                   return <MenuItem value={item}>{item}</MenuItem>;
                 })}
@@ -156,8 +180,8 @@ const Home = () => {
             </FormControl>
 
             <FormControl fullWidth>
-              <InputLabel id='demo-simple-select-label'>Age</InputLabel>
-              <Select labelId='demo-simple-select-label' id='demo-simple-select' label='Age'>
+              <InputLabel id='age-select-label'>Age</InputLabel>
+              <Select labelId='age-select-label' id='age-select' label='Age' name='age'>
                 {fileHeader.map((item) => {
                   return <MenuItem value={item}>{item}</MenuItem>;
                 })}
@@ -165,8 +189,8 @@ const Home = () => {
             </FormControl>
 
             <FormControl fullWidth>
-              <InputLabel id='demo-simple-select-label'>Gender</InputLabel>
-              <Select labelId='demo-simple-select-label' id='demo-simple-select' label='Age'>
+              <InputLabel id='gender-select-label'>Gender</InputLabel>
+              <Select labelId='gender-select-label' id='gender-select-label' label='gender' name='gender'>
                 {fileHeader.map((item) => {
                   return <MenuItem value={item}>{item}</MenuItem>;
                 })}
@@ -174,8 +198,8 @@ const Home = () => {
             </FormControl>
 
             <FormControl fullWidth>
-              <InputLabel id='demo-simple-select-label'>With who</InputLabel>
-              <Select labelId='demo-simple-select-label' id='demo-simple-select' label='Age'>
+              <InputLabel id='with-who-select-label'>With who</InputLabel>
+              <Select labelId='with-who-select-label' id='with-who-select' label='With who' name='with_who'>
                 {fileHeader.map((item) => {
                   return <MenuItem value={item}>{item}</MenuItem>;
                 })}
@@ -192,7 +216,19 @@ const Home = () => {
             </Button>
           </form>
         )}
+        {JSON.stringify(confirmedHeader)}
         <HomeSubPageForm handleClick={handleClick}></HomeSubPageForm>
+
+        {fileHeader && confirmedHeader && fileContent && (
+          <div>
+            <Button variant='contained' type='submit'>
+              Przydziel automatycznie
+            </Button>
+            <Button variant='contained' type='submit'>
+              Przydziel samodzielnie
+            </Button>
+          </div>
+        )}
       </div>
     </>
   );
