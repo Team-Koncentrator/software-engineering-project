@@ -2,18 +2,23 @@ import React, { useState, useCallback } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import DropZone from 'components/dnd/DropZone/DropZone';
-import TrashDropZone from 'components/dnd/TrashDropZone/TrashDropZone';
-import SideBarItem from 'components/dnd/SideBarItem/SideBarItem';
-import Row from 'components/dnd/Row/Row';
-import initialData from './initial-data';
-import { handleMoveWithinParent, handleMoveToDifferentParent, handleMoveSidebarComponentIntoParent, handleRemoveItemFromLayout } from './helpers';
+import DropZone from 'components/Dnd/DropZone/DropZone';
+import TrashDropZone from 'components/Dnd/TrashDropZone/TrashDropZone';
+import SideBarItem from 'components/Dnd/SideBarItem/SideBarItem';
+import Row from 'components/Dnd/Row/Row';
+import initialData from 'components/Dnd/initial-data';
+import {
+  handleMoveWithinParent,
+  handleMoveToDifferentParent,
+  handleMoveSidebarComponentIntoParent,
+  handleRemoveItemFromLayout
+} from 'components/Dnd/helpers';
 
-import { SIDEBAR_ITEMS, SIDEBAR_ITEM, COMPONENT, COLUMN } from './constants';
+import { SIDEBAR_ITEMS, SIDEBAR_ITEM, COMPONENT, COLUMN } from 'components/Dnd/constants';
 //import shortid from "shortid";
 import { nanoid } from 'nanoid';
 
-import './styles.css';
+import './Assign.css';
 
 const Container = () => {
   const initialLayout = initialData.layout;

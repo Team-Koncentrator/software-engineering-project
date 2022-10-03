@@ -9,7 +9,7 @@ import Register from 'pages/Register/Register';
 
 import Faq from 'pages/Faq/Faq';
 import Authors from 'pages/Authors/Authors';
-import Assign from 'components/dnd/example';
+import Assign from 'pages/Assign/Assign';
 
 function App() {
   return (
