@@ -10,7 +10,7 @@ import Register from 'pages/Register/Register';
 import Faq from 'pages/Faq/Faq';
 import Authors from 'pages/Authors/Authors';
 import Assign from 'pages/Assign/Assign';
-
+import Allocation from 'pages/Allocation/Allocation';
 function App() {
   return (
     <>
@@ -23,6 +23,7 @@ function App() {
           <Route path='login' element={<Login />} />
           <Route path='faq' element={<Faq />} />
           <Route path='authors' element={<Authors />} />
+          <Route path='allocation' element={<Allocation />} />
           <Route path='assign' element={<Assign />} />
         </Routes>
       </div>
