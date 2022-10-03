@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './HomeSubPageForm.css';
 const HomeSubPageForm = ({ handleClick }) => {
   return (
     <>

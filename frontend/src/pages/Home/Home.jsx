@@ -2,7 +2,7 @@
  * Created by Pawel on 18.09.2022.
  */
 
-import { Button, LinearProgress, Typography, InputLabel, FormControl, MenuItem, Select } from '@mui/material';
+import { Button, LinearProgress, Typography } from '@mui/material';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import * as React from 'react';
 import './Home.css';
@@ -120,9 +120,13 @@ const Home = () => {
         {/* *******************************************************************/}
 
         {fileHeader && fileContent && (
-          <div>
-            <div>{JSON.stringify(fileContent)}</div>
-            <div>{JSON.stringify(fileHeader)}</div>
+          <div className='confirm_headers_form'>
+            <div>
+              <h1>fileContent</h1>
+              <pre>{JSON.stringify(fileContent, null, 2)}</pre>
+              <h1>fileHeader</h1>
+              <pre>{JSON.stringify(fileHeader, null, 2)}</pre>
+            </div>
             <HomeConfirmHeaderForm fileHeader={fileHeader} handleOnSubmitConfirmedHeaders={(e) => handleOnSubmitConfirmedHeaders(e)} />
           </div>
         )}
@@ -130,13 +134,15 @@ const Home = () => {
 
         {/* *******************************************************************/}
         {fileHeader && confirmedHeader && fileContent && (
-          <div>
+          <div className='bottom-section'>
             <Button variant='contained' type='submit'>
               Przydziel automatycznie
             </Button>
             <Button variant='contained' type='submit'>
               Przydziel samodzielnie
             </Button>
+
+            <HomeBottomSection fileContent={fileContent} />
           </div>
         )}
       </div>
