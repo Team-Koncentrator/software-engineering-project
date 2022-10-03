@@ -39,7 +39,7 @@ const Faq = () => {
   };
   return (
     <>
-      <main>
+      <main className='faq-page-wrapper'>
         <div className='heroContent'>
           <div className='faq-intro'>
             <Typography component='h1' variant='h2' align='center' color='textPrimary' gutterBottom>
