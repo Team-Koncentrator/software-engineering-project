@@ -42,21 +42,21 @@ const Navigation = () => {
   ];
 
   return (
-    <Nav>
-      <NavLink to='/'>
-        <img src={myLogo} alt='logo' />
-      </NavLink>
-      <Bars />
-      <NavMenu>
-        {menuItems
-          .sort((a, b) => Number(a.order) - Number(b.order))
-          .map((item) => (
-            <li key={item.id}>
-              <NavLink to={item.url}>{item.label}</NavLink>
-            </li>
-          ))}
-      </NavMenu>
-    </Nav>
+      <Nav>
+        <NavLink to='/'>
+          <img src={myLogo} alt='logo' />
+        </NavLink>
+        <Bars />
+        <NavMenu>
+          {menuItems
+            .sort((a, b) => Number(a.order) - Number(b.order))
+            .map((item) => (
+              <li key={item.id}>
+                <NavLink to={item.url}>{item.label}</NavLink>
+              </li>
+            ))}
+        </NavMenu>
+      </Nav>
   );
 };
 

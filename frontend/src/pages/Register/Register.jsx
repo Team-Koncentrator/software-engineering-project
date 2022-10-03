@@ -1,20 +1,36 @@
 import { useRef, useState, useEffect } from 'react';
-import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import aes from 'crypto-js/aes';
+import { FaCheck, FaTimes, FaInfoCircle } from 'react-icons/fa';
 import axios from 'api/axios';
 import './Register.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+var CryptoJS = require('crypto-js');
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const NAME_REGEX = /^[A-z][A-z0-9-_]{1,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/register';
+const REGISTER_URL = '/users';
 
 const Register = () => {
   const userRef = useRef();
+  const nameRef = useRef();
   const errRef = useRef();
 
   const [user, setUser] = useState('');
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
+
+  const [firstName, setFirstName] = useState('');
+  const [validFirstName, setValidFirstName] = useState(false);
+  const [firstNameFocus, setFirstNameFocus] = useState(false);
+
+  const [lastName, setLastName] = useState('');
+  const [validLastName, setValidLastName] = useState(false);
+  const [lastNameFocus, setLastNameFocus] = useState(false);
+
+  const [selectedDate, setSelectedDate] = useState();
 
   const [pwd, setPwd] = useState('');
   const [validPwd, setValidPwd] = useState(false);
@@ -36,30 +52,47 @@ const Register = () => {
   }, [user]);
 
   useEffect(() => {
+    setValidFirstName(NAME_REGEX.test(firstName));
+  }, [firstName]);
+
+  useEffect(() => {
+    setValidLastName(NAME_REGEX.test(lastName));
+  }, [lastName]);
+
+  useEffect(() => {
     setValidPwd(PWD_REGEX.test(pwd));
     setValidMatch(pwd === matchPwd);
   }, [pwd, matchPwd]);
 
   useEffect(() => {
     setErrMsg('');
-  }, [user, pwd, matchPwd]);
+  }, [user, firstName, lastName, pwd, matchPwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // if button enabled with JS hack
     const v1 = USER_REGEX.test(user);
     const v2 = PWD_REGEX.test(pwd);
-    if (!v1 || !v2) {
+    const v3 = NAME_REGEX.test(firstName);
+    const v4 = NAME_REGEX.test(lastName);
+    setSelectedDate(e.target.value);
+    if (!v1 || !v2 || !v3 || !v4) {
       setErrMsg('Invalid Entry');
       return;
     }
+
     try {
-      const response = await axios.post(REGISTER_URL, JSON.stringify({ user, pwd }), {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true
+      const response = await axios.post(REGISTER_URL, {
+        firstName: firstName,
+        lastName: lastName,
+        age: new Date().getFullYear() - parseInt(selectedDate.toString().substring(11, 15)),
+        gender: firstName.charAt(firstName.length - 1) === 'a' || 'A' ? 'Female' : 'Male',
+        password: pwd //CryptoJS.AES.encrypt(pwd, 'testkey').toString()
       });
-      console.log(response?.data);
-      console.log(response?.accessToken);
+      console.log(response.data);
+      console.log(response.config);
+      console.log(response.statusText);
+      console.log(response.status);
       console.log(JSON.stringify(response));
       setSuccess(true);
       //clear state and controlled inputs
@@ -70,6 +103,7 @@ const Register = () => {
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
+        console.log(err.response?.data);
       } else if (err.response?.status === 409) {
         setErrMsg('Username Taken');
       } else {
@@ -80,7 +114,7 @@ const Register = () => {
   };
 
   return (
-    <>
+    <div className='register-page-wrapper'>
       {success ? (
         <section className='sect'>
           <h1>Success!</h1>
@@ -91,17 +125,16 @@ const Register = () => {
           </p>
         </section>
       ) : (
-        <section className='sect'>
-          >>>>>>> work
+        <section className='regsiter-wrapper'>
           <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>
             {errMsg}
           </p>
           <h1 className='registerTitle'>Register</h1>
           <form className='form' onSubmit={handleSubmit}>
             <label className='textLabel' htmlFor='username'>
-              >>>>>>> Nazwa użytkownika
-              <FontAwesomeIcon icon={faCheck} className={validName ? 'valid' : 'hide'} />
-              <FontAwesomeIcon icon={faTimes} className={validName || !user ? 'hide' : 'invalid'} />
+              Nazwa użytkownika
+              <FaCheck className={validName ? 'valid' : 'hide'}> </FaCheck>
+              <FaTimes className={validName || !user ? 'hide' : 'invalid'} />
             </label>
             <input
               type='text'
@@ -119,18 +152,78 @@ const Register = () => {
               onBlur={() => setUserFocus(false)}
             />
             <p id='uidnote' className={userFocus && user && !validName ? 'instructions' : 'offscreen'}>
-              <FontAwesomeIcon icon={faInfoCircle} />
+              <FaInfoCircle />
               4 to 24 characters.
               <br />
               Must begin with a letter.
               <br />
               Letters, numbers, underscores, hyphens allowed.
             </p>
+            <label className='textLabel' htmlFor='firstName'>
+              Imię
+              <FaCheck className={validFirstName ? 'valid' : 'hide'} />
+              <FaTimes className={validFirstName || !firstName ? 'hide' : 'invalid'} />
+            </label>
+            <input
+              type='text'
+              className='input'
+              id='firstName'
+              placeholder='Podaj imię'
+              ref={nameRef}
+              autoComplete='off'
+              onChange={(e) => setFirstName(e.target.value)}
+              value={firstName}
+              required
+              aria-invalid={validFirstName ? 'false' : 'true'}
+              aria-describedby='fnamenote'
+              onFocus={() => setFirstNameFocus(true)}
+              onBlur={() => setFirstNameFocus(false)}
+            />
+            <p id='fnamenote' className={firstNameFocus && firstName && !validFirstName ? 'instructions' : 'offscreen'}>
+              <FaInfoCircle />
+              At least two characters.
+            </p>
+            <label className='textLabel' htmlFor='lastName'>
+              Nazwisko
+              <FaCheck className={validLastName ? 'valid' : 'hide'} />
+              <FaTimes className={validLastName || !lastName ? 'hide' : 'invalid'} />
+            </label>
+            <input
+              type='text'
+              className='input'
+              id='lastName'
+              placeholder='Podaj nazwisko'
+              ref={nameRef}
+              autoComplete='off'
+              onChange={(e) => setLastName(e.target.value)}
+              value={lastName}
+              required
+              aria-invalid={validLastName ? 'false' : 'true'}
+              aria-describedby='namenote'
+              onFocus={() => setLastNameFocus(true)}
+              onBlur={() => setLastNameFocus(false)}
+            />
+            <p id='namenote' className={lastNameFocus && lastName && !validLastName ? 'instructions' : 'offscreen'}>
+              <FaInfoCircle />
+              At least two characters.
+            </p>
+            <label className='textLabel' htmlFor='firstName'>
+              Data
+            </label>
+            <DatePicker
+              className='input'
+              dateFormat='dd-MM-yyyy'
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              placeholderText='Wybierz datę urodzenia'
+              isClearable
+              showYearDropdown
+              showMonthDropdown></DatePicker>
 
-            <label className='textLabel' htmlFor='password'>
+            <label class='textLabel' htmlFor='password'>
               Hasło
-              <FontAwesomeIcon icon={faCheck} className={validPwd ? 'valid' : 'hide'} />
-              <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? 'hide' : 'invalid'} />
+              <FaCheck className={validPwd ? 'valid' : 'hide'} />
+              <FaTimes className={validPwd || !pwd ? 'hide' : 'invalid'} />
             </label>
             <input
               type='password'
@@ -146,7 +239,7 @@ const Register = () => {
               onBlur={() => setPwdFocus(false)}
             />
             <p id='pwdnote' className={pwdFocus && !validPwd ? 'instructions' : 'offscreen'}>
-              <FontAwesomeIcon icon={faInfoCircle} />
+              <FaInfoCircle />
               8 to 24 characters.
               <br />
               Must include uppercase and lowercase letters, a number and a special character.
@@ -154,11 +247,10 @@ const Register = () => {
               Allowed special characters: <span aria-label='exclamation mark'>!</span> <span aria-label='at symbol'>@</span>{' '}
               <span aria-label='hashtag'>#</span> <span aria-label='dollar sign'>$</span> <span aria-label='percent'>%</span>
             </p>
-
             <label className='textLabel' htmlFor='confirm_pwd'>
               Potwierdź hasło
-              <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? 'valid' : 'hide'} />
-              <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? 'hide' : 'invalid'} />
+              <FaCheck className={validMatch && matchPwd ? 'valid' : 'hide'} />
+              <FaTimes className={validMatch || !matchPwd ? 'hide' : 'invalid'} />
             </label>
             <input
               type='password'
@@ -174,10 +266,9 @@ const Register = () => {
               onBlur={() => setMatchFocus(false)}
             />
             <p id='confirmnote' className={matchFocus && !validMatch ? 'instructions' : 'offscreen'}>
-              <FontAwesomeIcon icon={faInfoCircle} />
+              <FaInfoCircle />
               Must match the first password input field.
             </p>
-
             <button className='button' disabled={!validName || !validPwd || !validMatch ? true : false}>
               Sign Up
             </button>
@@ -189,12 +280,11 @@ const Register = () => {
               <a className='a sign' href='login'>
                 Sign In
               </a>
-              >>>>>>> work
             </span>
           </p>
         </section>
       )}
-    </>
+    </div>
   );
 };
 
