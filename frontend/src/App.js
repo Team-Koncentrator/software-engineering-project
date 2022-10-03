@@ -6,8 +6,10 @@ import GlobalStyle from 'theme/globalStyles';
 import Home from 'pages/Home/Home';
 import Login from 'pages/Login/Login';
 import Register from 'pages/Register/Register';
+
 import Faq from 'pages/Faq/Faq';
 import Authors from 'pages/Authors/Authors';
+import Assign from 'components/dnd/example';
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
           <Route path='login' element={<Login />} />
           <Route path='faq' element={<Faq />} />
           <Route path='authors' element={<Authors />} />
+          <Route path='assign' element={<Assign />} />
         </Routes>
       </div>
     </>
