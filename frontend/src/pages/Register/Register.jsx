@@ -129,7 +129,7 @@ const Register = () => {
           <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>
             {errMsg}
           </p>
-          <h1 className='register-wrapper__header'>Register</h1>
+          <h1 className='register-wrapper__header'>Rejestracja</h1>
           <form className='register-wrapper__form' onSubmit={handleSubmit}>
             <div className='form__input-wrapper'>
               <label className='input-wrapper__label' htmlFor='username'>
