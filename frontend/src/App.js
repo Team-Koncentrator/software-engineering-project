@@ -16,14 +16,16 @@ function App() {
     <>
       <GlobalStyle />
       <Navigation />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='register' element={<Register />} />
-        <Route path='login' element={<Login />} />
-        <Route path='faq' element={<Faq />} />
-        <Route path='authors' element={<Authors />} />
-        <Route path='assign' element={ <Assign />} />
-      </Routes>
+      <div className='app-wrapper'>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='register' element={<Register />} />
+          <Route path='login' element={<Login />} />
+          <Route path='faq' element={<Faq />} />
+          <Route path='authors' element={<Authors />} />
+          <Route path='assign' element={<Assign />} />
+        </Routes>
+      </div>
     </>
   );
 }
