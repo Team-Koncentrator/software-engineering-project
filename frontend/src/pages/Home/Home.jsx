@@ -11,6 +11,7 @@ import HomeConfirmHeaderForm from 'pages/Home/HomeConfirmHeaderForm/HomeConfirmH
 import HomeSubPageForm from 'pages/Home/HomeSubPageForm/HomeSubPageForm';
 import HomeBottomSection from 'pages/Home/HomeBottomSection/HomeBottomSection';
 import { useState } from 'react';
+import HomeCSVTable from './HomeCSVTable/HomeCSVTable';
 
 const Home = () => {
   const [progress, setProgress] = React.useState(66);
@@ -18,6 +19,7 @@ const Home = () => {
   const [fileContent, setFileContent] = useState();
   const [fileHeader, setFileHeader] = useState();
   const [confirmedHeader, setConfirmedHeader] = useState();
+  const [isHeaderConfirm, setIsHeaderConfirm] = useState();
 
   let fileReader = new FileReader();
 
@@ -44,6 +46,12 @@ const Home = () => {
 
       fileReader.readAsText(csvFile);
     }
+
+    setTimeout(() => {
+      let elmntToView = document.getElementById('csv-wrapper--goto');
+      console.log(elmntToView);
+      elmntToView.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+    }, 100);
   };
 
   const parseCsv = (csvText) => {
@@ -62,33 +70,10 @@ const Home = () => {
     return [array, csvHeader];
   };
 
-  /* ************************************
-  handle functions for csv headers confirmation
-  ************************************ */
-  const handleOnSubmitConfirmedHeaders = (e) => {
-    e.preventDefault();
-
-    const form = document.getElementById('confirm-csv');
-
-    let myHeader = {
-      confirmedHeader: {
-        name: form.name.value,
-        surname: form.surname.value,
-        gender: form.gender.value,
-        age: form.age.value,
-        withWho: form.with_who.value
-      }
-    };
-
-    setConfirmedHeader(myHeader);
-  };
-
-  /* ************************************
-  handle functions for progress bar
-  ************************************ */
-  const handleClick = (num) => {
-    // 👇️ take parameter passed from Child component
-    setProgress(() => num);
+  const sendDataToParent = (index) => {
+    // the callback. Use a better name
+    console.log(index);
+    //setConfirmedHeader(index);
   };
 
   return (
@@ -103,7 +88,7 @@ const Home = () => {
           handleOnSubmit={(e) => handleOnSubmit(e)}
         />
         {/* *******************************************************************/}
-        <div className='progress-bar-section'>
+        {/* <div className='progress-bar-section'>
           <Typography variant='body2' sx={{ alignSelf: 'center' }}>
             Krok 1/3
           </Typography>
@@ -115,22 +100,20 @@ const Home = () => {
           </div>
           <div>{progress}</div>
           <HomeSubPageForm handleClick={handleClick}></HomeSubPageForm>
-        </div>
+        </div> */}
 
         {/* *******************************************************************/}
 
         {fileHeader && fileContent && (
-          <div className='confirm_headers_form'>
-            <div>
-              <h1>fileContent</h1>
-              <pre>{JSON.stringify(fileContent, null, 2)}</pre>
-              <h1>fileHeader</h1>
-              <pre>{JSON.stringify(fileHeader, null, 2)}</pre>
-            </div>
-            <HomeConfirmHeaderForm fileHeader={fileHeader} handleOnSubmitConfirmedHeaders={(e) => handleOnSubmitConfirmedHeaders(e)} />
+          <div className='csv-wrapper' id='csv-wrapper--goto'>
+            <h1 className='csv-wrapper__header'>Zmapuj swoje dane</h1>
+            <p className='csv-wrapper__subheader'>
+              Zrób to w taki sposób aby nazwy placeholderów pokrywały się z tym co pokazuje Ci się w polach po kliknięciu odpowiedniego inputa :D
+            </p>
+            <HomeConfirmHeaderForm fileHeader={fileHeader} sendDataToParent={sendDataToParent} />
+            {isHeaderConfirm && <HomeCSVTable data={fileContent}></HomeCSVTable>}
           </div>
         )}
-        {JSON.stringify(confirmedHeader)}
 
         {/* *******************************************************************/}
         {fileHeader && confirmedHeader && fileContent && (

@@ -4,7 +4,6 @@ import { Typography, Button } from '@mui/material';
 const HomeTopSection = ({ csvFile, handleOnChange, handleOnSubmit }) => {
   return (
     <div className='top-section'>
-      {console.log(csvFile)}
       <div className='wrapper__headers'>
         <div className='headers-section'>
           <h1 className='headers__main-header'>Przydziel uczestników do domków!</h1>
@@ -19,7 +18,14 @@ const HomeTopSection = ({ csvFile, handleOnChange, handleOnSubmit }) => {
           <div className='buttons__file'>
             <Button variant='contained' component='label'>
               Upload File
-              <input type='file' hidden onChange={handleOnChange} accept={'.csv'} />
+              <input
+                type='file'
+                hidden
+                onChange={(e) => {
+                  handleOnChange(e);
+                }}
+                accept={'.csv'}
+              />
             </Button>
           </div>
           <Typography variant='caption' sx={{ alignSelf: 'center' }}>
