@@ -18,8 +18,17 @@ const Home = () => {
   const [csvFile, setCsvFile] = useState();
   const [fileContent, setFileContent] = useState();
   const [fileHeader, setFileHeader] = useState();
-  const [confirmedHeader, setConfirmedHeader] = useState();
-  const [isHeaderConfirm, setIsHeaderConfirm] = useState();
+  const [isHeaderConfirm, setIsHeaderConfirm] = useState(false);
+  const [houses, setHouses] = useState([
+    {
+      id: Math.random() * 0.8 + Math.PI,
+      houseName: 'Domek 1',
+      rooms: [
+        { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', people: '3' },
+        { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 2', people: '3' }
+      ]
+    }
+  ]);
 
   let fileReader = new FileReader();
 
@@ -76,6 +85,18 @@ const Home = () => {
     //setConfirmedHeader(index);
   };
 
+  const handleSetConfirm = () => {
+    setIsHeaderConfirm(!isHeaderConfirm);
+  };
+
+  const afterConfirmSubmit = () => {
+    setTimeout(() => {
+      let elmntToView = document.getElementById('home-bootom-wrapper--goto');
+      console.log(elmntToView);
+      elmntToView.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+    }, 100);
+  };
+
   return (
     <>
       <div className='main-wrapper'>
@@ -106,26 +127,26 @@ const Home = () => {
 
         {fileHeader && fileContent && (
           <div className='csv-wrapper' id='csv-wrapper--goto'>
-            <h1 className='csv-wrapper__header'>Zmapuj swoje dane</h1>
+            <h1 className='csv-wrapper__header'>Krok 2. Zmapuj swoje dane</h1>
             <p className='csv-wrapper__subheader'>
               Zrób to w taki sposób aby nazwy placeholderów pokrywały się z tym co pokazuje Ci się w polach po kliknięciu odpowiedniego inputa :D
             </p>
-            <HomeConfirmHeaderForm fileHeader={fileHeader} sendDataToParent={sendDataToParent} />
-            {isHeaderConfirm && <HomeCSVTable data={fileContent}></HomeCSVTable>}
+            <HomeConfirmHeaderForm
+              fileHeader={fileHeader}
+              sendDataToParent={sendDataToParent}
+              handleSetConfirm={handleSetConfirm}
+              afterConfirmSubmit={afterConfirmSubmit}
+            />
+            {/* {isHeaderConfirm && <HomeCSVTable data={fileContent}></HomeCSVTable>} */}
           </div>
         )}
 
-        {/* *******************************************************************/}
-        {fileHeader && confirmedHeader && fileContent && (
-          <div className='bottom-section'>
-            <Button variant='contained' type='submit'>
-              Przydziel automatycznie
-            </Button>
-            <Button variant='contained' type='submit'>
-              Przydziel samodzielnie
-            </Button>
+        {/* ****************************************************************** */}
 
-            <HomeBottomSection fileContent={fileContent} />
+        {isHeaderConfirm && (
+          <div className='home-bootom-wrapper' id='home-bootom-wrapper--goto'>
+            <h1 className='bottom-wrapper__header'>Krok 3. Wybierz na ile domków oraz pokoi chcecie się podzielić ;&#41;</h1>
+            <HomeBottomSection houses={houses} setHouses={setHouses} fileContent={fileContent} />
           </div>
         )}
       </div>

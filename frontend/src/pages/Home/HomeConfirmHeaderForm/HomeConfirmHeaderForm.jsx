@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FormControl, Select, InputLabel, Button, MenuItem } from '@mui/material';
 import './HomeConfirmHeaderForm.css';
 
-const HomeConfirmHeaderForm = ({ fileHeader, sendDataToParent }) => {
+const HomeConfirmHeaderForm = ({ fileHeader, sendDataToParent, handleSetConfirm, afterConfirmSubmit }) => {
   const [obj, setObj] = useState({
     name: '',
     surname: '',
@@ -70,6 +70,8 @@ const HomeConfirmHeaderForm = ({ fileHeader, sendDataToParent }) => {
           onClick={(e) => {
             e.preventDefault();
             sendDataToParent(obj);
+            handleSetConfirm();
+            afterConfirmSubmit();
           }}>
           Przejdź dalej!
         </Button>
