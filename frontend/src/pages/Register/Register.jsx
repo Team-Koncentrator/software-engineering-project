@@ -5,6 +5,7 @@ import axios from 'api/axios';
 import './Register.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { NavLink as Link } from 'react-router-dom';
 
 var CryptoJS = require('crypto-js');
 
@@ -117,11 +118,13 @@ const Register = () => {
     <div className='register-page-wrapper'>
       {success ? (
         <section className='sect'>
-          <h1>Success!</h1>
+          <h1 className='register-wrapper__header'>Zarejestrowano pomyślnie!</h1>
           <p>
-            <a className='a sign' href='#'>
-              Zaloguj się
-            </a>
+            <span className='line'>
+              <Link className='a link__sign' to='/login'>
+                Zaloguj się
+              </Link>
+            </span>
           </p>
         </section>
       ) : (
@@ -157,7 +160,7 @@ const Register = () => {
                 <FaInfoCircle />
                 4 do 24 znaków.
                 <br />
-                Musi zaczynać się literą.
+                Musi zgczynać się literą.
                 <br />
                 Litery, cyfry, podkreślniki, myślniki są dozwolone.
               </p>
@@ -296,9 +299,9 @@ const Register = () => {
             Masz już konto?
             <br />
             <span className='line'>
-              <a className='a link__sign' href='login'>
+              <Link className='a link__sign' to='/login'>
                 Zaloguj się
-              </a>
+              </Link>
             </span>
           </p>
         </section>
