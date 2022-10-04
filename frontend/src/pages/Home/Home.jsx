@@ -27,86 +27,29 @@ const Home = () => {
         { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', people: '3' },
         { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 2', people: '3' }
       ]
+    },
+    {
+      id: Math.random() * 0.8 + Math.PI,
+      houseName: 'Domek 1',
+      rooms: [
+        { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', people: '3' },
+        { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 2', people: '3' },
+        { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 2', people: '3' }
+      ]
     }
   ]);
-
-  let fileReader = new FileReader();
-
-  /* *****************************
-  handle functions for csv form
-  ***************************** */
-  const handleOnChange = (e) => {
-    setCsvFile(e.target.files[0]);
-  };
-
-  const handleOnSubmit = (e) => {
-    e.preventDefault();
-    if (csvFile) {
-      fileReader.onload = function (event) {
-        const csvOutput = event.target.result;
-        let [array, header] = parseCsv(csvOutput);
-
-        setFileContent(array);
-        setFileHeader(header);
-
-        console.log(array);
-        console.log(header);
-      };
-
-      fileReader.readAsText(csvFile);
-    }
-
-    setTimeout(() => {
-      let elmntToView = document.getElementById('csv-wrapper--goto');
-      console.log(elmntToView);
-      elmntToView.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-    }, 100);
-  };
-
-  const parseCsv = (csvText) => {
-    const csvHeader = csvText.slice(0, csvText.indexOf('\n')).split(',');
-    const csvRows = csvText.slice(csvText.indexOf('\n') + 1).split('\n');
-
-    const array = csvRows.map((row) => {
-      const values = row.split(',');
-      const obj = csvHeader.reduce((object, header, index) => {
-        object[header] = values[index];
-        return object;
-      }, {});
-      return obj;
-    });
-
-    return [array, csvHeader];
-  };
-
-  const sendDataToParent = (index) => {
-    // the callback. Use a better name
-    console.log(index);
-    //setConfirmedHeader(index);
-  };
-
-  const handleSetConfirm = () => {
-    setIsHeaderConfirm(!isHeaderConfirm);
-  };
-
-  const afterConfirmSubmit = () => {
-    setTimeout(() => {
-      let elmntToView = document.getElementById('home-bootom-wrapper--goto');
-      console.log(elmntToView);
-      elmntToView.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-    }, 100);
-  };
 
   return (
     <>
       <div className='main-wrapper'>
         {/* *******************************************************************/}
         <HomeTopSection
-          csvfile={csvFile}
+          csvFile={csvFile}
+          setCsvFile={setCsvFile}
           fileContent={fileContent}
+          setFileContent={setFileContent}
           fileHeader={fileHeader}
-          handleOnChange={(e) => handleOnChange(e)}
-          handleOnSubmit={(e) => handleOnSubmit(e)}
+          setFileHeader={setFileHeader}
         />
         {/* *******************************************************************/}
         {/* <div className='progress-bar-section'>
@@ -131,12 +74,7 @@ const Home = () => {
             <p className='csv-wrapper__subheader'>
               Zrób to w taki sposób aby nazwy placeholderów pokrywały się z tym co pokazuje Ci się w polach po kliknięciu odpowiedniego inputa :D
             </p>
-            <HomeConfirmHeaderForm
-              fileHeader={fileHeader}
-              sendDataToParent={sendDataToParent}
-              handleSetConfirm={handleSetConfirm}
-              afterConfirmSubmit={afterConfirmSubmit}
-            />
+            <HomeConfirmHeaderForm fileHeader={fileHeader} isHeaderConfirm={isHeaderConfirm} setIsHeaderConfirm={setIsHeaderConfirm} />
             {/* {isHeaderConfirm && <HomeCSVTable data={fileContent}></HomeCSVTable>} */}
           </div>
         )}

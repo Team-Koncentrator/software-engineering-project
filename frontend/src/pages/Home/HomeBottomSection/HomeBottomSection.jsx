@@ -6,13 +6,29 @@ import AddHouseBlock from './AddHouseBlock';
 
 const HomeBottomSection = ({ houses, setHouses, fileContent }) => {
   const handleAddHouse = () => {
-    setHouses([...houses]);
-    return;
+    setHouses([
+      ...houses,
+      {
+        id: Math.random() * 0.8 + Math.PI,
+        houseName: 'Domek 1',
+        rooms: [{ id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', people: '2' }]
+      }
+    ]);
+  };
+
+  const removeHouse = (houseId) => {
+    //const houseIndex = houses.findIndex(houseId);
+    //console.log(houseIndex);
+    //splice
+  };
+
+  const addRoom = (houseId) => {
+    //const houseEl = document.getElementById(houseId)
+    console.log('dupa');
   };
 
   const countParticipants = (houses) => {
     //zliczanie uczestników ze wszystkich domków i pokojów
-
     return houses.length; // tymczasowo
   };
 

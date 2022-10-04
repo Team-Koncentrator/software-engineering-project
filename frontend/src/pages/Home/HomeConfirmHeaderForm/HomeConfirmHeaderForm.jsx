@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FormControl, Select, InputLabel, Button, MenuItem } from '@mui/material';
 import './HomeConfirmHeaderForm.css';
 
-const HomeConfirmHeaderForm = ({ fileHeader, sendDataToParent, handleSetConfirm, afterConfirmSubmit }) => {
+const HomeConfirmHeaderForm = ({ fileHeader, isHeaderConfirm, setIsHeaderConfirm }) => {
   const [obj, setObj] = useState({
     name: '',
     surname: '',
@@ -16,6 +16,18 @@ const HomeConfirmHeaderForm = ({ fileHeader, sendDataToParent, handleSetConfirm,
       ...pre,
       [name]: value
     }));
+  };
+
+  const handleSetConfirm = () => {
+    setIsHeaderConfirm(!isHeaderConfirm);
+  };
+
+  const afterConfirmSubmit = () => {
+    setTimeout(() => {
+      let elmntToView = document.getElementById('home-bootom-wrapper--goto');
+      console.log(elmntToView);
+      elmntToView.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+    }, 100);
   };
 
   return (
@@ -69,7 +81,6 @@ const HomeConfirmHeaderForm = ({ fileHeader, sendDataToParent, handleSetConfirm,
           fullWidth
           onClick={(e) => {
             e.preventDefault();
-            sendDataToParent(obj);
             handleSetConfirm();
             afterConfirmSubmit();
           }}>

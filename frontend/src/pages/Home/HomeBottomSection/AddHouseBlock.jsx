@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, TextField } from '@mui/material';
+import './HomeBottomSection.css';
 
 const AddHouseBlock = ({ data }) => {
   const { houseName } = data;
@@ -15,7 +16,6 @@ const AddHouseBlock = ({ data }) => {
           </div>
         </React.Fragment>
       ))}
-      <pre>{JSON.stringify(data.rooms, undefined, 2)}</pre>
       <div className='main-house-block__add-button'>
         <Button variant='contained'>Dodaj kolejny pokój</Button>
       </div>
