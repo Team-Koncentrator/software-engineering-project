@@ -5,6 +5,7 @@ import axios from 'api/axios';
 import './Register.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { NavLink as Link } from 'react-router-dom';
 
 var CryptoJS = require('crypto-js');
 
@@ -119,9 +120,7 @@ const Register = () => {
         <section className='sect'>
           <h1>Success!</h1>
           <p>
-            <a className='a sign' href='#'>
-              Zaloguj się
-            </a>
+            <Link to={'/login'}>{'Zaloguj się'}</Link>
           </p>
         </section>
       ) : (
@@ -283,7 +282,7 @@ const Register = () => {
               />
               <p id='confirmnote' className={matchFocus && !validMatch ? 'instructions' : 'offscreen'}>
                 <FaInfoCircle />
-                Hasła muszą się zadzać.
+                Hasła muszą się zgadzać.
               </p>
             </div>
             <div className='form__button-wrapper'>
