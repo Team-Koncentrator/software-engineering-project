@@ -11,7 +11,8 @@ Content-Type: application/json
     "firstName": "Juliet",
     "lastName": "Dupna",
     "age": 22,
-    "gender": "Male"
+    "gender": "Male",
+    "password": "123!Dupa"
 }
 
 ###
