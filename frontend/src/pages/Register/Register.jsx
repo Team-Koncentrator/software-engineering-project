@@ -6,6 +6,7 @@ import './Register.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { NavLink as Link } from 'react-router-dom';
+import { NavLink as Link } from 'react-router-dom';
 
 var CryptoJS = require('crypto-js');
 
@@ -286,7 +287,7 @@ const Register = () => {
               />
               <p id='confirmnote' className={matchFocus && !validMatch ? 'instructions' : 'offscreen'}>
                 <FaInfoCircle />
-                Hasła muszą się zadzać.
+                Hasła muszą się zgadzać.
               </p>
             </div>
             <div className='form__button-wrapper'>
