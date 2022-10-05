@@ -18,7 +18,7 @@ const Register = () => {
   const nameRef = useRef();
   const errRef = useRef();
 
-  const [user, setUser] = useState('');
+  const [username, setUsername] = useState();
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
 
@@ -31,6 +31,7 @@ const Register = () => {
   const [lastNameFocus, setLastNameFocus] = useState(false);
 
   const [selectedDate, setSelectedDate] = useState();
+  const [isUser, setIsUser] = useState(false);
 
   const [pwd, setPwd] = useState('');
   const [validPwd, setValidPwd] = useState(false);
@@ -48,8 +49,8 @@ const Register = () => {
   }, []);
 
   useEffect(() => {
-    setValidName(USER_REGEX.test(user));
-  }, [user]);
+    setValidName(USER_REGEX.test(username));
+  }, [username]);
 
   useEffect(() => {
     setValidFirstName(NAME_REGEX.test(firstName));
@@ -66,12 +67,12 @@ const Register = () => {
 
   useEffect(() => {
     setErrMsg('');
-  }, [user, firstName, lastName, pwd, matchPwd]);
+  }, [username, firstName, lastName, pwd, matchPwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // if button enabled with JS hack
-    const v1 = USER_REGEX.test(user);
+    const v1 = USER_REGEX.test(username);
     const v2 = PWD_REGEX.test(pwd);
     const v3 = NAME_REGEX.test(firstName);
     const v4 = NAME_REGEX.test(lastName);
@@ -82,35 +83,52 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post(REGISTER_URL, {
+      const response = await axios.get(
+        '/users',
+        JSON.stringify(
+          { username, pwd },
+          {
+            headers: { 'asdasd-Type': 'adasd/jsodn' },
+            withCredentials: true
+          }
+        )
+      );
+
+      response.data.forEach((item) => {
+        if (item.firstName === firstName) {
+          setErrMsg('Jest już taki użytkownik');
+          setSuccess(false);
+          setIsUser(true);
+          throw new Error('Jest już taki cwel');
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+
+    if (!isUser) {
+      const user = {
         firstName: firstName,
         lastName: lastName,
         age: new Date().getFullYear() - parseInt(selectedDate.toString().substring(11, 15)),
         gender: firstName.charAt(firstName.length - 1) === 'a' || 'A' ? 'Female' : 'Male',
         password: pwd //CryptoJS.AES.encrypt(pwd, 'testkey').toString()
-      });
-      console.log(response.data);
-      console.log(response.config);
-      console.log(response.statusText);
-      console.log(response.status);
-      console.log(JSON.stringify(response));
+      };
+
+      try {
+        const resp = await axios.post(REGISTER_URL, user);
+      } catch (err) {
+        console.log(err);
+      }
       setSuccess(true);
-      //clear state and controlled inputs
-      //need value attrib on inputs for this
-      setUser('');
+      setUsername('');
+      setFirstName('');
+      setLastName('');
       setPwd('');
       setMatchPwd('');
-    } catch (err) {
-      if (!err?.response) {
-        setErrMsg('No Server Response');
-        console.log(err.response?.data);
-      } else if (err.response?.status === 409) {
-        setErrMsg('Username Taken');
-      } else {
-        setErrMsg('Registration Failed');
-      }
-      errRef.current.focus();
     }
+    setPwd('');
+    setMatchPwd('');
   };
 
   return (
@@ -134,7 +152,7 @@ const Register = () => {
             <label className='textLabel' htmlFor='username'>
               Nazwa użytkownika
               <FaCheck className={validName ? 'valid' : 'hide'}> </FaCheck>
-              <FaTimes className={validName || !user ? 'hide' : 'invalid'} />
+              <FaTimes className={validName || !username ? 'hide' : 'invalid'} />
             </label>
             <input
               type='text'
@@ -143,15 +161,15 @@ const Register = () => {
               placeholder='Podaj login lub nazwę użytkownika'
               ref={userRef}
               autoComplete='off'
-              onChange={(e) => setUser(e.target.value)}
-              value={user}
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
               required
               aria-invalid={validName ? 'false' : 'true'}
               aria-describedby='uidnote'
               onFocus={() => setUserFocus(true)}
               onBlur={() => setUserFocus(false)}
             />
-            <p id='uidnote' className={userFocus && user && !validName ? 'instructions' : 'offscreen'}>
+            <p id='uidnote' className={userFocus && username && !validName ? 'instructions' : 'offscreen'}>
               <FaInfoCircle />
               4 to 24 characters.
               <br />
