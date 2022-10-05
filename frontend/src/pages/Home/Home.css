@@ -74,3 +74,19 @@
 .icon {
   transform: rotate(270deg);
 }
+
+#confirm-csv {
+  width: 20%;
+}
+
+.csv-wrapper {
+  margin-top: 50px;
+  min-height: 100vh;
+}
+
+.csv-wrapper__header {
+  text-align: center;
+  font: 60px/1.5 'open-500', sans-serif;
+  color: #004990;
+  margin-bottom: 25px;
+}

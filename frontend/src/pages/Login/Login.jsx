@@ -63,13 +63,13 @@ const Login = () => {
       //      setSuccess(true);
     } catch (err) {
       if (!err?.response) {
-        setErrMsg('No Server Response');
+        setErrMsg('Brak odpowiedzi serwera');
       } else if (err.response?.status === 400) {
-        setErrMsg('Missing Username or Password');
+        setErrMsg('Brakuje nazwy użytkownika lub hasła');
       } else if (err.response?.status === 401) {
-        setErrMsg('Unauthorized');
+        setErrMsg('Bark autoryzacji');
       } else {
-        setErrMsg('Login Failed');
+        setErrMsg('Logowanie nieudane');
       }
       errRef.current.focus();
     }
@@ -96,16 +96,16 @@ const Login = () => {
             <p ref={errRef} className={`m-hidden ${errMsg ? 'errorBox' : ''}`} aria-live='assertive'>
               {errMsg}
             </p>
-            <h1 className='login-wrapper__header'>Login</h1>
+            <h1 className='login-wrapper__header'>Logowanie</h1>
             <form onSubmit={handleSubmit} className='login-wrapper__form'>
               <div className='form__input-wrapper'>
                 <label htmlFor='username' className='input-wrapper__label'>
-                  <span className='label__asterisk'>*</span>Username
+                  <span className='label__asterisk'>*</span>Nazwa użytkownika
                 </label>
                 <input
                   className='input-wrapper__input'
                   type='text'
-                  placeholder='Username'
+                  placeholder='Wpisz nazwę użytkownika'
                   id='username'
                   ref={userRef}
                   autoComplete='off'
@@ -116,11 +116,11 @@ const Login = () => {
               </div>
               <div className='form__input-wrapper'>
                 <label htmlFor='password' className='input-wrapper__label'>
-                  <span className='label__asterisk'>*</span>Password
+                  <span className='label__asterisk'>*</span>Hasło
                 </label>
                 <input
                   className='input-wrapper__input'
-                  placeholder='Password'
+                  placeholder='Wpisz hasło'
                   type='password'
                   id='password'
                   onChange={(e) => setPwd(e.target.value)}
@@ -130,26 +130,26 @@ const Login = () => {
               </div>
               {/* TODO */}
               <a href='#' className='form__forgot-password'>
-                Forgot your password?
+                Zapomniałeś hasła?
               </a>
               <div className='form__button-wrapper'>
-                <button className='form__button'>Sign In</button>
+                <button className='form__button'>Zaloguj się</button>
               </div>
             </form>
           </section>
           <section className='register-wrapper'>
-            <h1 className='register-wrapper__header'>Register</h1>
-            <p className='register-wrapper__subheader'>Don't have an account yet?</p>
+            <h1 className='register-wrapper__header'>Rejestracja</h1>
+            <p className='register-wrapper__subheader'>Nie masz jeszcze konta?</p>
             <ul className='register-wrapper__list'>
-              <p className='list__text'>Register now and have access to:</p>
-              <li>- cos trzeba tu wpisac</li>
-              <li>- jakies trzy</li>
-              <li>- fajne hasła</li>
+              <p className='list__text'>Zarejestruj się i otrzymaj dostęp do:</p>
+              <li>- autorskiego kreatora</li>
+              <li>- towrzenie przydziałów</li>
+              <li>- zapisywanie przydziałów</li>
             </ul>
             {/*put router link here*/}
             <div className='form__button-wrapper'>
               <NavLink className='form__button link' to={'/register'}>
-                Register
+                Zarejestruj się
               </NavLink>
             </div>
           </section>
