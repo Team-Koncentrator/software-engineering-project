@@ -27,15 +27,6 @@ const Home = () => {
         { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', people: '3' },
         { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 2', people: '3' }
       ]
-    },
-    {
-      id: Math.random() * 0.8 + Math.PI,
-      houseName: 'Domek 1',
-      rooms: [
-        { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', people: '3' },
-        { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 2', people: '3' },
-        { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 2', people: '3' }
-      ]
     }
   ]);
 

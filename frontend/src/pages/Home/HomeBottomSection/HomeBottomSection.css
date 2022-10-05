@@ -43,3 +43,11 @@
 .main-house-block__add-button {
   align-self: center;
 }
+
+.main-house-block__input {
+  margin: 20px;
+}
+
+.main-house-block__room-block {
+  background-color: red;
+}
