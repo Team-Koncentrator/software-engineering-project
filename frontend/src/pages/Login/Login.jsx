@@ -14,6 +14,7 @@ const Login = () => {
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
+  const [isUser, setIsUser] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -37,8 +38,21 @@ const Login = () => {
           }
         )
       );
-      console.log(JSON.stringify(response?.data));
-      //console.log(JSON.stringify(response));
+
+      console.log('dupa');
+
+      console.log(response);
+      for (let i = response.data.length - 1; i > 0; i--) {
+        if (pwd === response.data[i].password && user === response.data[i].firstName) {
+          setIsUser(true);
+          setSuccess(true);
+        }
+        console.log(response.data[i]._id);
+        console.log(response.data[i].password);
+        console.log(response.data[i].firstName);
+      }
+
+      //console.log(JSON.stringify(response?.data));
       console.log(response?.data?.accessToken);
       console.log(response?.data?.roles);
       const accessToken = response?.data?.accessToken;
@@ -46,7 +60,7 @@ const Login = () => {
       setAuth({ user, pwd, roles, accessToken });
       setUser('');
       setPwd('');
-      setSuccess(true);
+      //      setSuccess(true);
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
