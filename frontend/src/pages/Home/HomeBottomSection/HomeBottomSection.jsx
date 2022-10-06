@@ -11,7 +11,7 @@ const HomeBottomSection = ({ houses, setHouses, fileContent }) => {
       {
         id: Math.random() * 0.8 + Math.PI,
         houseName: 'Domek 1',
-        rooms: [{ id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', people: '2' }]
+        rooms: [{ id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', people: 2 }]
       }
     ]);
   };

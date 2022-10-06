@@ -22,7 +22,7 @@ const AddHouseBlock = ({ data, houses, setHouses }) => {
     const houseId = e.currentTarget.id;
     const houseIndex = houses.findIndex((el) => el.id == houseId);
 
-    const room = { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 2', people: '2' };
+    const room = { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 2', people: 2 };
 
     houses[houseIndex].rooms.push(room);
     setHouses([...houses]);
