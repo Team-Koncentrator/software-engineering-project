@@ -2,6 +2,8 @@ import React from 'react';
 import { Button, TextField, IconButton } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import './HomeBottomSection.css';
 
 const AddHouseBlock = ({ data, houses, setHouses }) => {
@@ -38,6 +40,22 @@ const AddHouseBlock = ({ data, houses, setHouses }) => {
     setHouses([...houses]);
   };
 
+  const changePeople = (e, add) => {
+    const houseId = e.currentTarget.parentElement.id;
+    const roomId = e.currentTarget.id;
+
+    const houseIndex = houses.findIndex((el) => el.id == houseId);
+    const roomIndex = houses[houseIndex].rooms.findIndex((el) => el.id == roomId);
+
+    if (add) houses[houseIndex].rooms[roomIndex].people += 1;
+    else houses[houseIndex].rooms[roomIndex].people -= 1;
+
+    setHouses([...houses]);
+  };
+
+  // !!!!!!!!!!!!!!!!!!!!!!!!! UWAGA RUSZAJĄC DIVY !!!!!!!!!!!!!!!!!!!!!!!!!
+  // dla funkcji deleteRoom, incr, decr, houseid jest zgarniany z parenta!!!!!!!
+
   return (
     <div className='main-house-block'>
       <div>
@@ -47,28 +65,36 @@ const AddHouseBlock = ({ data, houses, setHouses }) => {
         </IconButton>
       </div>
 
+      <div>
+        <div className='main-house-block__add-button'>
+          <Button id={data.id} onClick={addRoom} variant='contained'>
+            Dodaj pokój
+          </Button>
+        </div>
+      </div>
+
       <div className='main-house-block__room-block' id={data.id}>
-        <IconButton id={data.id} onClick={addRoom}>
-          Dodaj pokój
-          <AddCircleOutlineIcon />
-        </IconButton>
         {data.rooms.map((room) => (
           <React.Fragment key={room.id}>
-            <p className='main-house-block__text'>{room.name}</p>
-            <IconButton id={room.id} onClick={deleteRoom}>
-              Usuń pokój
-              <DeleteForeverIcon />
-            </IconButton>
+            <p className='main-house-block__text' id={data.id}>
+              {room.name}
+              <IconButton id={room.id} onClick={deleteRoom}>
+                <DeleteForeverIcon />
+              </IconButton>
+            </p>
 
-            <div className='main-house-block__input'>
-              <TextField type='text' size='big' inputMode='numeric' pattern='[0-9]*' label='Ilość osób' />
+            <div id={data.id}>
+              {room.people}
+              <IconButton id={room.id} onClick={(e) => changePeople(e, true)}>
+                <PersonAddIcon />
+              </IconButton>
+
+              <IconButton id={room.id} onClick={(e) => changePeople(e, false)}>
+                <PersonRemoveIcon />
+              </IconButton>
             </div>
           </React.Fragment>
         ))}
-      </div>
-
-      <div className='main-house-block__add-button'>
-        <Button variant='contained'>Dodaj kolejny pokój</Button>
       </div>
     </div>
   );
