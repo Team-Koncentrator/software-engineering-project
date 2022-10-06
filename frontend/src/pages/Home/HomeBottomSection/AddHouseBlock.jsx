@@ -3,13 +3,14 @@ import { Button, TextField, IconButton } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import './HomeBottomSection.css';
 
-const AddHouseBlock = ({ data, houses }) => {
+const AddHouseBlock = ({ data, houses, setHouses }) => {
   const { houseName } = data;
 
   const removeHouse = (e) => {
     const houseId = e.currentTarget.id;
-    const houseIndex = houses.findIndex((el) => el == houseId);
-
+    const houseIndex = houses.findIndex((el) => el.id == houseId);
+    const housesDeleted = houses.splice(houseIndex, 1);
+    setHouses([...houses]);
     console.log(houseIndex);
   };
 

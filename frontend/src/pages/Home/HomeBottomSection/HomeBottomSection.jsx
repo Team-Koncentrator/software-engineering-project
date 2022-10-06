@@ -46,7 +46,7 @@ const HomeBottomSection = ({ houses, setHouses, fileContent }) => {
         </div>
       </div>
       {houses.map((el) => (
-        <AddHouseBlock houses={houses} key={el.id} data={el} />
+        <AddHouseBlock houses={houses} key={el.id} data={el} setHouses={setHouses} />
       ))}
       <pre>{JSON.stringify(houses, undefined, 2)}</pre>
     </div>
