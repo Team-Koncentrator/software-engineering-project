@@ -48,7 +48,9 @@ const AddHouseBlock = ({ data, houses, setHouses }) => {
     const roomIndex = houses[houseIndex].rooms.findIndex((el) => el.id == roomId);
 
     if (add) houses[houseIndex].rooms[roomIndex].people += 1;
-    else houses[houseIndex].rooms[roomIndex].people -= 1;
+    else {
+      if (houses[houseIndex].rooms[roomIndex].people > 1) houses[houseIndex].rooms[roomIndex].people -= 1;
+    }
 
     setHouses([...houses]);
   };

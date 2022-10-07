@@ -19,6 +19,7 @@ const Home = () => {
   const [fileContent, setFileContent] = useState();
   const [fileHeader, setFileHeader] = useState();
   const [isHeaderConfirm, setIsHeaderConfirm] = useState(false);
+  const [peopleCounter, setPeopleCounter] = useState(0);
   const [houses, setHouses] = useState([
     {
       id: Math.random() * 0.8 + Math.PI,
@@ -75,7 +76,13 @@ const Home = () => {
         {isHeaderConfirm && (
           <div className='home-bootom-wrapper' id='home-bootom-wrapper--goto'>
             <h1 className='bottom-wrapper__header'>Krok 3. Wybierz na ile domków oraz pokoi chcecie się podzielić ;&#41;</h1>
-            <HomeBottomSection houses={houses} setHouses={setHouses} fileContent={fileContent} />
+            <HomeBottomSection
+              houses={houses}
+              setHouses={setHouses}
+              fileContent={fileContent}
+              peopleCounter={peopleCounter}
+              setPeopleCounter={setPeopleCounter}
+            />
           </div>
         )}
       </div>
