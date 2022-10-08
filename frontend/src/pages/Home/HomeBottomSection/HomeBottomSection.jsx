@@ -3,8 +3,20 @@ import React, { useState } from 'react';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import './HomeBottomSection.css';
 import AddHouseBlock from './AddHouseBlock';
+import axios from 'axios';
 
-const HomeBottomSection = ({ houses, setHouses, fileContent, peopleCounter, setPeopleCounter }) => {
+const HomeBottomSection = ({
+  houses,
+  setHouses,
+  fileContent,
+  peopleCounter,
+  setPeopleCounter,
+  confirmedHeader,
+  houseIdCounter,
+  setHouseIdCounter,
+  roomIdCounter,
+  setRoomIdCounter
+}) => {
   const countPeople = () => {
     let counters = 0;
     counters = houses.map((house) => house.rooms.map((room) => (counters += room.people)));
@@ -16,25 +28,38 @@ const HomeBottomSection = ({ houses, setHouses, fileContent, peopleCounter, setP
   };
 
   const handleAddHouse = () => {
+    roomIdCounter.push(1);
+    houseIdCounter += 1;
+    setHouseIdCounter(houseIdCounter);
     setHouses([
       ...houses,
       {
         id: Math.random() * 0.8 + Math.PI,
-        houseName: 'Domek 1',
+        houseName: 'Domek ' + houseIdCounter,
         rooms: [{ id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', people: 2 }]
       }
     ]);
+    countPeople();
+    console.log(roomIdCounter);
   };
-  countPeople();
 
-  const submitAll = (e) => {
-    console.log(e);
+  const submitAll = async (e) => {
+    let dataToSend = { houses: houses, people: fileContent, header: confirmedHeader };
+    console.log(dataToSend);
+
+    const options = { 'Content-Type': 'application/json' };
+    try {
+      const response = await axios.post('http://localhost:3001/api/create/csv', dataToSend, options);
+      console.log(response.data.headers);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
     <div className='houses-select'>
       <div>Ilość wprowadzonych uczestników z pliku: {JSON.stringify(fileContent.length)}</div>
-      <div onClick={countPeople}>Ilość wprowadzonych uczestników {peopleCounter}</div>
+      <div>Ilość miejsc w domkach: {peopleCounter}</div>
       <div className='add-house-block'>
         <span className='add-house-block__button-text'>Dodaj domek</span>
         <IconButton onClick={handleAddHouse}>
@@ -42,14 +67,22 @@ const HomeBottomSection = ({ houses, setHouses, fileContent, peopleCounter, setP
         </IconButton>
       </div>
       {houses.map((el) => (
-        <AddHouseBlock houses={houses} key={el.id} data={el} setHouses={setHouses} />
+        <AddHouseBlock
+          houses={houses}
+          key={el.id}
+          data={el}
+          setHouses={setHouses}
+          countPeople={countPeople}
+          roomIdCounter={roomIdCounter}
+          setRoomIdCounter={setRoomIdCounter}
+        />
       ))}
+
       <div className='add-house-block__confirm-button'>
         <Button variant='contained' onClick={submitAll}>
           Zatwierdź
         </Button>
       </div>
-      <pre>{JSON.stringify(houses, undefined, 2)}</pre>
     </div>
   );
 };

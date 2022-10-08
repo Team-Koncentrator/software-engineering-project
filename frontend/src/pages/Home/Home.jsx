@@ -2,16 +2,26 @@
  * Created by Pawel on 18.09.2022.
  */
 
-import { Button, LinearProgress, Typography } from '@mui/material';
-import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import * as React from 'react';
+import { useState } from 'react';
 import './Home.css';
 import HomeTopSection from 'pages/Home/HomeTopSection/HomeTopSection';
 import HomeConfirmHeaderForm from 'pages/Home/HomeConfirmHeaderForm/HomeConfirmHeaderForm';
-import HomeSubPageForm from 'pages/Home/HomeSubPageForm/HomeSubPageForm';
 import HomeBottomSection from 'pages/Home/HomeBottomSection/HomeBottomSection';
-import { useState } from 'react';
-import HomeCSVTable from './HomeCSVTable/HomeCSVTable';
+//import HomeSubPageForm from 'pages/Home/HomeSubPageForm/HomeSubPageForm';
+//import HomeCSVTable from './HomeCSVTable/HomeCSVTable';
+
+{
+  /* 
+TODO: WAŻNE
+  * wystylować
+  * wysłać do backendu
+
+ TODO: POBOCZNE
+  * dodać inputy tekstowe do nazw domków i pokoi
+  * walidacja danych (np. required)
+*/
+}
 
 const Home = () => {
   const [progress, setProgress] = React.useState(66);
@@ -20,16 +30,22 @@ const Home = () => {
   const [fileHeader, setFileHeader] = useState();
   const [isHeaderConfirm, setIsHeaderConfirm] = useState(false);
   const [peopleCounter, setPeopleCounter] = useState(0);
+  const [houseIdCounter, setHouseIdCounter] = useState(1);
+  const [roomIdCounter, setRoomIdCounter] = useState([1]);
   const [houses, setHouses] = useState([
     {
       id: Math.random() * 0.8 + Math.PI,
       houseName: 'Domek 1',
-      rooms: [
-        { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', people: 3 },
-        { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 2', people: 3 }
-      ]
+      rooms: [{ id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', people: 2 }]
     }
   ]);
+  const [confirmedHeader, setConfirmedHeader] = useState({
+    name: '',
+    surname: '',
+    age: '',
+    gender: '',
+    with_who: ''
+  });
 
   return (
     <>
@@ -66,7 +82,13 @@ const Home = () => {
             <p className='csv-wrapper__subheader'>
               Zrób to w taki sposób aby nazwy placeholderów pokrywały się z tym co pokazuje Ci się w polach po kliknięciu odpowiedniego inputa :D
             </p>
-            <HomeConfirmHeaderForm fileHeader={fileHeader} isHeaderConfirm={isHeaderConfirm} setIsHeaderConfirm={setIsHeaderConfirm} />
+            <HomeConfirmHeaderForm
+              fileHeader={fileHeader}
+              isHeaderConfirm={isHeaderConfirm}
+              setIsHeaderConfirm={setIsHeaderConfirm}
+              confirmedHeader={confirmedHeader}
+              setConfirmedHeader={setConfirmedHeader}
+            />
             {/* {isHeaderConfirm && <HomeCSVTable data={fileContent}></HomeCSVTable>} */}
           </div>
         )}
@@ -82,6 +104,11 @@ const Home = () => {
               fileContent={fileContent}
               peopleCounter={peopleCounter}
               setPeopleCounter={setPeopleCounter}
+              confirmedHeader={confirmedHeader}
+              houseIdCounter={houseIdCounter}
+              setHouseIdCounter={setHouseIdCounter}
+              roomIdCounter={roomIdCounter}
+              setRoomIdCounter={setRoomIdCounter}
             />
           </div>
         )}

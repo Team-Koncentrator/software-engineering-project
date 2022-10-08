@@ -6,7 +6,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import './HomeBottomSection.css';
 
-const AddHouseBlock = ({ data, houses, setHouses }) => {
+const AddHouseBlock = ({ data, houses, setHouses, countPeople, roomIdCounter, setRoomIdCounter }) => {
   const { houseName } = data;
 
   const deleteHouse = (e) => {
@@ -14,18 +14,25 @@ const AddHouseBlock = ({ data, houses, setHouses }) => {
     const houseIndex = houses.findIndex((el) => el.id == houseId);
 
     houses.splice(houseIndex, 1);
+    roomIdCounter.splice(houseIndex, 1);
 
     setHouses([...houses]);
+    setRoomIdCounter(roomIdCounter);
+    countPeople();
+    console.log(roomIdCounter);
   };
 
   const addRoom = (e) => {
     const houseId = e.currentTarget.id;
     const houseIndex = houses.findIndex((el) => el.id == houseId);
 
-    const room = { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 2', people: 2 };
-
+    roomIdCounter[houseIndex] += 1;
+    const room = { id: Math.random() * 0.8 + Math.PI, name: 'Pokój ' + roomIdCounter[houseIndex], people: 2 };
     houses[houseIndex].rooms.push(room);
+
+    setRoomIdCounter(roomIdCounter);
     setHouses([...houses]);
+    countPeople();
   };
 
   const deleteRoom = (e) => {
@@ -33,11 +40,14 @@ const AddHouseBlock = ({ data, houses, setHouses }) => {
     const roomId = e.currentTarget.id;
 
     const houseIndex = houses.findIndex((el) => el.id == houseId);
+
+    if (houses[houseIndex].rooms.length <= 1) return;
     const roomIndex = houses[houseIndex].rooms.findIndex((el) => el.id == roomId);
 
     houses[houseIndex].rooms.splice(roomIndex, 1);
 
     setHouses([...houses]);
+    countPeople();
   };
 
   const changePeople = (e, add) => {
@@ -53,6 +63,7 @@ const AddHouseBlock = ({ data, houses, setHouses }) => {
     }
 
     setHouses([...houses]);
+    countPeople();
   };
 
   // !!!!!!!!!!!!!!!!!!!!!!!!! UWAGA RUSZAJĄC DIVY !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -86,11 +97,10 @@ const AddHouseBlock = ({ data, houses, setHouses }) => {
             </p>
 
             <div id={data.id}>
-              {room.people}
+              Pokój {room.people}-osobowy <br />
               <IconButton id={room.id} onClick={(e) => changePeople(e, true)}>
                 <PersonAddIcon />
               </IconButton>
-
               <IconButton id={room.id} onClick={(e) => changePeople(e, false)}>
                 <PersonRemoveIcon />
               </IconButton>
