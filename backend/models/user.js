@@ -16,7 +16,7 @@ const usersSchema = new mongoose.Schema({
   password: {
     type: String,
   },
-  with_who: {
+  withWho: {
     type: String,
   },
   isAdmin: {

@@ -6,6 +6,7 @@ const User = require("../models/user");
 router.get("/", async (request, response) => {
   try {
     const users = await User.find();
+    //const users = await User.find({}, { password: 0 });  // don't pass password
     response.json(users);
   } catch (err) {
     response.status(500).json({ message: err.message });
@@ -20,11 +21,13 @@ router.get("/:id", getUser, (request, response) => {
 // create one
 router.post("/", async (request, response) => {
   const user = new User({
-    firstName: request.body.firstName,
-    lastName: request.body.lastName,
+    name: request.body.name,
+    surname: request.body.surname,
     age: request.body.age,
     gender: request.body.gender,
     password: request.body.password,
+    withWho: request.body.withWho,
+    isAdmin: request.body.isAdmin,
   });
 
   try {
@@ -37,14 +40,17 @@ router.post("/", async (request, response) => {
 
 // update one
 router.patch("/:id", getUser, async (request, response) => {
-  if (request.body.firstName != null)
-    response.user.firstName = request.body.firstName;
-  if (request.body.lastName != null)
-    response.user.lastName = request.body.lastName;
+  if (request.body.name != null) response.user.name = request.body.name;
+  if (request.body.surname != null)
+    response.user.surname = request.body.surname;
   if (request.body.age != null) response.user.age = request.body.age;
   if (request.body.gender != null) response.user.gender = request.body.gender;
   if (request.body.password != null)
     response.user.password = request.body.password;
+  if (request.body.isAdmin != null)
+    response.user.isAdmin = request.body.isAdmin;
+  if (request.body.withWho != null)
+    response.user.withWho = request.body.withWho;
 
   try {
     const updatedUser = await response.user.save();
