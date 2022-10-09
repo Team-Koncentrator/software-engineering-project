@@ -45,12 +45,14 @@ const HomeBottomSection = ({
 
   const submitAll = async (e) => {
     let dataToSend = { houses: houses, people: fileContent, header: confirmedHeader };
+    console.log('dataToSend:');
     console.log(dataToSend);
 
     const options = { 'Content-Type': 'application/json' };
     try {
-      const response = await axios.post('http://localhost:3001/api/create/csv', dataToSend, options);
-      console.log(response.data.headers);
+      const response = await axios.post('http://localhost:3001/api/houses/csv', dataToSend, options);
+      console.log('response.data:');
+      console.log(response.data);
     } catch (e) {
       console.log(e);
     }

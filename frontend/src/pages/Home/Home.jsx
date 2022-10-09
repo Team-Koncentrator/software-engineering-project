@@ -13,10 +13,6 @@ import HomeBottomSection from 'pages/Home/HomeBottomSection/HomeBottomSection';
 
 {
   /* 
-TODO: WAŻNE
-  * wystylować
-  * wysłać do backendu
-
  TODO: POBOCZNE
   * dodać inputy tekstowe do nazw domków i pokoi
   * walidacja danych (np. required)
