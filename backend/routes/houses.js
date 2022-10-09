@@ -5,29 +5,74 @@ const User = require("../models/user");
 
 // handle csv
 router.post("/csv", async (request, response) => {
-  const house = new House({
-    name: request.body.name,
-    surname: request.body.surname,
-    age: request.body.age,
-    gender: request.body.gender,
-    password: request.body.password,
-    withWho: request.body.withWho,
-    isAdmin: request.body.isAdmin,
+  //console.log(request.body);
+
+  //adding houses
+  request.body.houses.map(async (house) => {
+    let houseDocument = new House({
+      houseName: house.houseName,
+      rooms: house.rooms,
+    });
+
+    try {
+      const newHouse = await houseDocument.save();
+    } catch (error) {
+      response.status(400).json({ message: error.message });
+      return;
+    }
   });
 
-  try {
-    const newUser = await house.save();
-    response.status(201).json(newUser);
-  } catch (error) {
-    response.status(400).json({ message: error.message });
-  }
+  // rename user keys by headers
+  request.body.people.map((user) => {
+    delete Object.assign(user, { ["name"]: user[request.body.header.name] })[
+      request.body.header.name
+    ];
+
+    delete Object.assign(user, {
+      ["surname"]: user[request.body.header.surname],
+    })[request.body.header.name];
+
+    delete Object.assign(user, { ["age"]: user[request.body.header.age] })[
+      request.body.header.name
+    ];
+
+    delete Object.assign(user, {
+      ["gender"]: user[request.body.header.gender],
+    })[request.body.header.name];
+
+    delete Object.assign(user, {
+      ["withWho"]: user[request.body.header.withWho],
+    })[request.body.header.name];
+  });
+
+  console.log(request.body.people);
+
+  //request.body.header.name
+
+  request.body.people.map(async (user) => {
+    let userDocument = new User({
+      name: user.name,
+      surname: user.surname,
+      age: user.age,
+      gender: user.age,
+      withWho: user.withWho,
+      isAdmin: false,
+      password: undefined,
+    });
+
+    try {
+      const newUser = await userDocument.save();
+    } catch (error) {
+      response.status(400).json({ message: error.message });
+      return;
+    }
+  });
 });
 
 // get all
 router.get("/", async (request, response) => {
   try {
     const houses = await House.find();
-    //const houses = await House.find({}, { password: 0 });  // don't pass password
     response.json(houses);
   } catch (err) {
     response.status(500).json({ message: err.message });
@@ -35,54 +80,40 @@ router.get("/", async (request, response) => {
 });
 
 // get one
-router.get("/:id", getUser, (request, response) => {
+router.get("/:id", getHouse, (request, response) => {
   response.send(response.house);
 });
 
 // create one
 router.post("/", async (request, response) => {
   const house = new House({
-    name: request.body.name,
-    surname: request.body.surname,
-    age: request.body.age,
-    gender: request.body.gender,
-    password: request.body.password,
-    withWho: request.body.withWho,
-    isAdmin: request.body.isAdmin,
+    houseName: request.body.houseName,
+    rooms: request.body.rooms,
   });
 
   try {
-    const newUser = await house.save();
-    response.status(201).json(newUser);
+    const newHouse = await house.save();
+    response.status(201).json(newHouse);
   } catch (error) {
     response.status(400).json({ message: error.message });
   }
 });
 
 // update one
-router.patch("/:id", getUser, async (request, response) => {
-  if (request.body.name != null) response.house.name = request.body.name;
-  if (request.body.surname != null)
-    response.house.surname = request.body.surname;
-  if (request.body.age != null) response.house.age = request.body.age;
-  if (request.body.gender != null) response.house.gender = request.body.gender;
-  if (request.body.password != null)
-    response.house.password = request.body.password;
-  if (request.body.isAdmin != null)
-    response.house.isAdmin = request.body.isAdmin;
-  if (request.body.withWho != null)
-    response.house.withWho = request.body.withWho;
+router.patch("/:id", getHouse, async (request, response) => {
+  if (request.body.houseName != null)
+    response.house.houseName = request.body.houseName;
 
   try {
-    const updatedUser = await response.house.save();
-    response.json(updatedUser);
+    const updatedHouse = await response.house.save();
+    response.json(updatedHouse);
   } catch (error) {
     response.status(400).json({ message: error.message });
   }
 });
 
 // delete one
-router.delete("/:id", getUser, async (request, response) => {
+router.delete("/:id", getHouse, async (request, response) => {
   try {
     await response.house.remove();
     response.json({ message: "House deleted" });
@@ -91,7 +122,7 @@ router.delete("/:id", getUser, async (request, response) => {
   }
 });
 
-async function getUser(request, response, next) {
+async function getHouse(request, response, next) {
   let house;
   try {
     house = await House.findById(request.params.id);

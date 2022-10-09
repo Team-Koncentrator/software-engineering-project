@@ -25,14 +25,14 @@ const Home = () => {
   const [fileContent, setFileContent] = useState();
   const [fileHeader, setFileHeader] = useState();
   const [isHeaderConfirm, setIsHeaderConfirm] = useState(false);
-  const [peopleCounter, setPeopleCounter] = useState(0);
+  const [peopleCounter, setPeopleCounter] = useState(2);
   const [houseIdCounter, setHouseIdCounter] = useState(1);
   const [roomIdCounter, setRoomIdCounter] = useState([1]);
   const [houses, setHouses] = useState([
     {
       id: Math.random() * 0.8 + Math.PI,
       houseName: 'Domek 1',
-      rooms: [{ id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', people: 2 }]
+      rooms: [{ id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', size: 2 }]
     }
   ]);
   const [confirmedHeader, setConfirmedHeader] = useState({
@@ -40,7 +40,7 @@ const Home = () => {
     surname: '',
     age: '',
     gender: '',
-    with_who: ''
+    withWho: ''
   });
 
   return (

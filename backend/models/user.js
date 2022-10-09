@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const User = require("./house");
 
 const usersSchema = new mongoose.Schema({
   name: {
@@ -22,6 +23,7 @@ const usersSchema = new mongoose.Schema({
   isAdmin: {
     type: Boolean,
   },
+  house: { type: mongoose.Schema.Types.ObjectId, ref: "House" },
 });
 
 module.exports = mongoose.model("User", usersSchema);
