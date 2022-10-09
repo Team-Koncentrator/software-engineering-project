@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const usersSchema = new mongoose.Schema({
-  firstName: {
+  name: {
     type: String,
   },
-  lastName: {
+  surname: {
     type: String,
   },
   age: {
@@ -15,6 +15,12 @@ const usersSchema = new mongoose.Schema({
   },
   password: {
     type: String,
+  },
+  with_who: {
+    type: String,
+  },
+  isAdmin: {
+    type: Boolean,
   },
 });
 
