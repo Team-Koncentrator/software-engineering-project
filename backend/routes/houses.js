@@ -52,14 +52,55 @@ router.post("/csv", async (request, response) => {
       usersToInsert.push(userDocument);
     });
 
-    // add users
     try {
+      // add users
       const insertedUsers = await User.insertMany(usersToInsert);
-      console.log(insertedUsers);
 
-      // assign users to houses
+      // sort inserted users
+      const men = [];
+      const women = [];
+      insertedUsers.map((user) => {
+        if (user.gender != undefined) {
+          gender = user.gender.toLowerCase();
+          if (
+            gender.includes("female") ||
+            gender.includes("kobieta") ||
+            gender.includes("woman") ||
+            gender.includes("k")
+          )
+            women.push(user);
+          else {
+            men.push(user);
+          }
+        }
+      });
 
+      const compare = (a, b) => {
+        if (a.age < b.age) {
+          return -1;
+        }
+        if (a.age > b.age) {
+          return 1;
+        }
+        return 0;
+      };
+
+      men.sort(compare);
+      women.sort(compare);
+
+      try {
+        // TODO
+        response.status(200).json({ message: "ok" });
+      } catch {
+        console.log(error);
+        response.status(400).json({ message: error.message });
+        return;
+      }
       // populate
+
+      response
+        .status(201)
+        .json({ message: "Houses and users created, users assigned" });
     } catch (error) {
       console.log(error.message);
       response.status(400).json({ message: error.message });
