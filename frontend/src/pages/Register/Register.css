@@ -6,7 +6,7 @@
   flex-direction: row;
   margin: 0 auto;
   max-width: 1140px;
-  padding: 180px 48px 0;
+  padding: 50px 48px 0;
 }
 
 .regsiter-wrapper {
@@ -51,7 +51,15 @@
 .register-wrapper__header {
   font: 60px/1.5 'open-500', sans-serif;
   color: #004990;
-  padding: 0 0 50px;
+  padding: 25px 0 50px;
+}
+
+.errmsg {
+  color: #ba3939;
+  background: #ffe0e0;
+  border: 1px solid #a33a3a;
+  text-align: center;
+  padding: 20px 20px;
 }
 
 .input-wrapper__label {
