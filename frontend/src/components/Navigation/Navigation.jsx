@@ -7,12 +7,12 @@ import { Nav, NavLink, Bars, NavMenu } from './NavigationElements';
 import myLogo from 'images/logo.svg';
 import { isLogged } from 'utils/isLogged';
 import { useState } from 'react';
-import { render } from 'react-dom';
 
 const Navigation = (event) => {
   const logged = isLogged();
-  const handleLogout = (event) => {
-    localStorage.setItem('isLogged', false);
+
+  const handleLogout = async (event) => {
+    localStorage.clear();
     window.location.reload(); //for development
   };
 
@@ -59,7 +59,7 @@ const Navigation = (event) => {
     : menuItems.push({
         id: '6',
         label: 'Logout',
-        url: 'login',
+        url: '',
         order: '6',
         click: { handleLogout }
       });
@@ -76,10 +76,9 @@ const Navigation = (event) => {
           .sort((a, b) => Number(a.order) - Number(b.order))
           .map((item) => (
             <li key={item.id}>
-              <NavLink to={item.url} onClick={handleLogout}>
+              <NavLink to={item.url} onClick={item.id === '6' ? handleLogout : undefined}>
                 {item.label}
               </NavLink>
-              <button onClick={handleLogout}>dupa</button>
             </li>
           ))}
       </NavMenu>

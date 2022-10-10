@@ -3,7 +3,7 @@ import AuthContext from './context/AuthProvider';
 import axios from 'api/axios';
 import './Login.css';
 import { NavLink } from 'react-router-dom';
-import isLogged from '../../utils/isLogged';
+import { isLogged } from 'utils/isLogged';
 
 const LOGIN_URL = '/users';
 
@@ -17,20 +17,10 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
   const [isUser, setIsUser] = useState(false);
-  const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
   }, []);
-
-  useEffect(() => {
-    setErrMsg('');
-  }, [user, pwd]);
-
-  useEffect(() => {
-    // storing input name
-    localStorage.setItem(isLogged, false);
-  }, [isLogged]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,8 +37,6 @@ const Login = () => {
         )
       );
 
-      console.log('dupa');
-
       console.log(response);
 
       response.data.forEach((item) => {
@@ -56,8 +44,9 @@ const Login = () => {
           console.log(item.firstName);
           console.log(user);
           setSuccess(true);
+          setUser('');
+          setPwd('');
           localStorage.setItem('isLogged', true);
-          console.log(isLogged);
           throw 'break';
         }
       });
@@ -68,9 +57,8 @@ const Login = () => {
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
       setAuth({ user, pwd, roles, accessToken });
-      setUser('');
+      setErrMsg('Nie znaleziono użytkownika');
       setPwd('');
-
       //      setSuccess(true);
     } catch (err) {
       setIsUser(false);
@@ -83,6 +71,7 @@ const Login = () => {
     window.history.replaceState('/login', '/register');
   };
 
+  const logged = isLogged();
   return (
     <div className='login-page-wrapper'>
       {success ? (
@@ -96,16 +85,14 @@ const Login = () => {
         </section>
       ) : (
         <>
-          <section className='login-wrapper'>
+          <section className={logged ? 'login-wrapper hidden' : 'login-wrapper'}>
             <p ref={errRef} className={`m-hidden ${errMsg ? 'errorBox' : ''}`} aria-live='assertive'>
               {errMsg}
             </p>
             <h1 className='login-wrapper__header'>Logowanie</h1>
-            <form onSubmit={handleSubmit} className='login-wrapper__form'>
+            <form onSubmit={handleSubmit} className='login-wrapper__form '>
               <div className='form__input-wrapper'>
-                <label htmlFor='username' className='input-wrapper__label'>
-                  <span className='label__asterisk'>*</span>Nazwa użytkownika
-                </label>
+                <label htmlFor='username' className='input-wrapper__label'></label>
                 <input
                   className='input-wrapper__input'
                   type='text'
@@ -141,7 +128,7 @@ const Login = () => {
               </div>
             </form>
           </section>
-          <section className='register-wrapper'>
+          <section className={logged ? 'register-wrapper__form hidden' : 'register-wrapper__form '}>
             <h1 className='register-wrapper__header'>Rejestracja</h1>
             <p className='register-wrapper__subheader'>Nie masz jeszcze konta?</p>
             <ul className='register-wrapper__list'>
@@ -156,6 +143,13 @@ const Login = () => {
                 Zarejestruj się
               </NavLink>
             </div>
+          </section>
+          <section className={!logged ? 'hidden' : undefined}>
+            <h1>Jesteś zalogowany</h1>
+            <br />
+            <p>
+              <a href='/'>Przejdź do kreatora</a>
+            </p>
           </section>
         </>
       )}
