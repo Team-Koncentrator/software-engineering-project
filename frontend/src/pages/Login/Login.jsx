@@ -42,15 +42,15 @@ const Login = () => {
       console.log('dupa');
 
       console.log(response);
-      for (let i = response.data.length - 1; i > 0; i--) {
-        if (pwd === response.data[i].password && user === response.data[i].firstName) {
-          setIsUser(true);
+
+      response.data.forEach((item) => {
+        if (item.firstName === user && item.password === pwd) {
+          console.log(item.firstName);
+          console.log(user);
           setSuccess(true);
+          throw 'break';
         }
-        console.log(response.data[i]._id);
-        console.log(response.data[i].password);
-        console.log(response.data[i].firstName);
-      }
+      });
 
       //console.log(JSON.stringify(response?.data));
       console.log(response?.data?.accessToken);
@@ -62,15 +62,8 @@ const Login = () => {
       setPwd('');
       //      setSuccess(true);
     } catch (err) {
-      if (!err?.response) {
-        setErrMsg('Brak odpowiedzi serwera');
-      } else if (err.response?.status === 400) {
-        setErrMsg('Brakuje nazwy użytkownika lub hasła');
-      } else if (err.response?.status === 401) {
-        setErrMsg('Bark autoryzacji');
-      } else {
-        setErrMsg('Logowanie nieudane');
-      }
+      setIsUser(false);
+      setErrMsg('');
       errRef.current.focus();
     }
   };

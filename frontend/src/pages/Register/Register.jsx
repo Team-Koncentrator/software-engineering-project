@@ -19,7 +19,7 @@ const Register = () => {
   const nameRef = useRef();
   const errRef = useRef();
 
-  const [username, setUsername] = useState();
+  const [username, setUsername] = useState('');
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
 
@@ -42,7 +42,7 @@ const Register = () => {
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
 
-  const [errMsg, setErrMsg] = useState('');
+  const [errMsg, setErrMsg] = useState();
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -65,11 +65,11 @@ const Register = () => {
     setValidPwd(PWD_REGEX.test(pwd));
     setValidMatch(pwd === matchPwd);
   }, [pwd, matchPwd]);
-
+  /*
   useEffect(() => {
     setErrMsg('');
   }, [username, firstName, lastName, pwd, matchPwd]);
-
+*/
   const handleSubmit = async (e) => {
     e.preventDefault();
     // if button enabled with JS hack
@@ -84,12 +84,13 @@ const Register = () => {
     }
 
     try {
+      console.log('pobierz uzytkownikow');
       const response = await axios.get(
         '/users',
         JSON.stringify(
           { username, pwd },
           {
-            headers: { 'asdasd-Type': 'adasd/jsodn' },
+            headers: { 'Content-Type': 'application/json' },
             withCredentials: true
           }
         )
@@ -97,37 +98,47 @@ const Register = () => {
 
       response.data.forEach((item) => {
         if (item.firstName === firstName) {
+          console.log(item.firstName);
+          console.log(firstName);
+          console.log('Jest juz uzytkownik');
           setErrMsg('Jest już taki użytkownik');
           setSuccess(false);
           setIsUser(true);
-          throw new Error('Jest już taki cwel');
+          throw 'break';
         }
       });
+
+      if (!isUser) {
+        console.log('tworze uzytkownika');
+        const username = {
+          firstName: firstName,
+          lastName: lastName,
+          age: new Date().getFullYear() - parseInt(selectedDate.toString().substring(11, 15)),
+          gender: firstName.charAt(firstName.length - 1) === 'a' || 'A' ? 'Female' : 'Male',
+          password: pwd //CryptoJS.AES.encrypt(pwd, 'testkey').toString()
+        };
+
+        try {
+          console.log('wysylam posta');
+          const resp = await axios.post(REGISTER_URL, username);
+          console.log('User created');
+          setSuccess(true);
+        } catch (err) {
+          console.log(err);
+        }
+
+        setUsername('');
+        setFirstName('');
+        setLastName('');
+        setPwd('');
+        setMatchPwd('');
+      }
     } catch (err) {
       console.log(err);
+      setIsUser(false);
+      setErrMsg('');
     }
 
-    if (!isUser) {
-      const user = {
-        firstName: firstName,
-        lastName: lastName,
-        age: new Date().getFullYear() - parseInt(selectedDate.toString().substring(11, 15)),
-        gender: firstName.charAt(firstName.length - 1) === 'a' || 'A' ? 'Female' : 'Male',
-        password: pwd //CryptoJS.AES.encrypt(pwd, 'testkey').toString()
-      };
-
-      try {
-        const resp = await axios.post(REGISTER_URL, user);
-      } catch (err) {
-        console.log(err);
-      }
-      setSuccess(true);
-      setUsername('');
-      setFirstName('');
-      setLastName('');
-      setPwd('');
-      setMatchPwd('');
-    }
     setPwd('');
     setMatchPwd('');
   };
@@ -157,7 +168,7 @@ const Register = () => {
                 <span className='label__asterisk'>*</span>
                 Nazwa użytkownika
                 <FaCheck className={validName ? 'valid' : 'hide'}> </FaCheck>
-                <FaTimes className={validName || !user ? 'hide' : 'invalid'} />
+                <FaTimes className={validName || !username ? 'hide' : 'invalid'} />
               </label>
               <input
                 type='text'
@@ -166,15 +177,15 @@ const Register = () => {
                 placeholder='Podaj login lub nazwę użytkownika'
                 ref={userRef}
                 autoComplete='off'
-                onChange={(e) => setUser(e.target.value)}
-                value={user}
+                onChange={(e) => setUsername(e.target.value)}
+                value={username}
                 required
                 aria-invalid={validName ? 'false' : 'true'}
                 aria-describedby='uidnote'
                 onFocus={() => setUserFocus(true)}
                 onBlur={() => setUserFocus(false)}
               />
-              <p id='uidnote' className={userFocus && user && !validName ? 'instructions' : 'offscreen'}>
+              <p id='uidnote' className={userFocus && username && !validName ? 'instructions' : 'offscreen'}>
                 <FaInfoCircle />
                 4 do 24 znaków.
                 <br />
@@ -253,7 +264,7 @@ const Register = () => {
                 showMonthDropdown></DatePicker>
             </div>
             <div className='form__input-wrapper'>
-              <label class='input-wrapper__label' htmlFor='password'>
+              <label className='input-wrapper__label' htmlFor='password'>
                 <span className='label__asterisk'>*</span>
                 Hasło
                 <FaCheck className={validPwd ? 'valid' : 'hide'} />
