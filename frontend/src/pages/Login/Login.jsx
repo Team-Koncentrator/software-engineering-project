@@ -14,7 +14,6 @@ const Login = () => {
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
-  const [isUser, setIsUser] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -38,21 +37,8 @@ const Login = () => {
           }
         )
       );
-
-      console.log('dupa');
-
-      console.log(response);
-
-      response.data.forEach((item) => {
-        if (item.firstName === user && item.password === pwd) {
-          console.log(item.firstName);
-          console.log(user);
-          setSuccess(true);
-          throw 'break';
-        }
-      });
-
-      //console.log(JSON.stringify(response?.data));
+      console.log(JSON.stringify(response?.data));
+      //console.log(JSON.stringify(response));
       console.log(response?.data?.accessToken);
       console.log(response?.data?.roles);
       const accessToken = response?.data?.accessToken;
@@ -60,10 +46,17 @@ const Login = () => {
       setAuth({ user, pwd, roles, accessToken });
       setUser('');
       setPwd('');
-      //      setSuccess(true);
+      setSuccess(true);
     } catch (err) {
-      setIsUser(false);
-      setErrMsg('');
+      if (!err?.response) {
+        setErrMsg('No Server Response');
+      } else if (err.response?.status === 400) {
+        setErrMsg('Missing Username or Password');
+      } else if (err.response?.status === 401) {
+        setErrMsg('Unauthorized');
+      } else {
+        setErrMsg('Login Failed');
+      }
       errRef.current.focus();
     }
   };
@@ -89,16 +82,16 @@ const Login = () => {
             <p ref={errRef} className={`m-hidden ${errMsg ? 'errorBox' : ''}`} aria-live='assertive'>
               {errMsg}
             </p>
-            <h1 className='login-wrapper__header'>Logowanie</h1>
+            <h1 className='login-wrapper__header'>Login</h1>
             <form onSubmit={handleSubmit} className='login-wrapper__form'>
               <div className='form__input-wrapper'>
                 <label htmlFor='username' className='input-wrapper__label'>
-                  <span className='label__asterisk'>*</span>Nazwa użytkownika
+                  <span className='label__asterisk'>*</span>Username
                 </label>
                 <input
                   className='input-wrapper__input'
                   type='text'
-                  placeholder='Wpisz nazwę użytkownika'
+                  placeholder='Username'
                   id='username'
                   ref={userRef}
                   autoComplete='off'
@@ -109,11 +102,11 @@ const Login = () => {
               </div>
               <div className='form__input-wrapper'>
                 <label htmlFor='password' className='input-wrapper__label'>
-                  <span className='label__asterisk'>*</span>Hasło
+                  <span className='label__asterisk'>*</span>Password
                 </label>
                 <input
                   className='input-wrapper__input'
-                  placeholder='Wpisz hasło'
+                  placeholder='Password'
                   type='password'
                   id='password'
                   onChange={(e) => setPwd(e.target.value)}
@@ -123,26 +116,26 @@ const Login = () => {
               </div>
               {/* TODO */}
               <a href='#' className='form__forgot-password'>
-                Zapomniałeś hasła?
+                Forgot your password?
               </a>
               <div className='form__button-wrapper'>
-                <button className='form__button'>Zaloguj się</button>
+                <button className='form__button'>Sign In</button>
               </div>
             </form>
           </section>
           <section className='register-wrapper'>
-            <h1 className='register-wrapper__header'>Rejestracja</h1>
-            <p className='register-wrapper__subheader'>Nie masz jeszcze konta?</p>
+            <h1 className='register-wrapper__header'>Register</h1>
+            <p className='register-wrapper__subheader'>Don't have an account yet?</p>
             <ul className='register-wrapper__list'>
-              <p className='list__text'>Zarejestruj się i otrzymaj dostęp do:</p>
-              <li>- autorskiego kreatora</li>
-              <li>- towrzenie przydziałów</li>
-              <li>- zapisywanie przydziałów</li>
+              <p className='list__text'>Register now and have access to:</p>
+              <li>- cos trzeba tu wpisac</li>
+              <li>- jakies trzy</li>
+              <li>- fajne hasła</li>
             </ul>
             {/*put router link here*/}
             <div className='form__button-wrapper'>
               <NavLink className='form__button link' to={'/register'}>
-                Zarejestruj się
+                Register
               </NavLink>
             </div>
           </section>

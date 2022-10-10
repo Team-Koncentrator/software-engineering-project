@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
-import { COMPONENT, SIDEBAR_ITEM, ROW, COLUMN } from 'components/Dnd/constants';
+import { COMPONENT, SIDEBAR_ITEM, ROW, COLUMN } from 'components/dnd/constants';
 
 const ACCEPTS = [SIDEBAR_ITEM, COMPONENT, ROW, COLUMN];
 
