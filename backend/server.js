@@ -13,7 +13,11 @@ const app = express();
 app.use(express.json()); // accept json in header
 
 app.use(cors());
+
 const usersRouter = require("./routes/users");
-app.use("/users", usersRouter);
+const housesRouter = require("./routes/houses");
+
+app.use("/api/users", usersRouter);
+app.use("/api/houses", housesRouter);
 
 app.listen(3001, () => console.log("API Server started at port 3001"));
