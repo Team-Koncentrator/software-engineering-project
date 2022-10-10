@@ -1,16 +1,27 @@
+.hidden {
+  display: none;
+}
+
 .login-page-wrapper {
   display: flex;
   justify-content: center;
   flex-direction: row;
   margin: 0 auto;
   max-width: 1140px;
-  padding: 180px 48px 0;
+  padding: 100px 48px 0;
 }
 
 .login-wrapper {
   flex-basis: 58%;
-  padding: 0 49px 74px 0;
+  padding: 0 75px 74px 0;
   border-right: 1px solid #dee2e6;
+  border-bottom: none;
+  position: relative;
+}
+
+.register-wrapper__form {
+  flex-basis: 58%;
+  padding: 0 0 74px 75px;
   border-bottom: none;
   position: relative;
 }

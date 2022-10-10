@@ -9,9 +9,10 @@
   padding: 50px 48px 0;
 }
 
-.regsiter-wrapper {
+.register-wrapper {
   flex-basis: 58%;
   padding: 0 49px 74px 0;
+  border-right: 1px solid #dee2e6;
   border-bottom: none;
   position: relative;
 }
@@ -51,7 +52,11 @@
 .register-wrapper__header {
   font: 60px/1.5 'open-500', sans-serif;
   color: #004990;
-  padding: 25px 0 50px;
+  padding: 0 0 20px;
+}
+
+.register-wrapper__list {
+  padding: 0 0 5px;
 }
 
 .errmsg {
