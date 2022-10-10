@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
-import { SIDEBAR_ITEM } from 'components/dnd/constants';
+import { SIDEBAR_ITEM } from 'components/Dnd/constants';
 
 const SideBarItem = ({ data }) => {
   const [{ opacity }, drag] = useDrag({

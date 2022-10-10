@@ -1,6 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
+  "proxy": "http://localhost:3001",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.4",
@@ -19,6 +20,7 @@
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.4.0",
     "react-scripts": "5.0.1",
+    "react-token-auth": "^2.3.8",
     "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },
