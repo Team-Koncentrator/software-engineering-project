@@ -10,11 +10,12 @@ Content-Type: application/json
 {
     "name": "Anna",
     "surname": "Wanna",
+    "nickname": "Bath",
     "age": 32,
     "gender": "m",
     "password": "123!Dupa",
     "withWho": "",
-    "isAdmin": true
+    "isAdmin": true,
 }
 
 ###

@@ -28,6 +28,7 @@ router.post("/", async (request, response) => {
     password: request.body.password,
     withWho: request.body.withWho,
     isAdmin: request.body.isAdmin,
+    nickname: request.body.nickname,
   });
 
   try {
@@ -51,6 +52,8 @@ router.patch("/:id", getUser, async (request, response) => {
     response.user.isAdmin = request.body.isAdmin;
   if (request.body.withWho != null)
     response.user.withWho = request.body.withWho;
+  if (request.body.nickname != null)
+    response.user.nickname = request.body.nickname;
 
   try {
     const updatedUser = await response.user.save();
@@ -79,7 +82,7 @@ async function getUser(request, response, next) {
       return response.status(404).json({ message: "Cant find the user" });
     }
   } catch (error) {
-    console.log("dupa: " + user);
+    console.log(user);
     return response.status(500).json({ message: error.message });
   }
 

@@ -8,6 +8,9 @@ const usersSchema = new mongoose.Schema({
   surname: {
     type: String,
   },
+  nickname: {
+    type: String,
+  },
   age: {
     type: Number,
   },
