@@ -3,6 +3,8 @@ import AuthContext from './context/AuthProvider';
 import axios from 'api/axios';
 import './Login.css';
 import { NavLink } from 'react-router-dom';
+import isLogged from '../../utils/isLogged';
+
 const LOGIN_URL = '/users';
 
 const Login = () => {
@@ -15,6 +17,7 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
   const [isUser, setIsUser] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -23,6 +26,11 @@ const Login = () => {
   useEffect(() => {
     setErrMsg('');
   }, [user, pwd]);
+
+  useEffect(() => {
+    // storing input name
+    localStorage.setItem(isLogged, false);
+  }, [isLogged]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,10 +52,12 @@ const Login = () => {
       console.log(response);
 
       response.data.forEach((item) => {
-        if (item.firstName === user && item.password === pwd) {
+        if (item.name === user && item.password === pwd) {
           console.log(item.firstName);
           console.log(user);
           setSuccess(true);
+          localStorage.setItem('isLogged', true);
+          console.log(isLogged);
           throw 'break';
         }
       });
@@ -60,6 +70,7 @@ const Login = () => {
       setAuth({ user, pwd, roles, accessToken });
       setUser('');
       setPwd('');
+
       //      setSuccess(true);
     } catch (err) {
       setIsUser(false);
@@ -77,10 +88,10 @@ const Login = () => {
       {success ? (
         // TODO
         <section>
-          <h1>You are logged in!</h1>
+          <h1>Zalogowane pomyślnie</h1>
           <br />
           <p>
-            <a href='/'>Go to Home</a>
+            <a href='/'>Przejdź do kreatora</a>
           </p>
         </section>
       ) : (
