@@ -6,23 +6,8 @@ const User = require("../models/user");
 // *************************************************
 // handle csv
 router.post("/csv", async (request, response) => {
-  //console.log(request.body);
-
-  //adding houses to db
-  request.body.houses.map(async (house) => {
-    let houseDocument = new House({
-      houseName: house.houseName,
-      rooms: house.rooms,
-    });
-
-    try {
-      const newHouse = await houseDocument.save();
-      housesCreated.push(newHouse);
-    } catch (error) {
-      response.status(400).json({ message: error.message });
-      return;
-    }
-  });
+  let housesCreated = [];
+  let usersCreated = { men: [], women: [] };
 
   // rename user keys by headers
   request.body.people.map((user) => {
@@ -47,44 +32,98 @@ router.post("/csv", async (request, response) => {
     })[request.body.header.name];
   });
 
-  let housesCreated = [];
-  let usersCreated = { men: [], women: [] };
+  // add houses to db
+  try {
+    const insertedHouses = await House.insertMany(request.body.houses);
 
-  // add users
-  request.body.people.map(async (user) => {
-    let userDocument = new User({
-      name: user.name,
-      surname: user.surname,
-      age: user.age,
-      gender: user.gender,
-      withWho: user.withWho,
-      isAdmin: false,
-      password: undefined,
+    // create pure users array for insert
+    usersToInsert = [];
+    request.body.people.map((user) => {
+      let userDocument = {
+        name: user.name,
+        surname: user.surname,
+        nickname: undefined,
+        age: user.age,
+        gender: user.gender,
+        withWho: user.withWho,
+        isAdmin: false,
+        password: undefined,
+      };
+      usersToInsert.push(userDocument);
     });
 
-    try {
-      const newUser = await userDocument.save();
-      if (newUser.gender) {
-        let gender = newUser.gender.toLowerCase();
+    // add users
+    const insertedUsers = await User.insertMany(usersToInsert);
+
+    // sort inserted users
+    const men = [];
+    const women = [];
+    insertedUsers.map((user) => {
+      if (user.gender != undefined) {
+        gender = user.gender.toLowerCase();
         if (
           gender.includes("female") ||
           gender.includes("kobieta") ||
           gender.includes("woman") ||
           gender.includes("k")
-        ) {
-          usersCreated.women.push(newUser);
-        } else {
-          usersCreated.men.push(newUser);
+        )
+          women.push(user);
+        else {
+          men.push(user);
         }
-        return usersCreated;
       }
-    } catch (error) {
-      response.status(400).json({ message: error.message });
-      return;
-    }
-  });
+    });
 
-  console.log(usersCreated);
+    const compare = (a, b) => {
+      if (a.age < b.age) {
+        return -1;
+      }
+      if (a.age > b.age) {
+        return 1;
+      }
+      return 0;
+    };
+
+    men.sort(compare);
+    women.sort(compare);
+
+    // assign person to the room
+    //insertedHouses, men, women
+    let menCounter = 0;
+    let womenCounter = 0;
+
+    // NOT WORKING
+    let result = insertedHouses.map((house) => {
+      let parsedHouses = house.rooms.map((room) => {
+        let i = 0;
+        let filledRoom;
+        while (room.size > i) {
+          if (menCounter < men.length) {
+            filledRoom = room;
+            filledRoom.users.push(men[menCounter]);
+            menCounter++;
+          } else if (womenCounter < women.length) {
+            filledRoom = room;
+            filledRoom.users.push(women[womenCounter]);
+            womenCounter++;
+          } else break;
+          i++;
+        }
+        return filledRoom;
+      });
+      return parsedHouses;
+    });
+
+    console.log(result[0].users);
+
+    response
+      .status(201)
+      .json({ message: "Houses and users created, users assigned" });
+  } catch (error) {
+    console.log(error);
+    response.status(400).json({ message: error.message });
+    return;
+  }
 });
 
 // *************************************************
@@ -155,7 +194,7 @@ async function getHouse(request, response, next) {
       return response.status(404).json({ message: "Cant find the house" });
     }
   } catch (error) {
-    console.log("dupa: " + house);
+    console.log(house);
     return response.status(500).json({ message: error.message });
   }
 
