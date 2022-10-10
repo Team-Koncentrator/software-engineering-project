@@ -3,11 +3,12 @@ const router = express.Router();
 const House = require("../models/house");
 const User = require("../models/user");
 
+// *************************************************
 // handle csv
 router.post("/csv", async (request, response) => {
   //console.log(request.body);
 
-  //adding houses
+  //adding houses to db
   request.body.houses.map(async (house) => {
     let houseDocument = new House({
       houseName: house.houseName,
@@ -16,6 +17,7 @@ router.post("/csv", async (request, response) => {
 
     try {
       const newHouse = await houseDocument.save();
+      housesCreated.push(newHouse);
     } catch (error) {
       response.status(400).json({ message: error.message });
       return;
@@ -45,16 +47,16 @@ router.post("/csv", async (request, response) => {
     })[request.body.header.name];
   });
 
-  console.log(request.body.people);
+  let housesCreated = [];
+  let usersCreated = { men: [], women: [] };
 
-  //request.body.header.name
-
+  // add users
   request.body.people.map(async (user) => {
     let userDocument = new User({
       name: user.name,
       surname: user.surname,
       age: user.age,
-      gender: user.age,
+      gender: user.gender,
       withWho: user.withWho,
       isAdmin: false,
       password: undefined,
@@ -62,13 +64,30 @@ router.post("/csv", async (request, response) => {
 
     try {
       const newUser = await userDocument.save();
+      if (newUser.gender) {
+        let gender = newUser.gender.toLowerCase();
+        if (
+          gender.includes("female") ||
+          gender.includes("kobieta") ||
+          gender.includes("woman") ||
+          gender.includes("k")
+        ) {
+          usersCreated.women.push(newUser);
+        } else {
+          usersCreated.men.push(newUser);
+        }
+        return usersCreated;
+      }
     } catch (error) {
       response.status(400).json({ message: error.message });
       return;
     }
   });
+
+  console.log(usersCreated);
 });
 
+// *************************************************
 // get all
 router.get("/", async (request, response) => {
   try {
@@ -79,11 +98,13 @@ router.get("/", async (request, response) => {
   }
 });
 
+// *************************************************
 // get one
 router.get("/:id", getHouse, (request, response) => {
   response.send(response.house);
 });
 
+// *************************************************
 // create one
 router.post("/", async (request, response) => {
   const house = new House({
@@ -99,6 +120,7 @@ router.post("/", async (request, response) => {
   }
 });
 
+// *************************************************
 // update one
 router.patch("/:id", getHouse, async (request, response) => {
   if (request.body.houseName != null)
@@ -112,6 +134,7 @@ router.patch("/:id", getHouse, async (request, response) => {
   }
 });
 
+// *************************************************
 // delete one
 router.delete("/:id", getHouse, async (request, response) => {
   try {
@@ -122,6 +145,7 @@ router.delete("/:id", getHouse, async (request, response) => {
   }
 });
 
+// *************************************************
 async function getHouse(request, response, next) {
   let house;
   try {

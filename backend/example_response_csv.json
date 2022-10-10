@@ -70,6 +70,6 @@
     "surname": "Nazwisko",
     "age": "Wiek",
     "gender": "Płeć",
-    "with_who": "Podaj imię i nazwisko osoby z którą chciałbyś być w pokoju\r"
+    "withWho": "Podaj imię i nazwisko osoby z którą chciałbyś być w pokoju\r"
   }
 }
