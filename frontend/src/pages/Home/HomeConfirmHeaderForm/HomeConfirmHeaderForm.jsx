@@ -75,14 +75,14 @@ const HomeConfirmHeaderForm = ({ fileHeader, isHeaderConfirm, setIsHeaderConfirm
         </FormControl>
 
         <FormControl fullWidth sx={{ marginBottom: '20px' }}>
-          <InputLabel id='with_who'>With who</InputLabel>
+          <InputLabel id='withWho'>With who</InputLabel>
           <Select
-            value={confirmedHeader.with_who}
+            value={confirmedHeader.withWho}
             onChange={handleInputChange}
             labelId='with_who-select-label'
             id='with_who-select-label'
-            label='with_who'
-            name='with_who'>
+            label='withWho'
+            name='withWho'>
             {fileHeader.map((item) => {
               return <MenuItem value={item}>{item}</MenuItem>;
             })}

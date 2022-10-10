@@ -19,9 +19,9 @@ const HomeBottomSection = ({
 }) => {
   const countPeople = () => {
     let counters = 0;
-    counters = houses.map((house) => house.rooms.map((room) => (counters += room.people)));
-
-    if (counters.length) peopleCounter = counters.at(-1).at(-1);
+    counters = houses.map((house) => house.rooms.map((room) => (counters += room.size)));
+    console.log(counters);
+    if (counters.length >= 1) peopleCounter = counters.at(-1).at(-1);
     else peopleCounter = 0;
 
     setPeopleCounter(peopleCounter);
@@ -31,16 +31,14 @@ const HomeBottomSection = ({
     roomIdCounter.push(1);
     houseIdCounter += 1;
     setHouseIdCounter(houseIdCounter);
-    setHouses([
-      ...houses,
-      {
-        id: Math.random() * 0.8 + Math.PI,
-        houseName: 'Domek ' + houseIdCounter,
-        rooms: [{ id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', people: 2 }]
-      }
-    ]);
+    const newHouse = {
+      id: Math.random() * 0.8 + Math.PI,
+      houseName: 'Domek ' + houseIdCounter,
+      rooms: [{ id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', size: 2 }]
+    };
+    houses.push(newHouse);
+    setHouses([...houses]);
     countPeople();
-    console.log(roomIdCounter);
   };
 
   const submitAll = async (e) => {

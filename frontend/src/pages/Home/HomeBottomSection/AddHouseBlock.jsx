@@ -27,7 +27,7 @@ const AddHouseBlock = ({ data, houses, setHouses, countPeople, roomIdCounter, se
     const houseIndex = houses.findIndex((el) => el.id == houseId);
 
     roomIdCounter[houseIndex] += 1;
-    const room = { id: Math.random() * 0.8 + Math.PI, name: 'Pokój ' + roomIdCounter[houseIndex], people: 2 };
+    const room = { id: Math.random() * 0.8 + Math.PI, name: 'Pokój ' + roomIdCounter[houseIndex], size: 2 };
     houses[houseIndex].rooms.push(room);
 
     setRoomIdCounter(roomIdCounter);
@@ -57,9 +57,9 @@ const AddHouseBlock = ({ data, houses, setHouses, countPeople, roomIdCounter, se
     const houseIndex = houses.findIndex((el) => el.id == houseId);
     const roomIndex = houses[houseIndex].rooms.findIndex((el) => el.id == roomId);
 
-    if (add) houses[houseIndex].rooms[roomIndex].people += 1;
+    if (add) houses[houseIndex].rooms[roomIndex].size += 1;
     else {
-      if (houses[houseIndex].rooms[roomIndex].people > 1) houses[houseIndex].rooms[roomIndex].people -= 1;
+      if (houses[houseIndex].rooms[roomIndex].size > 1) houses[houseIndex].rooms[roomIndex].size -= 1;
     }
 
     setHouses([...houses]);
@@ -97,7 +97,7 @@ const AddHouseBlock = ({ data, houses, setHouses, countPeople, roomIdCounter, se
             </p>
 
             <div id={data.id}>
-              Pokój {room.people}-osobowy <br />
+              Pokój {room.size}-osobowy <br />
               <IconButton id={room.id} onClick={(e) => changePeople(e, true)}>
                 <PersonAddIcon />
               </IconButton>
