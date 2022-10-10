@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "dev": "nodemon server.js"
   },
-  "author": "",
+  "author": "Maciej Węgrzak",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",

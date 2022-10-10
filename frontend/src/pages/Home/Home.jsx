@@ -2,16 +2,22 @@
  * Created by Pawel on 18.09.2022.
  */
 
-import { Button, LinearProgress, Typography } from '@mui/material';
-import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import * as React from 'react';
+import { useState } from 'react';
 import './Home.css';
 import HomeTopSection from 'pages/Home/HomeTopSection/HomeTopSection';
 import HomeConfirmHeaderForm from 'pages/Home/HomeConfirmHeaderForm/HomeConfirmHeaderForm';
-import HomeSubPageForm from 'pages/Home/HomeSubPageForm/HomeSubPageForm';
 import HomeBottomSection from 'pages/Home/HomeBottomSection/HomeBottomSection';
-import { useState } from 'react';
-import HomeCSVTable from './HomeCSVTable/HomeCSVTable';
+//import HomeSubPageForm from 'pages/Home/HomeSubPageForm/HomeSubPageForm';
+//import HomeCSVTable from './HomeCSVTable/HomeCSVTable';
+
+{
+  /* 
+ TODO: POBOCZNE
+  * dodać inputy tekstowe do nazw domków i pokoi
+  * walidacja danych (np. required)
+*/
+}
 
 const Home = () => {
   const [progress, setProgress] = React.useState(66);
@@ -19,94 +25,35 @@ const Home = () => {
   const [fileContent, setFileContent] = useState();
   const [fileHeader, setFileHeader] = useState();
   const [isHeaderConfirm, setIsHeaderConfirm] = useState(false);
+  const [peopleCounter, setPeopleCounter] = useState(2);
+  const [houseIdCounter, setHouseIdCounter] = useState(1);
+  const [roomIdCounter, setRoomIdCounter] = useState([1]);
   const [houses, setHouses] = useState([
     {
       id: Math.random() * 0.8 + Math.PI,
       houseName: 'Domek 1',
-      rooms: [
-        { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', people: '3' },
-        { id: Math.random() * 0.8 + Math.PI, name: 'Pokój 2', people: '3' }
-      ]
+      rooms: [{ id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', size: 2 }]
     }
   ]);
-
-  let fileReader = new FileReader();
-
-  /* *****************************
-  handle functions for csv form
-  ***************************** */
-  const handleOnChange = (e) => {
-    setCsvFile(e.target.files[0]);
-  };
-
-  const handleOnSubmit = (e) => {
-    e.preventDefault();
-    if (csvFile) {
-      fileReader.onload = function (event) {
-        const csvOutput = event.target.result;
-        let [array, header] = parseCsv(csvOutput);
-
-        setFileContent(array);
-        setFileHeader(header);
-
-        console.log(array);
-        console.log(header);
-      };
-
-      fileReader.readAsText(csvFile);
-    }
-
-    setTimeout(() => {
-      let elmntToView = document.getElementById('csv-wrapper--goto');
-      console.log(elmntToView);
-      elmntToView.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-    }, 100);
-  };
-
-  const parseCsv = (csvText) => {
-    const csvHeader = csvText.slice(0, csvText.indexOf('\n')).split(',');
-    const csvRows = csvText.slice(csvText.indexOf('\n') + 1).split('\n');
-
-    const array = csvRows.map((row) => {
-      const values = row.split(',');
-      const obj = csvHeader.reduce((object, header, index) => {
-        object[header] = values[index];
-        return object;
-      }, {});
-      return obj;
-    });
-
-    return [array, csvHeader];
-  };
-
-  const sendDataToParent = (index) => {
-    // the callback. Use a better name
-    console.log(index);
-    //setConfirmedHeader(index);
-  };
-
-  const handleSetConfirm = () => {
-    setIsHeaderConfirm(!isHeaderConfirm);
-  };
-
-  const afterConfirmSubmit = () => {
-    setTimeout(() => {
-      let elmntToView = document.getElementById('home-bootom-wrapper--goto');
-      console.log(elmntToView);
-      elmntToView.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-    }, 100);
-  };
+  const [confirmedHeader, setConfirmedHeader] = useState({
+    name: '',
+    surname: '',
+    age: '',
+    gender: '',
+    withWho: ''
+  });
 
   return (
     <>
       <div className='main-wrapper'>
         {/* *******************************************************************/}
         <HomeTopSection
-          csvfile={csvFile}
+          csvFile={csvFile}
+          setCsvFile={setCsvFile}
           fileContent={fileContent}
+          setFileContent={setFileContent}
           fileHeader={fileHeader}
-          handleOnChange={(e) => handleOnChange(e)}
-          handleOnSubmit={(e) => handleOnSubmit(e)}
+          setFileHeader={setFileHeader}
         />
         {/* *******************************************************************/}
         {/* <div className='progress-bar-section'>
@@ -133,9 +80,10 @@ const Home = () => {
             </p>
             <HomeConfirmHeaderForm
               fileHeader={fileHeader}
-              sendDataToParent={sendDataToParent}
-              handleSetConfirm={handleSetConfirm}
-              afterConfirmSubmit={afterConfirmSubmit}
+              isHeaderConfirm={isHeaderConfirm}
+              setIsHeaderConfirm={setIsHeaderConfirm}
+              confirmedHeader={confirmedHeader}
+              setConfirmedHeader={setConfirmedHeader}
             />
             {/* {isHeaderConfirm && <HomeCSVTable data={fileContent}></HomeCSVTable>} */}
           </div>
@@ -146,7 +94,18 @@ const Home = () => {
         {isHeaderConfirm && (
           <div className='home-bootom-wrapper' id='home-bootom-wrapper--goto'>
             <h1 className='bottom-wrapper__header'>Krok 3. Wybierz na ile domków oraz pokoi chcecie się podzielić ;&#41;</h1>
-            <HomeBottomSection houses={houses} setHouses={setHouses} fileContent={fileContent} />
+            <HomeBottomSection
+              houses={houses}
+              setHouses={setHouses}
+              fileContent={fileContent}
+              peopleCounter={peopleCounter}
+              setPeopleCounter={setPeopleCounter}
+              confirmedHeader={confirmedHeader}
+              houseIdCounter={houseIdCounter}
+              setHouseIdCounter={setHouseIdCounter}
+              roomIdCounter={roomIdCounter}
+              setRoomIdCounter={setRoomIdCounter}
+            />
           </div>
         )}
       </div>
