@@ -12,7 +12,7 @@ var CryptoJS = require('crypto-js');
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const NAME_REGEX = /^[A-z][A-z0-9-_]{1,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/users';
+const REGISTER_URL = 'users';
 
 const Register = () => {
   const userRef = useRef();
@@ -65,6 +65,7 @@ const Register = () => {
     setValidPwd(PWD_REGEX.test(pwd));
     setValidMatch(pwd === matchPwd);
   }, [pwd, matchPwd]);
+
   /*
   useEffect(() => {
     setErrMsg('');
@@ -111,11 +112,12 @@ const Register = () => {
       if (!isUser) {
         console.log('tworze uzytkownika');
         const username = {
-          firstName: firstName,
-          lastName: lastName,
+          name: firstName,
+          surname: lastName,
           age: new Date().getFullYear() - parseInt(selectedDate.toString().substring(11, 15)),
           gender: firstName.charAt(firstName.length - 1) === 'a' || 'A' ? 'Female' : 'Male',
           password: pwd //CryptoJS.AES.encrypt(pwd, 'testkey').toString()
+          //isAdmin: false
         };
 
         try {
