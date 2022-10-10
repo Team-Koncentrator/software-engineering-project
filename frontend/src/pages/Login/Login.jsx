@@ -14,6 +14,7 @@ const Login = () => {
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
+  const [isUser, setIsUser] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -37,8 +38,21 @@ const Login = () => {
           }
         )
       );
-      console.log(JSON.stringify(response?.data));
-      //console.log(JSON.stringify(response));
+
+      console.log('dupa');
+
+      console.log(response);
+
+      response.data.forEach((item) => {
+        if (item.firstName === user && item.password === pwd) {
+          console.log(item.firstName);
+          console.log(user);
+          setSuccess(true);
+          throw 'break';
+        }
+      });
+
+      //console.log(JSON.stringify(response?.data));
       console.log(response?.data?.accessToken);
       console.log(response?.data?.roles);
       const accessToken = response?.data?.accessToken;
@@ -46,17 +60,10 @@ const Login = () => {
       setAuth({ user, pwd, roles, accessToken });
       setUser('');
       setPwd('');
-      setSuccess(true);
+      //      setSuccess(true);
     } catch (err) {
-      if (!err?.response) {
-        setErrMsg('Brak odpowiedzi serwera');
-      } else if (err.response?.status === 400) {
-        setErrMsg('Brakuje nazwy użytkownika lub hasła');
-      } else if (err.response?.status === 401) {
-        setErrMsg('Bark autoryzacji');
-      } else {
-        setErrMsg('Logowanie nieudane');
-      }
+      setIsUser(false);
+      setErrMsg('');
       errRef.current.focus();
     }
   };
