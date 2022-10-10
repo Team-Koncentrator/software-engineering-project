@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
-const User = require("./house");
 
 const usersSchema = new mongoose.Schema({
-  name: {
+  firstName: {
     type: String,
   },
-  surname: {
+  lastName: {
     type: String,
   },
   age: {
@@ -17,13 +16,6 @@ const usersSchema = new mongoose.Schema({
   password: {
     type: String,
   },
-  withWho: {
-    type: String,
-  },
-  isAdmin: {
-    type: Boolean,
-  },
-  house: { type: mongoose.Schema.Types.ObjectId, ref: "House" },
 });
 
 module.exports = mongoose.model("User", usersSchema);

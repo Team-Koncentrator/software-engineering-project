@@ -78,19 +78,3 @@
 #confirm-csv {
   width: 20%;
 }
-
-.csv-wrapper {
-  margin-top: 50px;
-  min-height: 85vh;
-}
-
-.csv-wrapper__header,
-.bottom-wrapper__header {
-  text-align: center;
-  font: 60px/1.5 'open-500', sans-serif;
-  color: #004990;
-  margin-bottom: 45px;
-}
-.home-bootom-wrapper {
-  min-height: 100vh;
-}

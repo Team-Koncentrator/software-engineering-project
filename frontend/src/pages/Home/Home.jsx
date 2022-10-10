@@ -2,61 +2,108 @@
  * Created by Pawel on 18.09.2022.
  */
 
+import { Button, LinearProgress, Typography } from '@mui/material';
+import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import * as React from 'react';
-import { useState } from 'react';
 import './Home.css';
 import HomeTopSection from 'pages/Home/HomeTopSection/HomeTopSection';
 import HomeConfirmHeaderForm from 'pages/Home/HomeConfirmHeaderForm/HomeConfirmHeaderForm';
+import HomeSubPageForm from 'pages/Home/HomeSubPageForm/HomeSubPageForm';
 import HomeBottomSection from 'pages/Home/HomeBottomSection/HomeBottomSection';
-//import HomeSubPageForm from 'pages/Home/HomeSubPageForm/HomeSubPageForm';
-//import HomeCSVTable from './HomeCSVTable/HomeCSVTable';
-
-{
-  /* 
- TODO: POBOCZNE
-  * dodać inputy tekstowe do nazw domków i pokoi
-  * walidacja danych (np. required)
-*/
-}
+import { useState } from 'react';
 
 const Home = () => {
   const [progress, setProgress] = React.useState(66);
   const [csvFile, setCsvFile] = useState();
   const [fileContent, setFileContent] = useState();
   const [fileHeader, setFileHeader] = useState();
-  const [isHeaderConfirm, setIsHeaderConfirm] = useState(false);
-  const [peopleCounter, setPeopleCounter] = useState(2);
-  const [houseIdCounter, setHouseIdCounter] = useState(1);
-  const [roomIdCounter, setRoomIdCounter] = useState([1]);
-  const [houses, setHouses] = useState([
-    {
-      id: Math.random() * 0.8 + Math.PI,
-      houseName: 'Domek 1',
-      rooms: [{ id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', size: 2 }]
+  const [confirmedHeader, setConfirmedHeader] = useState();
+
+  let fileReader = new FileReader();
+
+  /* *****************************
+  handle functions for csv form
+  ***************************** */
+  const handleOnChange = (e) => {
+    setCsvFile(e.target.files[0]);
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    if (csvFile) {
+      fileReader.onload = function (event) {
+        const csvOutput = event.target.result;
+        let [array, header] = parseCsv(csvOutput);
+
+        setFileContent(array);
+        setFileHeader(header);
+
+        console.log(array);
+        console.log(header);
+      };
+
+      fileReader.readAsText(csvFile);
     }
-  ]);
-  const [confirmedHeader, setConfirmedHeader] = useState({
-    name: '',
-    surname: '',
-    age: '',
-    gender: '',
-    withWho: ''
-  });
+  };
+
+  const parseCsv = (csvText) => {
+    const csvHeader = csvText.slice(0, csvText.indexOf('\n')).split(',');
+    const csvRows = csvText.slice(csvText.indexOf('\n') + 1).split('\n');
+
+    const array = csvRows.map((row) => {
+      const values = row.split(',');
+      const obj = csvHeader.reduce((object, header, index) => {
+        object[header] = values[index];
+        return object;
+      }, {});
+      return obj;
+    });
+
+    return [array, csvHeader];
+  };
+
+  /* ************************************
+  handle functions for csv headers confirmation
+  ************************************ */
+  const handleOnSubmitConfirmedHeaders = (e) => {
+    e.preventDefault();
+
+    const form = document.getElementById('confirm-csv');
+
+    let myHeader = {
+      confirmedHeader: {
+        name: form.name.value,
+        surname: form.surname.value,
+        gender: form.gender.value,
+        age: form.age.value,
+        withWho: form.with_who.value
+      }
+    };
+
+    setConfirmedHeader(myHeader);
+  };
+
+  /* ************************************
+  handle functions for progress bar
+  ************************************ */
+  const handleClick = (num) => {
+    // 👇️ take parameter passed from Child component
+    setProgress(() => num);
+  };
 
   return (
     <>
       <div className='main-wrapper'>
         {/* *******************************************************************/}
         <HomeTopSection
-          csvFile={csvFile}
-          setCsvFile={setCsvFile}
+          csvfile={csvFile}
           fileContent={fileContent}
-          setFileContent={setFileContent}
           fileHeader={fileHeader}
-          setFileHeader={setFileHeader}
+          handleOnChange={(e) => handleOnChange(e)}
+          handleOnSubmit={(e) => handleOnSubmit(e)}
         />
         {/* *******************************************************************/}
-        {/* <div className='progress-bar-section'>
+        <div className='progress-bar-section'>
           <Typography variant='body2' sx={{ alignSelf: 'center' }}>
             Krok 1/3
           </Typography>
@@ -68,44 +115,34 @@ const Home = () => {
           </div>
           <div>{progress}</div>
           <HomeSubPageForm handleClick={handleClick}></HomeSubPageForm>
-        </div> */}
+        </div>
 
         {/* *******************************************************************/}
 
         {fileHeader && fileContent && (
-          <div className='csv-wrapper' id='csv-wrapper--goto'>
-            <h1 className='csv-wrapper__header'>Krok 2. Zmapuj swoje dane</h1>
-            <p className='csv-wrapper__subheader'>
-              Zrób to w taki sposób aby nazwy placeholderów pokrywały się z tym co pokazuje Ci się w polach po kliknięciu odpowiedniego inputa :D
-            </p>
-            <HomeConfirmHeaderForm
-              fileHeader={fileHeader}
-              isHeaderConfirm={isHeaderConfirm}
-              setIsHeaderConfirm={setIsHeaderConfirm}
-              confirmedHeader={confirmedHeader}
-              setConfirmedHeader={setConfirmedHeader}
-            />
-            {/* {isHeaderConfirm && <HomeCSVTable data={fileContent}></HomeCSVTable>} */}
+          <div className='confirm_headers_form'>
+            <div>
+              <h1>fileContent</h1>
+              <pre>{JSON.stringify(fileContent, null, 2)}</pre>
+              <h1>fileHeader</h1>
+              <pre>{JSON.stringify(fileHeader, null, 2)}</pre>
+            </div>
+            <HomeConfirmHeaderForm fileHeader={fileHeader} handleOnSubmitConfirmedHeaders={(e) => handleOnSubmitConfirmedHeaders(e)} />
           </div>
         )}
+        {JSON.stringify(confirmedHeader)}
 
-        {/* ****************************************************************** */}
+        {/* *******************************************************************/}
+        {fileHeader && confirmedHeader && fileContent && (
+          <div className='bottom-section'>
+            <Button variant='contained' type='submit'>
+              Przydziel automatycznie
+            </Button>
+            <Button variant='contained' type='submit'>
+              Przydziel samodzielnie
+            </Button>
 
-        {isHeaderConfirm && (
-          <div className='home-bootom-wrapper' id='home-bootom-wrapper--goto'>
-            <h1 className='bottom-wrapper__header'>Krok 3. Wybierz na ile domków oraz pokoi chcecie się podzielić ;&#41;</h1>
-            <HomeBottomSection
-              houses={houses}
-              setHouses={setHouses}
-              fileContent={fileContent}
-              peopleCounter={peopleCounter}
-              setPeopleCounter={setPeopleCounter}
-              confirmedHeader={confirmedHeader}
-              houseIdCounter={houseIdCounter}
-              setHouseIdCounter={setHouseIdCounter}
-              roomIdCounter={roomIdCounter}
-              setRoomIdCounter={setRoomIdCounter}
-            />
+            <HomeBottomSection fileContent={fileContent} />
           </div>
         )}
       </div>
