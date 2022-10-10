@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { useDrag } from 'react-dnd';
-import { COLUMN } from 'components/dnd/constants';
-import DropZone from 'components/dnd/DropZone/DropZone';
-import Component from 'components/dnd/Component/Component';
+import { COLUMN } from 'components/Dnd/constants';
+import DropZone from 'components/Dnd/DropZone/DropZone';
+import Component from 'components/Dnd/Component/Component';
 
 const style = {};
 const Column = ({ data, components, handleDrop, path }) => {

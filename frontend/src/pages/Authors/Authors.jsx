@@ -64,7 +64,7 @@ const Authors = () => {
 
   return (
     <>
-      <main>
+      <main className='authors-page-wrapper'>
         {/* Hero unit */}
         <div className='heroContent'>
           <div className='onas'>
