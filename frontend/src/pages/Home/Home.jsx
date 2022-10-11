@@ -2,60 +2,61 @@
  * Created by Pawel on 18.09.2022.
  */
 
-//import Button from 'components/Button/Button';
-import { Button, LinearProgress, Box, Typography } from '@mui/material';
-import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import * as React from 'react';
+import { useState } from 'react';
 import './Home.css';
-import HomeSubPageForm from 'pages/HomeSubPageForm/HomeSubPageForm';
+import HomeTopSection from 'pages/Home/HomeTopSection/HomeTopSection';
+import HomeConfirmHeaderForm from 'pages/Home/HomeConfirmHeaderForm/HomeConfirmHeaderForm';
+import HomeBottomSection from 'pages/Home/HomeBottomSection/HomeBottomSection';
+//import HomeSubPageForm from 'pages/Home/HomeSubPageForm/HomeSubPageForm';
+//import HomeCSVTable from './HomeCSVTable/HomeCSVTable';
+
+{
+  /* 
+ TODO: POBOCZNE
+  * dodać inputy tekstowe do nazw domków i pokoi
+  * walidacja danych (np. required)
+*/
+}
 
 const Home = () => {
   const [progress, setProgress] = React.useState(66);
-
-  const handleClick = (num) => {
-    // 👇️ take parameter passed from Child component
-    setProgress(() => num);
-  };
+  const [csvFile, setCsvFile] = useState();
+  const [fileContent, setFileContent] = useState();
+  const [fileHeader, setFileHeader] = useState();
+  const [isHeaderConfirm, setIsHeaderConfirm] = useState(false);
+  const [peopleCounter, setPeopleCounter] = useState(2);
+  const [houseIdCounter, setHouseIdCounter] = useState(1);
+  const [roomIdCounter, setRoomIdCounter] = useState([1]);
+  const [houses, setHouses] = useState([
+    {
+      id: Math.random() * 0.8 + Math.PI,
+      houseName: 'Domek 1',
+      rooms: [{ id: Math.random() * 0.8 + Math.PI, name: 'Pokój 1', size: 2 }]
+    }
+  ]);
+  const [confirmedHeader, setConfirmedHeader] = useState({
+    name: '',
+    surname: '',
+    age: '',
+    gender: '',
+    withWho: ''
+  });
 
   return (
     <>
       <div className='main-wrapper'>
-        <div className='top-section'>
-          <div className='wrapper__headers'>
-            <div className='headers-section'>
-              <h1 className='headers__main-header'>Przydziel uczestników do domków!</h1>
-              <div className='headers__horizontal'></div>
-              <h2 className='headers__second-header'>Nasza aplikacja ułatwia podział uczestników ze względu na płeć i wiek</h2>
-              <p className='headers__content'>
-                Spędzasz noce nad logistyką obozów i chcesz przed rozpoczęciem wiedzieć, jak najbardziej optymalnie przydzielić uczestników do domków
-                i pokojów? Z naszą aplikacją to staje się dużo prostrze! Przygotuj plik xml, a my zrobimy resztę za ciebie :&#41;
-              </p>
-            </div>
-            <div className='buttons-section'>
-              <div className='buttons__file'>
-                <input accept='text/xml' style={{ display: 'none' }} id='raised-button-file' multiple type='file' />
-                <label htmlFor='raised-button-file'>
-                  <Button variant='outlined' component='span'>
-                    Upload
-                  </Button>
-                </label>
-              </div>
-              <Typography variant='caption' sx={{ alignSelf: 'center' }}>
-                Wymagany format pliku to .<strong>XML</strong>
-              </Typography>
-              <div className='buttons__next'>
-                <Button variant='contained'>ROZPOCZNIJ</Button>
-              </div>
-              <Typography variant='caption' sx={{ alignSelf: 'center' }}>
-                naciśnij <strong>Enter</strong>
-              </Typography>
-            </div>
-          </div>
-          <div className='top-section__img-container'>
-            <img src={require('images/mainImg.png')} alt='obrazek' className='img-container__img' />
-          </div>
-        </div>
-        <div className='progress-bar-section'>
+        {/* *******************************************************************/}
+        <HomeTopSection
+          csvFile={csvFile}
+          setCsvFile={setCsvFile}
+          fileContent={fileContent}
+          setFileContent={setFileContent}
+          fileHeader={fileHeader}
+          setFileHeader={setFileHeader}
+        />
+        {/* *******************************************************************/}
+        {/* <div className='progress-bar-section'>
           <Typography variant='body2' sx={{ alignSelf: 'center' }}>
             Krok 1/3
           </Typography>
@@ -65,9 +66,48 @@ const Home = () => {
               <MdOutlineArrowBackIosNew className='icon'></MdOutlineArrowBackIosNew>
             </Button>
           </div>
-        </div>
-        <div>{progress}</div>
-        <HomeSubPageForm handleClick={handleClick}></HomeSubPageForm>
+          <div>{progress}</div>
+          <HomeSubPageForm handleClick={handleClick}></HomeSubPageForm>
+        </div> */}
+
+        {/* *******************************************************************/}
+
+        {fileHeader && fileContent && (
+          <div className='csv-wrapper' id='csv-wrapper--goto'>
+            <h1 className='csv-wrapper__header'>Krok 2. Zmapuj swoje dane</h1>
+            <p className='csv-wrapper__subheader'>
+              Zrób to w taki sposób aby nazwy placeholderów pokrywały się z tym co pokazuje Ci się w polach po kliknięciu odpowiedniego inputa :D
+            </p>
+            <HomeConfirmHeaderForm
+              fileHeader={fileHeader}
+              isHeaderConfirm={isHeaderConfirm}
+              setIsHeaderConfirm={setIsHeaderConfirm}
+              confirmedHeader={confirmedHeader}
+              setConfirmedHeader={setConfirmedHeader}
+            />
+            {/* {isHeaderConfirm && <HomeCSVTable data={fileContent}></HomeCSVTable>} */}
+          </div>
+        )}
+
+        {/* ****************************************************************** */}
+
+        {isHeaderConfirm && (
+          <div className='home-bootom-wrapper' id='home-bootom-wrapper--goto'>
+            <h1 className='bottom-wrapper__header'>Krok 3. Wybierz na ile domków oraz pokoi chcecie się podzielić ;&#41;</h1>
+            <HomeBottomSection
+              houses={houses}
+              setHouses={setHouses}
+              fileContent={fileContent}
+              peopleCounter={peopleCounter}
+              setPeopleCounter={setPeopleCounter}
+              confirmedHeader={confirmedHeader}
+              houseIdCounter={houseIdCounter}
+              setHouseIdCounter={setHouseIdCounter}
+              roomIdCounter={roomIdCounter}
+              setRoomIdCounter={setRoomIdCounter}
+            />
+          </div>
+        )}
       </div>
     </>
   );

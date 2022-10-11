@@ -1,17 +1,4 @@
-.wrapper {
-  display: block;
-  padding: 0 16px;
-  min-height: 140vh;
-}
-
-@media all and (min-width: 768px) {
-  .wrapper {
-    padding: 0 48px;
-  }
-}
-
-@media all and (min-width: 1440px) {
-  .wrapper {
-    padding: 0 104px;
-  }
+.app-wrapper {
+  padding: 0 104px;
+  min-height: 100vh;
 }
