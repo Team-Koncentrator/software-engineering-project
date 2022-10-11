@@ -7,13 +7,14 @@ import Component from 'components/Dnd/Component/Component';
 const style = {};
 const Column = ({ data, components, handleDrop, path }) => {
   const ref = useRef(null);
-  console.table(data);
+  // console.table(data);
   const [{ isDragging }, drag] = useDrag({
     item: {
       id: data.id,
       children: data.children,
       path
     },
+
     type: COLUMN,
     collect: (monitor) => ({
       isDragging: monitor.isDragging()
@@ -29,7 +30,7 @@ const Column = ({ data, components, handleDrop, path }) => {
 
   return (
     <div ref={ref} style={{ ...style, opacity }} className='base draggable column'>
-      {data.id}
+      {data.name}
       {data.children.map((component, index) => {
         const currentPath = `${path}-${index}`;
 

@@ -60,7 +60,7 @@ body {
 }
 
 .component {
-  height: 60px;
+  /*height: 60px;*/
   padding: 10px;
   background: #aaa;
 }
@@ -84,6 +84,7 @@ body {
   padding: 0.5rem 1rem;
   background-color: white;
   cursor: move;
+  min-width: 120px;
 }
 
 .row {
@@ -109,4 +110,12 @@ body {
   flex: 1;
   flex-direction: column;
   margin-bottom: 100px;
+}
+
+.woman {
+  background-color: #f2a2a2 !important;
+}
+
+.man {
+  background-color: #a2baf2 !important;
 }
