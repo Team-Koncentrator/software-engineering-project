@@ -26,12 +26,11 @@ const Component = ({ data, components, path }) => {
 
   const content = component.content;
   return (
-    <div ref={ref} style={{ ...style, opacity }} className='component draggable'>
+    <div ref={ref} style={{ ...style, opacity }} className={[content.gender === 'k' ? 'woman' : 'man', 'component draggable'].join(' ')}>
       <div style={{ display: 'none' }}>{data.id}</div>
       <div type='text'>{content.name}</div>
       <div type='text'>{content.surname}</div>
       <div type='text'>{content.age}</div>
-      <div type='text'>{content.gender}</div>
     </div>
   );
 };

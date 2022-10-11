@@ -7,7 +7,7 @@ import TrashDropZone from 'components/Dnd/TrashDropZone/TrashDropZone';
 import SideBarItem from 'components/Dnd/SideBarItem/SideBarItem';
 import Row from 'components/Dnd/Row/Row';
 import initialData from 'components/Dnd/initial-data';
-import NumericInput from 'react-numeric-input';
+
 import {
   handleMoveWithinParent,
   handleMoveToDifferentParent,

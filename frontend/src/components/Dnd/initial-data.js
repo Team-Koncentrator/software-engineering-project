@@ -148,7 +148,7 @@ const initialData = {
   ],
   components: {
     component0: { id: 'component0', type: 'input', content: { name: 'Agnieszka', surname: 'Łuczak', age: 18, gender: 'k' } },
-    component1: { id: 'component1', type: 'input', content: { name: 'Andrzej', surname: 'Byk', age: 17, gender: 'km' } },
+    component1: { id: 'component1', type: 'input', content: { name: 'Andrzej', surname: 'Byk', age: 17, gender: 'm' } },
     component2: { id: 'component2', type: 'input', content: { name: 'Kaja', surname: 'Kucz', age: 17, gender: 'k' } },
     component3: { id: 'component3', type: 'input', content: { name: 'Bartek', surname: 'Rok', age: 15, gender: 'm' } },
     component4: { id: 'component4', type: 'input', content: { name: 'Natalia', surname: 'Beczka', age: 16, gender: 'k' } }
