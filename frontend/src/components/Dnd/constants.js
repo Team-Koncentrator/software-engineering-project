@@ -6,7 +6,8 @@ export const COLUMN = 'column';
 export const COMPONENT = 'component';
 
 export const SIDEBAR_ITEMS = [
-  { 
+  /*
+  {
     id: nanoid(),
     type: SIDEBAR_ITEM,
     component: {
@@ -45,5 +46,5 @@ export const SIDEBAR_ITEMS = [
       type: 'image',
       content: 'Some image'
     }
-  }
+  }*/
 ];

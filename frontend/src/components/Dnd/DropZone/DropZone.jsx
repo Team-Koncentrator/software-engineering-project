@@ -11,6 +11,8 @@ const DropZone = ({ data, onDrop, isLast, className }) => {
       onDrop(data, item);
     },
     canDrop: (item, monitor) => {
+      //item = item.data;
+      console.table(item);
       const dropZonePath = data.path;
       const splitDropZonePath = dropZonePath.split('-');
       const itemPath = item.path;

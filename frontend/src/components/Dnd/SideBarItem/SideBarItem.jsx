@@ -14,9 +14,12 @@ const SideBarItem = ({ data }) => {
   });
 
   return (
-    <div className='sideBarItem' ref={drag} style={{ opacity }}>
-      {data.component.type}
-    </div>
+    <>
+      <div className='sideBarItem' ref={drag} style={{ opacity }}>
+        {data.component.content.name} | {data.component.content.surname}
+        {data.component.content.age} | {data.component.content.gender}
+      </div>
+    </>
   );
 };
 export default SideBarItem;
