@@ -107,7 +107,8 @@ router.post("/csv", async (request, response) => {
         }
     });
     */
-    console.log(result);
+    console.log(insertedHouses);
+    console.log(insertedUsers);
 
     response
       .status(201)
