@@ -49,5 +49,6 @@
 }
 
 .main-house-block__room-block {
-  background-color: red;
+  margin: 5px;
+  border: black solid 1px;
 }

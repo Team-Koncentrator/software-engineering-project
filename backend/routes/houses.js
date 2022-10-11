@@ -92,33 +92,27 @@ router.post("/csv", async (request, response) => {
     let menCounter = 0;
     let womenCounter = 0;
 
-    // NOT WORKING
+    /*
     let result = insertedHouses.map((house) => {
-      let parsedHouses = house.rooms.map((room) => {
+      test = [];
         let i = 0;
-        let filledRoom;
         while (room.size > i) {
           if (menCounter < men.length) {
-            filledRoom = room;
-            filledRoom.users.push(men[menCounter]);
+            test.push(men[menCounter]._id);
             menCounter++;
           } else if (womenCounter < women.length) {
-            filledRoom = room;
-            filledRoom.users.push(women[womenCounter]);
             womenCounter++;
           } else break;
           i++;
         }
-        return filledRoom;
-      });
-      return parsedHouses;
     });
-
-    console.log(result[0].users);
+    */
+    console.log(insertedHouses);
+    console.log(insertedUsers);
 
     response
       .status(201)
-      .json({ message: "Houses and users created, users assigned" });
+      .json({ housesCreated: insertedHouses, usersCreated: insertedUsers });
   } catch (error) {
     console.log(error);
     response.status(400).json({ message: error.message });
